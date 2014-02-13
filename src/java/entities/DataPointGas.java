@@ -16,12 +16,13 @@ public class DataPointGas implements InterfaceDataPoint{
     
     private Timestamp time;
     private float value;
+    private int idOutput;
     private int tag;
     private String unit;
-    
+    private String sensorName;
 
     @Override
-    public void setTimeStamp() {
+    public void setTimeStamp(Timestamp time) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -31,7 +32,7 @@ public class DataPointGas implements InterfaceDataPoint{
     }
 
     @Override
-    public void setValue() {
+    public void setValue(float value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -41,7 +42,7 @@ public class DataPointGas implements InterfaceDataPoint{
     }
 
     @Override
-    public void setTag() {
+    public void setTag(int tag) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -51,7 +52,7 @@ public class DataPointGas implements InterfaceDataPoint{
     }
 
     @Override
-    public void setUnit() {
+    public void setUnit(String unit) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -59,5 +60,27 @@ public class DataPointGas implements InterfaceDataPoint{
     public String getUnit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void setSensorName(String SensorName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getSensorName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setIdOutput(int idOutput) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getIdOutput() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+
     
 }

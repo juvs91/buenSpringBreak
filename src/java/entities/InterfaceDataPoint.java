@@ -17,14 +17,18 @@ import java.sql.Timestamp;
 public interface InterfaceDataPoint {
  
     
-    public void setTimeStamp();
+    public void setTimeStamp(Timestamp time);
     public Timestamp getTimeStamp();
-    public void setValue();
+    public void setValue(float value);
     public float getValue();
-    public void setTag();
+    public void setIdOutput(int idOutput);
+    public int getIdOutput();
+    public void setTag(int tag);
     public int getTag();
-    public void setUnit();
-    public String getUnit();
+    public void setUnit(String unit);
+    public String getUnit();//unidad de medida
+    public void setSensorName(String SensorName);
+    public String getSensorName();
 
   
     
