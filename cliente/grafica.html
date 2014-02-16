@@ -1,0 +1,50 @@
+<html>
+	<head>
+		 <script type="text/javascript" src="plugins/jquery.min.js"></script> 
+		 <script src="highcharts.js"></script>     
+		<script type="text/javascript" src="sensores.js" charset="utf-8">
+		</script>                                                        
+		<script type="text/javascript" src="point.js" charset="utf-8">
+		</script>
+		<script type="text/javascript" charset="utf-8">   
+		var sensor1 = new Sensores();
+		var sensor2 = new Sensores();
+		
+		sensor1.setTag(1);
+		sensor1.setSensorName("sensor de temperatura");
+		sensor1.addPoint(new Point(123,"12-12-12",1,1,"grados","bla"));   
+		sensor1.addPoint(new Point(345,"12-12-12",1,1,"grados","bla"));   
+		sensor1.addPoint(new Point(567,"12-12-12",1,1,"grados","bla"));   
+
+		
+		sensor2.setTag(2);
+		sensor2.setSensorName("sensor de gas"); 
+		sensor2.addPoint(new Point(345,"12-12-12",2,2,"medidade gas","bla"));   
+		sensor2.addPoint(new Point(589,"12-12-12",2,2,"medidade gas","bla"));    
+		
+		console.log(sensor1.getDataStructureGraph());       
+		
+		var allSeries = [
+		   sensor1.getDataStructureGraph(),sensor2.getDataStructureGraph()
+		];
+		   $(function () {
+		    $('#chart').highcharts({
+		        chart: {
+		        
+				},
+		        xAxis: {
+		            minPadding: 0.05,
+		            maxPadding: 0.05
+		        },
+
+		        series: allSeries,
+		    });
+		});
+		</script>
+		
+	</head>
+	<body>
+		<div id="chart" ></div>
+		
+	</body>
+</html>
