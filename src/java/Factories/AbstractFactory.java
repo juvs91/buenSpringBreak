@@ -6,15 +6,18 @@
 
 package Factories;
 
-import entities.DataPointGas;
-import entities.DataPointTemperature;
+import graph.object.SensorGas;
+import graph.object.SensorTemp;
+import javax.ejb.Local;
 
 /**
  *
- * @author usuario
+ * @author ccastillo
  */
+
 public interface AbstractFactory {
-    public DataPointGas createDataPointGas();
-    public DataPointTemperature createDataPointTemperature();
     
+    public String entro();
+    public SensorGas createSensorGas();
+    public SensorTemp createSensorTemp();
 }

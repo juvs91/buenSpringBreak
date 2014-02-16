@@ -6,8 +6,8 @@
 
 package Factories;
 
-import entities.DataPointGas;
-import entities.DataPointTemperature;
+import graph.object.DataPointGas;
+import graph.object.DataPointTemp;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,14 +18,10 @@ import javax.persistence.NamedQuery;
  *
  * @author usuario
  */
-@Entity
-@NamedQueries({
-    @NamedQuery(name = "PointsFactory.createPointGas", query = "SELECT c FROM Company c"),
-    @NamedQuery(name = "PointsFactory.createPointTemperature", query = "SELECT c FROM Company c")
-})
-public class PointsFactory implements AbstractFactory, Serializable {
+
+public class PointsFactory  {
    
-    @Id
+    /*@Id
     private Integer idOutput;
     
     
@@ -51,5 +47,5 @@ public class PointsFactory implements AbstractFactory, Serializable {
     public void setIdOutput(Integer idOutput) {
         this.idOutput = idOutput;
     }
-    
+    */
 }

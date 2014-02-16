@@ -5,8 +5,8 @@
         <property name="serverName" value="127.0.0.1"/>
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="factoryecomation"/>
-        <property name="User" value="root"/>
-        <property name="Password" value="root"/>
+        <property name="User" value="cesar"/>
+        <property name="Password" value="cesar"/>
         <property name="URL" value="jdbc:mysql://localhost:3306/factoryecomation?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
