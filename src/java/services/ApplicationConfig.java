@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(filter.ResponseCorsFilter.class);
         resources.add(services.CommDeviceCatalogFacadeREST.class);
         resources.add(services.CommDeviceTagsFacadeREST.class);
         resources.add(services.CommDeviceTypeFacadeREST.class);
