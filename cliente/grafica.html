@@ -1,50 +1,88 @@
-<html>
+<!DOCTYPE html>
+<html ng-app>
 	<head>
 		 <script type="text/javascript" src="plugins/jquery.min.js"></script> 
 		 <script src="highcharts.js"></script>     
-		<script type="text/javascript" src="sensores.js" charset="utf-8">
-		</script>                                                        
-		<script type="text/javascript" src="point.js" charset="utf-8">
-		</script>
-		<script type="text/javascript" charset="utf-8">   
+		<script type="text/javascript" src="sensores.js" charset="utf-8"></script>                                                        
+		<script type="text/javascript" src="point.js" charset="utf-8"></script>                 
+		<script type="text/javascript" src="request.js" charset="utf-8"></script>  
+		<script type="text/javascript" charset="utf-8">
+		
+		requestCtr();
 		var sensor1 = new Sensores();
-		var sensor2 = new Sensores();
+		var sensor2 = new Sensores(); 
+		var chart; //variable chart para que se actualize en tiempo real 
+		var shift;//la variable que se encarga si se tiene que mover la grafica  
+		var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo 
+		var i = 0;//para saber en que parte del arreglo de series se encuentra cada serie   
 		
 		sensor1.setTag(1);
 		sensor1.setSensorName("sensor de temperatura");
 		sensor1.addPoint(new Point(123,"12-12-12",1,1,"grados","bla"));   
 		sensor1.addPoint(new Point(345,"12-12-12",1,1,"grados","bla"));   
-		sensor1.addPoint(new Point(567,"12-12-12",1,1,"grados","bla"));   
+		sensor1.addPoint(new Point(567,"12-12-12",1,1,"grados","bla"));
+		mapeoIdSeries[sensor1.getTag()] = i;   
+		i++;
 
 		
 		sensor2.setTag(2);
 		sensor2.setSensorName("sensor de gas"); 
 		sensor2.addPoint(new Point(345,"12-12-12",2,2,"medidade gas","bla"));   
-		sensor2.addPoint(new Point(589,"12-12-12",2,2,"medidade gas","bla"));    
+		sensor2.addPoint(new Point(589,"12-12-12",2,2,"medidade gas","bla"));  
+		mapeoIdSeries[sensor2.getTag()] = i;  
+		i++; 
+		  
 		
-		console.log(sensor1.getDataStructureGraph());       
-		
+		//console.log(sensor1.getDataStructureGraph()); 
+		      
+		//todas las series se tienen que colocar dentro de la lista allSeries
 		var allSeries = [
 		   sensor1.getDataStructureGraph(),sensor2.getDataStructureGraph()
-		];
-		   $(function () {
-		    $('#chart').highcharts({
-		        chart: {
-		        
+		];          
+		//esta funcion tiene que llenar los puntos 
+		function pushPoints() {
+			                                                                                          
+		   //shift = chart.series[i].data.length > 58; //dice si la grafica se mueve o no 
+		   //chart.series[i].addPoint(["12-12-12",888],true,shift);//agrega un nuevo punto a la grafica 
+		}
+		
+		$(document).ready(function() {
+			
+			 chart = new Highcharts.Chart({
+				chart :{
+					renderTo :"container",
+					defaultSeriesType: 'line',
+					events : {
+						load : pushPoints
+					} 
 				},
-		        xAxis: {
-		            minPadding: 0.05,
-		            maxPadding: 0.05
-		        },
-
-		        series: allSeries,
-		    });
+				title :{
+					text : "todos los sensores"
+				},
+				xAxis :{
+					type : "datetime", 
+					tickPixelInterval: 150,
+					maxZoom: 20 * 1000
+				},
+				yAxis : {
+					minPadding : 0.2,
+					maxPadding : 0.2,
+					title : {
+						text : "value",
+						margin : 80
+					}
+				}, 
+				series : allSeries,
+				
+			});
+			  
+			
+			 
 		});
 		</script>
 		
 	</head>
 	<body>
-		<div id="chart" ></div>
-		
+		<div id="container" ></div>
 	</body>
 </html>

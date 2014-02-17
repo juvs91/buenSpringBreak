@@ -1,9 +1,10 @@
-var Sensores = function Sensores(points,sensorName,tag){
+var Sensores = function Sensores(points,sensorName,tag,type){
 	var points = [];
 	var tuplePointValueDate = [];  
 	var dataStructureGraph = {
 		"name" :"",
-		"data" : tuplePointValueDate
+		"data" : tuplePointValueDate, 
+		"visible" : false
 	};
 	this.addPoint = function setPoints (point) {
 		points.push(point);
@@ -32,5 +33,11 @@ var Sensores = function Sensores(points,sensorName,tag){
 	this.getTag = function getTag () {
 		return tag;
 	};  
+	this.setType = function setType (typeIn) {
+		type = typeIn;
+	}; 
+	this.getTypeg = function getTypeg () {
+		return type;
+	};
 	
 }

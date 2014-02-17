@@ -41,7 +41,5 @@ var Point = function Point (value,date,idOutput,deviceTag,unit,sensorName) {
 	this.getSensorName = function getSensorName () {
 		return sensorName;
 	}; 
-	this.graphic = function graphic () {
-		//en este metodo se va a graficar el punto
-	}
+ 
 }       
