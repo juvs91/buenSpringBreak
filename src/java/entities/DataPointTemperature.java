@@ -7,72 +7,62 @@
 package entities;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author usuario
  */
+@Entity
 public class DataPointTemperature implements InterfaceDataPoint{
 
-    @Override
-    public void setTimeStamp(Timestamp time) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  
+    @Id 
+    @GeneratedValue
+    private Long dataPointTemp_id;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date time;
+    private float value;
+    @ManyToOne
+    private SensorTemp sensorTemp_ID;
+    
+    public void setId(Long id){
+        this.dataPointTemp_id=id;
+    }
+
+    
+    public Long get(){
+        return this.dataPointTemp_id;
     }
 
     @Override
-    public Timestamp getTimeStamp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setDate(Date date) {
+        this.time=date;
+    }
+
+  
+    @Override
+    public Date getDate() {
+        return this.time;
     }
 
     @Override
     public void setValue(float value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.value=value;
     }
 
     @Override
     public float getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setTag(int tag) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getTag() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setUnit(String unit) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getUnit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setSensorName(String SensorName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getSensorName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setIdOutput(int idOutput) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getIdOutput() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.value;
     }
 
    
+
+
 }
