@@ -21,21 +21,22 @@ import javax.persistence.Temporal;
 public class DataPointGas implements InterfaceDataPoint{
     
     @Id 
-    @GeneratedValue
-    private Integer dataPointGas_id;
+    private int dataPointGas_id;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date time;
     private float value;
     @ManyToOne
     private SensorGas sensorGas_ID;
+    private int output_id;
+
     
-    public void setId(Integer id){
+    public void setId(int id){
         this.dataPointGas_id=id;
     }
 
     
-    public Integer get(){
+    public int get(){
         return this.dataPointGas_id;
     }
 
@@ -59,9 +60,17 @@ public class DataPointGas implements InterfaceDataPoint{
     public float getValue() {
         return this.value;
     }
+    
+    
+    public void setOutputId(int output_id) {
+        this.output_id=output_id;
+    }
 
    
-
-
+    public int getOutputId() {
+        return this.output_id;
+    }
     
+    
+ 
 }

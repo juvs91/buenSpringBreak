@@ -24,73 +24,9 @@ import javax.persistence.PersistenceContext;
  * @author usuario
  */
 @Stateless
-public class SensorsFactory {
+public class SensorsFactory  {
     @PersistenceContext
-    EntityManager em;
-       public SensorGas createSensorGas() {
-           
-             
-        List<SensorTags> gases = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
-        SensorTags sensorTags  = gases.get(0);    
-        SensorGas gas  = new SensorGas();
-        
-        
-        //metemos el gas y la unidad de medida
-        gas.setSensorName(sensorTags.getIdSensorCatalog().getIdSensorType().getSensorType());      
-        gas.setUnit(sensorTags.getIdMeasurementUnit().getUnitName());
-        
-        List<Outputs> outs = new ArrayList<Outputs>(sensorTags.getOutputsCollection());
-        
-        //sacamos la lista
-        List<DataPointGas> points = new ArrayList<DataPointGas>();
-        
-        for(Outputs out : outs){
-            DataPointGas point = new DataPointGas();
-            point.setDate(out.getInsertDate());
-            point.setValue(out.getOutputValue());
-            points.add(point);
-        }
-        
-        gas.setPoint(points);
-
-        
-    
-        return gas;
-     }
-        
-    
-
-  
-    public SensorTemp createSensorTemp() {
-              
-        List<SensorTags> sensors = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
-        SensorTags sensorTags  = sensors.get(0);    
-        SensorTemp temp  = new SensorTemp();
-        
-        
-        //metemos el gas y la unidad de medida
-        temp.setSensorName(sensorTags.getIdSensorCatalog().getIdSensorType().getSensorType());      
-        temp.setUnit(sensorTags.getIdMeasurementUnit().getUnitName());
-        
-        List<Outputs> outs = new ArrayList<Outputs>(sensorTags.getOutputsCollection());
-        
-        //sacamos la lista
-        List<DataPointTemperature> points = new ArrayList<DataPointTemperature>();
-        
-        for(Outputs out : outs){
-            DataPointTemperature point = new DataPointTemperature();
-            point.setDate(out.getInsertDate());
-            point.setValue(out.getOutputValue());
-            points.add(point);
-        }
-        
-        temp.setPoint(points);
-
-        
-    
-        return temp;
-    }
-    
+    EntityManager em;    
     public List<SensorGas> createSensors(){
         List<SensorGas> sensores  = new ArrayList<SensorGas>(); 
         List<SensorTags> sensors = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
@@ -109,7 +45,7 @@ public class SensorsFactory {
             
             for(Outputs out : outs){
                 DataPointGas point = new DataPointGas();
-                point.setId(out.getIdOutput());
+                point.setOutputId(out.getIdOutput());
                 point.setDate(out.getInsertDate());
                 point.setValue(out.getOutputValue());
                 points.add(point);
@@ -124,7 +60,7 @@ public class SensorsFactory {
         
     }
 
-    
+  
     
 
     
