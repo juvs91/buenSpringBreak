@@ -6,7 +6,7 @@
 
 package entities;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 
@@ -17,18 +17,10 @@ import java.sql.Timestamp;
 public interface InterfaceDataPoint {
  
     
-    public void setTimeStamp(Timestamp time);
-    public Timestamp getTimeStamp();
+    public void setDate(Date time);
+    public Date getDate();
     public void setValue(float value);
     public float getValue();
-    public void setIdOutput(int idOutput);
-    public int getIdOutput();
-    public void setTag(int tag);
-    public int getTag();
-    public void setUnit(String unit);
-    public String getUnit();//unidad de medida
-    public void setSensorName(String SensorName);
-    public String getSensorName();
 
   
     
