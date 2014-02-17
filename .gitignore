@@ -1,3 +1,5 @@
+*.rapt
+.DS_Store
 *_.java
 *.class
 
