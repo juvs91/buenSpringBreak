@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SensorTags.findByMinValue", query = "SELECT s FROM SensorTags s WHERE s.minValue = :minValue"),
     @NamedQuery(name = "SensorTags.findByActive", query = "SELECT s FROM SensorTags s WHERE s.active = :active"),
     @NamedQuery(name = "SensorTags.findByInsertDate", query = "SELECT s FROM SensorTags s WHERE s.insertDate = :insertDate"),
-    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate")})
+    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate"),
+    })
+
 public class SensorTags implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,6 +68,7 @@ public class SensorTags implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
     @OneToMany(mappedBy = "sensorTag")
+    
     private Collection<Outputs> outputsCollection;
     @JoinColumn(name = "id_sensor_catalog", referencedColumnName = "id_sensor_catalog")
     @ManyToOne
@@ -195,6 +198,11 @@ public class SensorTags implements Serializable {
     @Override
     public String toString() {
         return "entities.SensorTags[ sensorTag=" + sensorTag + " ]";
+    }
+    
+    public Collection<Outputs> sensorOuts(Integer id){
+        return null;
+    
     }
     
 }
