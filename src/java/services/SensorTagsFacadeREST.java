@@ -4,6 +4,7 @@
  */
 package services;
 
+import entities.Outputs;
 import entities.SensorTags;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -12,11 +13,14 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -72,6 +76,15 @@ public class SensorTagsFacadeREST extends AbstractFacade<SensorTags> {
     public List<SensorTags> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
+    @GET
+    @Path("outs/{id}")
+    @Produces({"application/xml", "application/json"})
+    public List<Outputs> findSensorOuts(@PathParam("id") String id){
+        //return null;
+        return (List<Outputs>) em.find(SensorTags.class, id).getOutputsCollection();
+    }
+    
+    
 
     @GET
     @Path("count")
