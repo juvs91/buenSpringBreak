@@ -8,42 +8,58 @@
 		<script type="text/javascript" src="request.js" charset="utf-8"></script>  
 		<script type="text/javascript" charset="utf-8">
 		
-		requestCtr();
-		var sensor1 = new Sensores();
-		var sensor2 = new Sensores(); 
+		var sensoresJson = requestCtr();  
+		var sensor; 
+		var allSeries = [];   
 		var chart; //variable chart para que se actualize en tiempo real 
 		var shift;//la variable que se encarga si se tiene que mover la grafica  
 		var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo 
 		var i = 0;//para saber en que parte del arreglo de series se encuentra cada serie   
+	    console.log(sensoresJson);
 		
-		sensor1.setTag(1);
+		
+		for (var i in sensoresJson) {
+			sensor = new Sensores();                              
+			sensor.setTag(sensoresJson[i]["sensorGas_ID"]);
+		  	sensor.setSensorName(sensoresJson[i]["sensorName"]);
+			$.each(sensoresJson[i]["point"],function(key,value){
+				sensor.addPoint(new Point(value["value"],new Date(value["date"]),sensoresJson[i]["unit"],0));
+			});
+			mapeoIdSeries[sensor.getTag()] = i;  
+			i++;
+			allSeries.push(sensor.getDataStructureGraph());
+		}
+	   console.log(allSeries);
+		var sensor1 = new Sensores();
+		var sensor2 = new Sensores(); 
+		
+		
+	    sensor1.setTag(1);
 		sensor1.setSensorName("sensor de temperatura");
-		sensor1.addPoint(new Point(123,"12-12-12",1,1,"grados","bla"));   
-		sensor1.addPoint(new Point(345,"12-12-12",1,1,"grados","bla"));   
-		sensor1.addPoint(new Point(567,"12-12-12",1,1,"grados","bla"));
+		sensor1.addPoint(new Point(123,"12-12-12",1,"bla"));   
+		sensor1.addPoint(new Point(345,"12-12-12",1,"bla"));   
+		sensor1.addPoint(new Point(567,"12-12-12",1,"bla"));
 		mapeoIdSeries[sensor1.getTag()] = i;   
 		i++;
-
+        allSeries.push(sensor1.getDataStructureGraph());
 		
-		sensor2.setTag(2);
+	   /* sensor2.setTag(2);
 		sensor2.setSensorName("sensor de gas"); 
-		sensor2.addPoint(new Point(345,"12-12-12",2,2,"medidade gas","bla"));   
-		sensor2.addPoint(new Point(589,"12-12-12",2,2,"medidade gas","bla"));  
+		sensor2.addPoint(new Point(345,"12-12-12",2,"bla"));   
+		sensor2.addPoint(new Point(589,"12-12-12",2,"bla"));  
 		mapeoIdSeries[sensor2.getTag()] = i;  
 		i++; 
-		  
+		*/ 
 		
 		//console.log(sensor1.getDataStructureGraph()); 
 		      
 		//todas las series se tienen que colocar dentro de la lista allSeries
-		var allSeries = [
-		   sensor1.getDataStructureGraph(),sensor2.getDataStructureGraph()
-		];          
+		       
 		//esta funcion tiene que llenar los puntos 
 		function pushPoints() {
 			                                                                                          
-		   //shift = chart.series[i].data.length > 58; //dice si la grafica se mueve o no 
-		   //chart.series[i].addPoint(["12-12-12",888],true,shift);//agrega un nuevo punto a la grafica 
+		   //shift = chart.series[mapeoIdSeries[sensor.getTag()]].data.length > 58; //dice si la grafica se mueve o no 
+		   //chart.series[mapeoIdSeries[sensor.getTag()]].addPoint(["12-12-12",888],true,shift);//agrega un nuevo punto a la grafica 
 		}
 		
 		$(document).ready(function() {
