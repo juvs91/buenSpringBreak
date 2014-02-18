@@ -7,11 +7,9 @@
 package Factories;
 
 import entities.DataPointGas;
-import entities.DataPointTemperature;
 import entities.Outputs;
 import entities.SensorGas;
 import entities.SensorTags;
-import entities.SensorTemp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;

@@ -16,7 +16,10 @@ function requestCtr () {
 	    },
 	    error: function(e) { 
 	       console.log(e);
-	    } 
+	    },
+	 	onload:function(json){
+			console.log();
+		}
 	});
 	return data;   
 	

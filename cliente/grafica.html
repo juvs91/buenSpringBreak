@@ -15,7 +15,6 @@
 		var shift;//la variable que se encarga si se tiene que mover la grafica  
 		var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo 
 		var i = 0;//para saber en que parte del arreglo de series se encuentra cada serie   
-	    console.log(sensoresJson);
 		
 		
 		for (var i in sensoresJson) {
@@ -23,16 +22,16 @@
 			sensor.setTag(sensoresJson[i]["sensorGas_ID"]);
 		  	sensor.setSensorName(sensoresJson[i]["sensorName"]);
 			$.each(sensoresJson[i]["point"],function(key,value){
-				sensor.addPoint(new Point(value["value"],new Date(value["date"]),sensoresJson[i]["unit"],0));
+				sensor.addPoint(new Point(value["value"],new Date(value["date"]),sensoresJson[i]["unit"],sensoresJson[i]["outpuId"]));
 			});
 			mapeoIdSeries[sensor.getTag()] = i;  
 			i++;
 			allSeries.push(sensor.getDataStructureGraph());
 		}
-	   console.log(allSeries);
+		
 		var sensor1 = new Sensores();
 		var sensor2 = new Sensores(); 
-		
+		console.log(mapeoIdSeries);
 		
 	    sensor1.setTag(1);
 		sensor1.setSensorName("sensor de temperatura");
