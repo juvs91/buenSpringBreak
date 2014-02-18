@@ -1,4 +1,4 @@
-var Point = function Point (value,date,idOutput,deviceTag,unit,sensorName) {
+var Point = function Point (value,date,idOutput,unit) {
 	this.setValue = function setValue (valueIn) {
 		value = valueIn;
 	}; 
@@ -17,29 +17,7 @@ var Point = function Point (value,date,idOutput,deviceTag,unit,sensorName) {
 	this.getIdOutput = function getIdOutput () {
 		return idOutput;
 	}; 
-	this.setDeviceTag = function setDeviceTag (deviceTagIn) {
-		deviceTag = deviceTagIn;
-	}; 
-	this.getDeviceTag = function getDeviceTag () {
-		return deviceTag;
-	};
-	this.setDeviceTag = function setDeviceTag (deviceTagIn) {
-		deviceTag = deviceTagIn;
-	}; 
-	this.getDeviceTag = function getDeviceTag () {
-		return deviceTag;
-	};
-	this.setUnit = function setUnit (unitIn) {
-		unit = unitIn;
-	}; 
-	this.getUnit = function getUnit () {
-		return unit;
-	};      
-	this.setSensorName = function setSensorName (sensorNameIn) {
-		sensorName = sensorNameIn;
-	}; 
-	this.getSensorName = function getSensorName () {
-		return sensorName;
-	}; 
+
+  
  
 }       

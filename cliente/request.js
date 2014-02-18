@@ -1,24 +1,26 @@
-var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/outs/GAS01';
 
 
 function requestCtr () {
-
-    var headerData = {};
-
+	var url = 'http://localhost:8080/factoryEcomation_Services/webresources/sensorgas';
+    var data = {};
 	$.ajax({    
 	    type: 'GET',
 	    url: url,
-	    async: true,
+	    async: false,
 	    jsonpCallback: 'jsonCallback',
 	    contentType: "aplication/json",
 	    //dataType: 'jsonp',   
-		crossDomain : true, 
+		//crossDomain : true, 
 	    success: function(json) {
-	       console.log(json);
+		   data = json; 		
 	    },
 	    error: function(e) { 
 	       console.log(e);
-	    } 
-	});   
+	    },
+	 	onload:function(json){
+			console.log();
+		}
+	});
+	return data;   
 	
 }
