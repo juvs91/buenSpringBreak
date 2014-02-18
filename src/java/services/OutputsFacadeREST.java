@@ -65,11 +65,19 @@ public class OutputsFacadeREST extends AbstractFacade<Outputs> {
     public List<Outputs> findAll() {
         return super.findAll();
     }
-
+    
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
     public List<Outputs> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+        return super.findRange(new int[]{from, to});
+    }
+    
+    @GET
+    @Path("{from}/newOutputs")
+    @Produces({"application/xml", "application/json"})
+    public List<Outputs> findRange(@PathParam("from") Integer from) {
+        Integer to = Integer.valueOf(super.count());
         return super.findRange(new int[]{from, to});
     }
 
