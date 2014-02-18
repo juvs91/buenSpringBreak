@@ -18,26 +18,26 @@ import javax.persistence.Temporal;
  * @author usuario
  */
 @Entity
-public class DataPointGas implements InterfaceDataPoint{
+public class DataPoint implements InterfaceDataPoint{
     
     @Id 
-    private int dataPointGas_id;
+    private int dataPoint_id;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date time;
     private float value;
     @ManyToOne
-    private SensorGas sensorGas_ID;
+    private Sensor sensor_ID;
     private int output_id;
 
     
     public void setId(int id){
-        this.dataPointGas_id=id;
+        this.dataPoint_id=id;
     }
 
     
     public int get(){
-        return this.dataPointGas_id;
+        return this.dataPoint_id;
     }
 
     @Override

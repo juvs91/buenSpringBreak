@@ -20,24 +20,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class SensorGas implements Serializable {
+public class Sensor implements Serializable {
     @Id 
     @GeneratedValue
-    private String sensorGas_ID;
+    private String sensor_ID;
 
     private String sensorName;
     private String unit;
   
     
-    @OneToMany(mappedBy = "sensorGas_ID")
-    private List<DataPointGas> points;
+    @OneToMany(mappedBy = "sensor_ID")
+    private List<DataPoint> points;
     
-    public String getSensorGas_ID() {
-        return sensorGas_ID;
+    public String getSensor_ID() {
+        return sensor_ID;
     }
 
-    public void setSensorGas_ID(String sensorGas_ID) {
-        this.sensorGas_ID = sensorGas_ID;
+    public void setSensor_ID(String sensorGas_ID) {
+        this.sensor_ID = sensorGas_ID;
     }
     
     
@@ -60,12 +60,12 @@ public class SensorGas implements Serializable {
         return this.sensorName;
     }
     
-    public void setPoint(List<DataPointGas> points){
+    public void setPoint(List<DataPoint> points){
             this.points=points;
 }
     
   
-  public List<DataPointGas> getPoint(){
+  public List<DataPoint> getPoint(){
        return this.points;
 }
     
