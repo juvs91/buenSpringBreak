@@ -39,8 +39,11 @@ public class SensorsFactory  {
             
             //sacamos la lista
             List<DataPoint> points = new ArrayList<DataPoint>();
+            int longitud =50;
             
-            for(Outputs out : outs){
+    
+            for(int i= 0; i < longitud && i < outs.size() ; i++){
+                Outputs out = outs.get(i);
                 DataPoint point = new DataPoint();
                 point.setOutputId(out.getIdOutput());
                 point.setDate(out.getInsertDate());

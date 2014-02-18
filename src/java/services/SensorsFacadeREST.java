@@ -27,7 +27,7 @@ import javax.ws.rs.Produces;
  * @author ccastillo
  */
 @Stateless
-@Path("sensorgas")
+@Path("sensor")
 public class SensorsFacadeREST extends AbstractFacade<Sensor> {
     @PersistenceContext(unitName = "factoryEcomation_ServicesPU")
     @EJB SensorsFactory sensor;
