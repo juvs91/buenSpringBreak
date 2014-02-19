@@ -6,9 +6,9 @@
 
 package Factories;
 
-import entities.DataPointGas;
+import entities.DataPoint;
 import entities.Outputs;
-import entities.SensorGas;
+import entities.Sensor;
 import entities.SensorTags;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +24,29 @@ import javax.persistence.PersistenceContext;
 public class SensorsFactory  {
     @PersistenceContext
     EntityManager em;    
-    public List<SensorGas> createSensors(){
-        List<SensorGas> sensores  = new ArrayList<>(); 
+
+    public List<Sensor> createSensors(){
+        List<Sensor> sensores  = new ArrayList<Sensor>(); 
         List<SensorTags> sensors = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
 
         for (SensorTags sen :  sensors){   
-            SensorGas gas  = new SensorGas();
+            Sensor gas  = new Sensor();
             //metemos el gas y la unidad de medida
-            gas.setSensorGas_ID(sen.getSensorTag());
+            gas.setSensor_ID(sen.getSensorTag());
             gas.setSensorName(sen.getIdSensorCatalog().getIdSensorType().getSensorType());      
             gas.setUnit(sen.getIdMeasurementUnit().getUnitName());
             
             List<Outputs> outs = new ArrayList<>(sen.getOutputsCollection());
             
             //sacamos la lista
-            List<DataPointGas> points = new ArrayList<>();
+
+            List<DataPoint> points = new ArrayList<DataPoint>();
+            int longitud =50;
             
-            for(Outputs out : outs){
-                DataPointGas point = new DataPointGas();
+    
+            for(int i= 0; i < longitud && i < outs.size() ; i++){
+                Outputs out = outs.get(i);
+                DataPoint point = new DataPoint();
                 point.setOutputId(out.getIdOutput());
                 point.setDate(out.getInsertDate());
                 point.setValue(out.getOutputValue());

@@ -7,7 +7,7 @@
 package services;
 
 import Factories.SensorsFactory;
-import entities.SensorGas;
+import entities.Sensor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,27 +27,27 @@ import javax.ws.rs.Produces;
  * @author ccastillo
  */
 @Stateless
-@Path("sensorgas")
-public class SensorsFacadeREST extends AbstractFacade<SensorGas> {
+@Path("sensor")
+public class SensorsFacadeREST extends AbstractFacade<Sensor> {
     @PersistenceContext(unitName = "factoryEcomation_ServicesPU")
     @EJB SensorsFactory sensor;
     private EntityManager em;
 
     public SensorsFacadeREST() {
-        super(SensorGas.class);
+        super(Sensor.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(SensorGas entity) {
+    public void create(Sensor entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Long id, SensorGas entity) {
+    public void edit(@PathParam("id") Long id, Sensor entity) {
         super.edit(entity);
     }
 
@@ -60,7 +60,7 @@ public class SensorsFacadeREST extends AbstractFacade<SensorGas> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public SensorGas find(@PathParam("id") Long id) {
+    public Sensor find(@PathParam("id") Long id) {
         return super.find(id);
     }
     
@@ -77,7 +77,7 @@ public class SensorsFacadeREST extends AbstractFacade<SensorGas> {
     
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<SensorGas> listaSensores() {
+    public List<Sensor> listaSensores() {
         return  sensor.createSensors();
     }
 
@@ -85,7 +85,7 @@ public class SensorsFacadeREST extends AbstractFacade<SensorGas> {
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<SensorGas> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Sensor> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

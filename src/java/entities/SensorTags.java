@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -74,7 +75,7 @@ public class SensorTags implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
     @OneToMany(mappedBy = "sensorTag")
-    
+    @OrderBy ("insertDate DESC")
     private Collection<Outputs> outputsCollection;
     @JoinColumn(name = "id_sensor_catalog", referencedColumnName = "id_sensor_catalog")
     @ManyToOne
