@@ -23,7 +23,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+/*
 
+SELET TOP 50 *
+FROM SensorTags
+WHERE 
+ORDER BY ID DESC
+*/
 /**
  *
  * @author Priscila
@@ -32,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "sensor_tags")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SensorTags.findAll", query = "SELECT s FROM SensorTags s"),
+    @NamedQuery(name = "SensorTags.findAll", query = "SELECT s FROM SensorTags s "),
     @NamedQuery(name = "SensorTags.findBySensorTag", query = "SELECT s FROM SensorTags s WHERE s.sensorTag = :sensorTag"),
     @NamedQuery(name = "SensorTags.findByMaxValue", query = "SELECT s FROM SensorTags s WHERE s.maxValue = :maxValue"),
     @NamedQuery(name = "SensorTags.findByMinValue", query = "SELECT s FROM SensorTags s WHERE s.minValue = :minValue"),

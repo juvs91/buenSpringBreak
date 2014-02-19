@@ -9,6 +9,7 @@
 		<script type="text/javascript" charset="utf-8">
 		
 		var sensoresJson = requestCtr();  
+		var idLastPoint = 0;
 		var sensor; 
 		var allSeries = [];   
 		var chart; //variable chart para que se actualize en tiempo real 
@@ -22,7 +23,8 @@
 			sensor.setTag(sensoresJson[i]["sensorGas_ID"]);
 		  	sensor.setSensorName(sensoresJson[i]["sensorName"]);
 			$.each(sensoresJson[i]["point"],function(key,value){
-				sensor.addPoint(new Point(value["value"],new Date(value["date"]),sensoresJson[i]["unit"],sensoresJson[i]["outpuId"]));
+			 	sensor.addPoint(new Point(value["value"],new Date(value["date"]),value["unit"],value["outputId"])); 
+				idLastPoint = (value["outputId"] > idLastPoint) ? value["outputId"] : idLastPoint ; 
 			});
 			mapeoIdSeries[sensor.getTag()] = i;  
 			i++;
@@ -31,8 +33,8 @@
 		
 		var sensor1 = new Sensores();
 		var sensor2 = new Sensores(); 
-		console.log(mapeoIdSeries);
-		
+		console.log(idLastPoint);
+		console.log(sensoresJson);
 	    sensor1.setTag(1);
 		sensor1.setSensorName("sensor de temperatura");
 		sensor1.addPoint(new Point(123,"12-12-12",1,"bla"));   

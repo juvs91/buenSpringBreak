@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
+    //@NamedQuery(name = "Outputs.findBysensorTag",query="SELECT o FROM Outputs o WHERE o.sensorTag = :sensorTag"),
     @NamedQuery(name = "Outputs.findAll", query = "SELECT o FROM Outputs o"),
     @NamedQuery(name = "Outputs.findByIdOutput", query = "SELECT o FROM Outputs o WHERE o.idOutput = :idOutput"),
     @NamedQuery(name = "Outputs.findByGenericTag", query = "SELECT o FROM Outputs o WHERE o.genericTag = :genericTag"),

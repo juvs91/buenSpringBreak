@@ -25,7 +25,7 @@ public class SensorsFactory  {
     @PersistenceContext
     EntityManager em;    
     public List<SensorGas> createSensors(){
-        List<SensorGas> sensores  = new ArrayList<SensorGas>(); 
+        List<SensorGas> sensores  = new ArrayList<>(); 
         List<SensorTags> sensors = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
 
         for (SensorTags sen :  sensors){   
@@ -35,10 +35,10 @@ public class SensorsFactory  {
             gas.setSensorName(sen.getIdSensorCatalog().getIdSensorType().getSensorType());      
             gas.setUnit(sen.getIdMeasurementUnit().getUnitName());
             
-            List<Outputs> outs = new ArrayList<Outputs>(sen.getOutputsCollection());
+            List<Outputs> outs = new ArrayList<>(sen.getOutputsCollection());
             
             //sacamos la lista
-            List<DataPointGas> points = new ArrayList<DataPointGas>();
+            List<DataPointGas> points = new ArrayList<>();
             
             for(Outputs out : outs){
                 DataPointGas point = new DataPointGas();
