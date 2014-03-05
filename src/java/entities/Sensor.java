@@ -26,6 +26,10 @@ public class Sensor implements Serializable {
     private String sensor_ID;
 
     private String sensorName;
+    private String sensorName1;
+    private String sensorName2;
+    private String sensorName3;
+    private String sensorType;
     private String unit;
   
     
@@ -56,9 +60,35 @@ public class Sensor implements Serializable {
     }
 
  
+    public String getSensorName1() {
+        return this.sensorName1;
+    }
+       public void setSensorName1(String SensorName1) {
+        this.sensorName1=SensorName1;
+    }
+
+ 
+    public String getSensorName2() {
+        return this.sensorName2;
+    }
+    
+       public void setSensorName2(String SensorName2) {
+        this.sensorName2=SensorName2;
+    }
+
+ 
+    public String getSensorName3() {
+        return this.sensorName3;
+    }
+       public void setSensorName3(String SensorName3) {
+        this.sensorName3=SensorName3;
+    }
+
+ 
     public String getSensorName() {
         return this.sensorName;
     }
+    
     
     public void setPoint(List<DataPoint> points){
             this.points=points;
@@ -69,6 +99,14 @@ public class Sensor implements Serializable {
        return this.points;
 }
     
+      public void setSensorType(String SensorType) {
+        this.sensorType=SensorType;
+    }
+
+ 
+    public String getSensorType() {
+        return this.sensorType;
+    }
 
     
 }

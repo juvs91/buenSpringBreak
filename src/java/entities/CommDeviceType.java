@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -26,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "comm_device_type")
@@ -51,6 +53,7 @@ public class CommDeviceType implements Serializable {
     private String commDeviceType;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
@@ -137,7 +140,7 @@ public class CommDeviceType implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.CommDeviceType[ idCommDeviceType=" + idCommDeviceType + " ]";
+        return "Factories.CommDeviceType[ idCommDeviceType=" + idCommDeviceType + " ]";
     }
     
 }

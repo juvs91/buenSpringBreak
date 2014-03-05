@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -25,9 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
+@Table(name = "location")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l"),
@@ -53,6 +57,7 @@ public class Location implements Serializable {
     private String locationDescription;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
@@ -147,7 +152,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Location[ idLocation=" + idLocation + " ]";
+        return "Factories.Location[ idLocation=" + idLocation + " ]";
     }
     
 }

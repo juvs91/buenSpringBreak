@@ -7,7 +7,7 @@
 package Factories;
 
 import entities.DataPoint;
-import entities.Outputs;
+import entities.Sensorlist;
 import entities.Sensor;
 import entities.SensorTags;
 import java.util.ArrayList;
@@ -27,34 +27,33 @@ public class SensorsFactory  {
 
     public List<Sensor> createSensors(){
         List<Sensor> sensores  = new ArrayList<Sensor>(); 
-        List<SensorTags> sensors = (List<SensorTags>) em.createNamedQuery("SensorTags.findAll").getResultList();
+        List<Sensorlist> sensorsList = (List<Sensorlist>) em.createNamedQuery("Sensorlist.findAll").getResultList();
 
-        for (SensorTags sen :  sensors){   
-            Sensor gas  = new Sensor();
+        for (Sensorlist sen :  sensorsList){   
+            Sensor se  = new Sensor();
             //metemos el gas y la unidad de medida
-            gas.setSensor_ID(sen.getSensorTag());
-            gas.setSensorName(sen.getIdSensorCatalog().getIdSensorType().getSensorType());      
-            gas.setUnit(sen.getIdMeasurementUnit().getUnitName());
-            
-            List<Outputs> outs = new ArrayList<>(sen.getOutputsCollection());
+            if(!(sen.getSensorTagsCollection().isEmpty())){
+                List<SensorTags> sensorTags = new ArrayList<>(sen.getSensorTagsCollection());
+                se.setSensorType(sensorTags.get(0).getIdSensorCatalog().getIdSensorType().getSensorType());
+                se.setUnit(sensorTags.get(0).getIdMeasurementUnit().getUnitName());
+                se.setSensorName(sensorTags.get(0).getSensorTag());
+            }
+            se.setSensorName1(sen.getSlName1());
+            se.setSensorName2(sen.getSlName2());
+            se.setSensorName3(sen.getSlName3());
+         
             
             //sacamos la lista
-
             List<DataPoint> points = new ArrayList<DataPoint>();
-            int longitud =50;
             
-    
-            for(int i= 0; i < longitud && i < outs.size() ; i++){
-                Outputs out = outs.get(i);
-                DataPoint point = new DataPoint();
-                point.setOutputId(out.getIdOutput());
-                point.setDate(out.getInsertDate());
-                point.setValue(out.getOutputValue());
-                points.add(point);
-            }
+            DataPoint point = new DataPoint();
+            point.setDate(sen.getSlActualTimestamp());
+            point.setValue(sen.getSlActualValue());
+            points.add(point);
+          
             
-            gas.setPoint(points);
-            sensores.add(gas);
+            se.setPoint(points);
+            sensores.add(se);
         }
         
         return sensores;

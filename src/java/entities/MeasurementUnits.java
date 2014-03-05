@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -26,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "measurement_units")
@@ -51,14 +53,13 @@ public class MeasurementUnits implements Serializable {
     private String unitName;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
-    @OneToMany(mappedBy = "idMeasurementUnit")
-    private Collection<Outputs> outputsCollection;
     @OneToMany(mappedBy = "idMeasurementUnit")
     private Collection<SensorTags> sensorTagsCollection;
 
@@ -109,15 +110,6 @@ public class MeasurementUnits implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Outputs> getOutputsCollection() {
-        return outputsCollection;
-    }
-
-    public void setOutputsCollection(Collection<Outputs> outputsCollection) {
-        this.outputsCollection = outputsCollection;
-    }
-
-    @XmlTransient
     public Collection<SensorTags> getSensorTagsCollection() {
         return sensorTagsCollection;
     }
@@ -148,7 +140,7 @@ public class MeasurementUnits implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.MeasurementUnits[ idMeasurementUnit=" + idMeasurementUnit + " ]";
+        return "Factories.MeasurementUnits[ idMeasurementUnit=" + idMeasurementUnit + " ]";
     }
     
 }
