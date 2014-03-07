@@ -1,15 +1,45 @@
 var Sensores = function Sensores(points,sensorName,tag,type){
 	var points = [];
-	var tuplePointValueDate = [];  
+	var tuplePointValueDate = []; 
+	var idLastPoint = 0;     
+	var sort = null;
+	var merge = null;  
+	var mergeSort = null;
 	var dataStructureGraph = {
 		"name" :"",
 		"data" : tuplePointValueDate, 
 		"visible" : false
 	};
 	this.addPoint = function setPoints (point) {
-		points.push(point);
+		points.push(point);  
+		//tuplePointValueDate = [point.getDate(),point.getValue()];
 		tuplePointValueDate.push([point.getDate(),point.getValue()]);
+	};
+	this.addPoints = function addPoints (n_points) {
+		
+		//n_points = sort(n_points);
+		
+		for(var i = 0; i < n_points.length; i++) {
+			this.addPoint(new Point(n_points[i]["value"],n_points[i]["date"],n_points[i]["unit"],n_points[i]["outputId"]));
+			idLastPoint = (n_points[i]["outputId"] > idLastPoint) ? n_points[i]["outputId"] : idLastPoint ; 
+		}
+		    
+		return idLastPoint;                                                       
 	}; 
+	
+	sort = function sort (points) {
+		mergeSort(points,0,points.length);
+	} 
+	    
+	mergeSort = function mergeSort (points,low,high) {
+		
+		
+	}
+	
+	merge = function merge (points,low,mid,high) {
+		
+	}
+	
 	this.deletePoint = function getPoints (index) {
 	   
 	};
@@ -17,6 +47,10 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 		return points;
 	}   
 	this.getDataStructureGraph = function getDataStructureGraph () {
+		
+		//implementar merge sort a todos los puntos 
+		
+		
 		return dataStructureGraph;
 	}
 	            

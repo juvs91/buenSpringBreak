@@ -17,7 +17,5 @@ var Point = function Point (value,date,idOutput,unit) {
 	this.getIdOutput = function getIdOutput () {
 		return idOutput;
 	}; 
-
-  
  
 }       

@@ -1,105 +1,96 @@
 <!DOCTYPE html>
 <html ng-app>
 	<head>
-		 <script type="text/javascript" src="plugins/jquery.min.js"></script> 
-		 <script src="highcharts.js"></script>     
+		<script type="text/javascript" src="plugins/jquery.min.js"></script> 
+		<script src="plugins/highcharts.js"></script>     
 		<script type="text/javascript" src="sensores.js" charset="utf-8"></script>                                                        
 		<script type="text/javascript" src="point.js" charset="utf-8"></script>                 
-		<script type="text/javascript" src="request.js" charset="utf-8"></script>  
-		<script type="text/javascript" charset="utf-8">
-		
-		var sensoresJson = requestCtr();  
-		var idLastPoint = 0;
-		var sensor; 
-		var allSeries = [];   
-		var chart; //variable chart para que se actualize en tiempo real 
-		var shift;//la variable que se encarga si se tiene que mover la grafica  
-		var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo 
-		var i = 0;//para saber en que parte del arreglo de series se encuentra cada serie   
-		
-		
-		for (var i in sensoresJson) {
-			sensor = new Sensores();                              
-			sensor.setTag(sensoresJson[i]["sensorGas_ID"]);
-		  	sensor.setSensorName(sensoresJson[i]["sensorName"]);
-			$.each(sensoresJson[i]["point"],function(key,value){
-			 	sensor.addPoint(new Point(value["value"],new Date(value["date"]),value["unit"],value["outputId"])); 
-				idLastPoint = (value["outputId"] > idLastPoint) ? value["outputId"] : idLastPoint ; 
-			});
-			mapeoIdSeries[sensor.getTag()] = i;  
-			i++;
-			allSeries.push(sensor.getDataStructureGraph());
-		}
-		
-		var sensor1 = new Sensores();
-		var sensor2 = new Sensores(); 
-		console.log(idLastPoint);
-		console.log(sensoresJson);
-	    sensor1.setTag(1);
-		sensor1.setSensorName("sensor de temperatura");
-		sensor1.addPoint(new Point(123,"12-12-12",1,"bla"));   
-		sensor1.addPoint(new Point(345,"12-12-12",1,"bla"));   
-		sensor1.addPoint(new Point(567,"12-12-12",1,"bla"));
-		mapeoIdSeries[sensor1.getTag()] = i;   
-		i++;
-        allSeries.push(sensor1.getDataStructureGraph());
-		
-	   /* sensor2.setTag(2);
-		sensor2.setSensorName("sensor de gas"); 
-		sensor2.addPoint(new Point(345,"12-12-12",2,"bla"));   
-		sensor2.addPoint(new Point(589,"12-12-12",2,"bla"));  
-		mapeoIdSeries[sensor2.getTag()] = i;  
-		i++; 
-		*/ 
-		
-		//console.log(sensor1.getDataStructureGraph()); 
-		      
-		//todas las series se tienen que colocar dentro de la lista allSeries
-		       
-		//esta funcion tiene que llenar los puntos 
-		function pushPoints() {
-			                                                                                          
-		   //shift = chart.series[mapeoIdSeries[sensor.getTag()]].data.length > 58; //dice si la grafica se mueve o no 
-		   //chart.series[mapeoIdSeries[sensor.getTag()]].addPoint(["12-12-12",888],true,shift);//agrega un nuevo punto a la grafica 
-		}
-		
-		$(document).ready(function() {
-			
-			 chart = new Highcharts.Chart({
-				chart :{
-					renderTo :"container",
-					defaultSeriesType: 'line',
-					events : {
-						load : pushPoints
-					} 
-				},
-				title :{
-					text : "todos los sensores"
-				},
-				xAxis :{
-					type : "datetime", 
-					tickPixelInterval: 150,
-					maxZoom: 20 * 1000
-				},
-				yAxis : {
-					minPadding : 0.2,
-					maxPadding : 0.2,
-					title : {
-						text : "value",
-						margin : 80
-					}
-				}, 
-				series : allSeries,
-				
-			});
-			  
-			
-			 
-		});
-		</script>
-		
+		<script type="text/javascript" src="request.js" charset="utf-8"></script>   
 	</head>
-	<body>
-		<div id="container" ></div>
-	</body>
+	<body id="body">
+		<div id='container' ></div>
+	</body>                        
+	<script type="text/javascript" charset="utf-8">
+
+	var sensoresJson = requestSensores();  
+	var idLastPoint = 0;     
+	var lastPointTemp = 0;
+	var sensor; 
+	var allSeries = [];   
+	var chart; //variable chart para que se actualize en tiempo real 
+	var shift;//la variable que se encarga si se tiene que mover la grafica  
+	var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo     
+
+	function creaSensor (sensorJson) {
+		sensor =new Sensores();
+		sensor.setTag(sensorJson["sensor_ID"]);
+	  	sensor.setSensorName(sensorJson["sensorName"]);
+		if (sensorJson["point"] != null) {
+	       lastPointTemp = sensor.addPoints(sensorJson["point"]);
+		   idLastPoint = (lastPointTemp > idLastPoint) ? lastPointTemp : idLastPoint ; 
+	
+		}    
+		mapeoIdSeries[sensor.getTag()] = i;
+		return sensor;
+	}
+	          
+	//esta funcion tiene que llenar los puntos 
+	function pushPoints(newPoints) { 
+		console.log(newPoints);                 
+		for (var i = 0; i < newPoints.length; i++) {
+			//mueve la grafica o no 
+			shift = chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].data.length > 58; 
+			//agrega los puntos a la grafica
+			//tengo que agregar el punto a la serie y pasarle por parametro el add.Point de sensores y uego con los gets y sets del sensor para poder utilizar los datos para lo que pidio el doctor  
+	chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].addPoint([newPoints[i]["insertDate"],newPoints[i]["outputValue"]],shift,true); 
+			    idLastPoint = (newPoints[i]["idOutput"] > idLastPoint) ? newPoints[i]["idOutput"] : idLastPoint; 
+			}                                                                                           
+
+	}
+	
+	function addSeries (serie) {
+
+
+
+		chart.addSeries();
+   }
+   
+
+	for(var i = 0, t = sensoresJson.length; i < t; i++) {
+		allSeries.push((creaSensor(sensoresJson[i])).getDataStructureGraph());
+	} 
+	chart = new Highcharts.Chart({
+		chart :{
+			renderTo :"container",
+			defaultSeriesType: 'line',
+			events : {
+				//load : requestNewPoints
+			} 
+		},
+		title :{
+			text : "todos los sensores"
+		},
+		xAxis :{
+			type : "datetime", 
+			tickPixelInterval: 150,
+			maxZoom: 20 * 1000
+		},
+		yAxis : {
+			minPadding : 0.2,
+			maxPadding : 0.2,
+			title : {
+				text : "value",
+				margin : 80
+			}
+		}, 
+		series : allSeries,
+
+	});      
+		
+	
+
+		
+	setInterval(function(){requestNewPoints(idLastPoint)},5000);
+
+	</script>
 </html>
