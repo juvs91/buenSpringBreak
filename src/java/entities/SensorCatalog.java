@@ -1,13 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "sensor_catalog")
@@ -50,19 +53,24 @@ public class SensorCatalog implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "model")
     private String model;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "reference")
     private String reference;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSensorCatalog")
+    private Collection<SensorCatalogLog> sensorCatalogLogCollection;
     @OneToMany(mappedBy = "idSensorCatalog")
     private Collection<SensorTags> sensorTagsCollection;
     @JoinColumn(name = "id_sensor_type", referencedColumnName = "id_sensor_type")
@@ -134,6 +142,15 @@ public class SensorCatalog implements Serializable {
     }
 
     @XmlTransient
+    public Collection<SensorCatalogLog> getSensorCatalogLogCollection() {
+        return sensorCatalogLogCollection;
+    }
+
+    public void setSensorCatalogLogCollection(Collection<SensorCatalogLog> sensorCatalogLogCollection) {
+        this.sensorCatalogLogCollection = sensorCatalogLogCollection;
+    }
+
+    @XmlTransient
     public Collection<SensorTags> getSensorTagsCollection() {
         return sensorTagsCollection;
     }
@@ -196,7 +213,7 @@ public class SensorCatalog implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.SensorCatalog[ idSensorCatalog=" + idSensorCatalog + " ]";
+        return "Factories.SensorCatalog[ idSensorCatalog=" + idSensorCatalog + " ]";
     }
     
 }

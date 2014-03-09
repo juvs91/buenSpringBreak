@@ -1,13 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "comm_device_catalog")
@@ -53,9 +56,11 @@ public class CommDeviceCatalog implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "reference")
     private String reference;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,6 +80,8 @@ public class CommDeviceCatalog implements Serializable {
     @JoinColumn(name = "id_comm_device_type", referencedColumnName = "id_comm_device_type")
     @ManyToOne
     private CommDeviceType idCommDeviceType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCommDeviceCatalog")
+    private Collection<CommDeviceCatalogLog> commDeviceCatalogLogCollection;
     @OneToMany(mappedBy = "idCommDeviceCatalog")
     private Collection<CommDeviceTags> commDeviceTagsCollection;
 
@@ -172,6 +179,15 @@ public class CommDeviceCatalog implements Serializable {
     }
 
     @XmlTransient
+    public Collection<CommDeviceCatalogLog> getCommDeviceCatalogLogCollection() {
+        return commDeviceCatalogLogCollection;
+    }
+
+    public void setCommDeviceCatalogLogCollection(Collection<CommDeviceCatalogLog> commDeviceCatalogLogCollection) {
+        this.commDeviceCatalogLogCollection = commDeviceCatalogLogCollection;
+    }
+
+    @XmlTransient
     public Collection<CommDeviceTags> getCommDeviceTagsCollection() {
         return commDeviceTagsCollection;
     }
@@ -202,7 +218,7 @@ public class CommDeviceCatalog implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.CommDeviceCatalog[ idCommDeviceCatalog=" + idCommDeviceCatalog + " ]";
+        return "Factories.CommDeviceCatalog[ idCommDeviceCatalog=" + idCommDeviceCatalog + " ]";
     }
     
 }

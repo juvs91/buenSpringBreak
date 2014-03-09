@@ -24,7 +24,7 @@ public class DataPoint implements InterfaceDataPoint{
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date time;
-    private float value;
+    private Double value;
     @ManyToOne
     private Sensor sensor_ID;
     private int output_id;
@@ -51,12 +51,12 @@ public class DataPoint implements InterfaceDataPoint{
     }
 
     @Override
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value=value;
     }
 
     @Override
-    public float getValue() {
+    public double getValue() {
         return this.value;
     }
     

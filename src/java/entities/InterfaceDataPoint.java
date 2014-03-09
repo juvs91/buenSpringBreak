@@ -19,8 +19,8 @@ public interface InterfaceDataPoint {
     
     public void setDate(Date time);
     public Date getDate();
-    public void setValue(float value);
-    public float getValue();
+    public void setValue(double value);
+    public double getValue();
 
   
     

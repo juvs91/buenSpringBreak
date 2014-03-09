@@ -1,13 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,30 +26,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-/*
 
-SELET TOP 50 *
-FROM SensorTags
-WHERE 
-ORDER BY ID DESC
-*/
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "sensor_tags")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SensorTags.findAll", query = "SELECT s FROM SensorTags s "),
+    @NamedQuery(name = "SensorTags.findAll", query = "SELECT s FROM SensorTags s"),
+    @NamedQuery(name = "SensorTags.restri", query ="SELECT s FROM SensorTags s WHERE s.id_sensor_catalog != null "),
     @NamedQuery(name = "SensorTags.findBySensorTag", query = "SELECT s FROM SensorTags s WHERE s.sensorTag = :sensorTag"),
     @NamedQuery(name = "SensorTags.findByMaxValue", query = "SELECT s FROM SensorTags s WHERE s.maxValue = :maxValue"),
     @NamedQuery(name = "SensorTags.findByMinValue", query = "SELECT s FROM SensorTags s WHERE s.minValue = :minValue"),
     @NamedQuery(name = "SensorTags.findByActive", query = "SELECT s FROM SensorTags s WHERE s.active = :active"),
     @NamedQuery(name = "SensorTags.findByInsertDate", query = "SELECT s FROM SensorTags s WHERE s.insertDate = :insertDate"),
-    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate"),
-    })
-
+    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate")})
 public class SensorTags implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,6 +58,7 @@ public class SensorTags implements Serializable {
     private Float minValue;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
@@ -74,9 +70,8 @@ public class SensorTags implements Serializable {
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
-    @OneToMany(mappedBy = "sensorTag")
-    @OrderBy ("insertDate DESC")
-    private Collection<Outputs> outputsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sensorTag")
+    private Collection<SensorTagsLog> sensorTagsLogCollection;
     @JoinColumn(name = "id_sensor_catalog", referencedColumnName = "id_sensor_catalog")
     @ManyToOne
     private SensorCatalog idSensorCatalog;
@@ -86,6 +81,9 @@ public class SensorTags implements Serializable {
     @JoinColumn(name = "comm_device_tag", referencedColumnName = "comm_device_tag")
     @ManyToOne(optional = false)
     private CommDeviceTags commDeviceTag;
+    @JoinColumn(name = "sensor_id", referencedColumnName = "slId")
+    @ManyToOne
+    private Sensorlist sensorId;
 
     public SensorTags() {
     }
@@ -150,12 +148,12 @@ public class SensorTags implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Outputs> getOutputsCollection() {
-        return outputsCollection;
+    public Collection<SensorTagsLog> getSensorTagsLogCollection() {
+        return sensorTagsLogCollection;
     }
 
-    public void setOutputsCollection(Collection<Outputs> outputsCollection) {
-        this.outputsCollection = outputsCollection;
+    public void setSensorTagsLogCollection(Collection<SensorTagsLog> sensorTagsLogCollection) {
+        this.sensorTagsLogCollection = sensorTagsLogCollection;
     }
 
     public SensorCatalog getIdSensorCatalog() {
@@ -182,6 +180,14 @@ public class SensorTags implements Serializable {
         this.commDeviceTag = commDeviceTag;
     }
 
+    public Sensorlist getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(Sensorlist sensorId) {
+        this.sensorId = sensorId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -204,12 +210,7 @@ public class SensorTags implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.SensorTags[ sensorTag=" + sensorTag + " ]";
-    }
-    
-    public Collection<Outputs> sensorOuts(Integer id){
-        return null;
-    
+        return "Factories.SensorTags[ sensorTag=" + sensorTag + " ]";
     }
     
 }

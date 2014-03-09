@@ -45,14 +45,9 @@ public class ApplicationConfig extends Application {
         resources.add(services.CompanyFacadeREST.class);
         resources.add(services.LocationFacadeREST.class);
         resources.add(services.MeasurementUnitsFacadeREST.class);
-        resources.add(services.ModuleFacadeREST.class);
         resources.add(services.OutputFormatFacadeREST.class);
-        resources.add(services.OutputOriginTypeFacadeREST.class);
         resources.add(services.OutputTypeFacadeREST.class);
-        resources.add(services.OutputsFacadeREST.class);
-        resources.add(services.OutputsTypeValueFacadeREST.class);
         resources.add(services.SensorCatalogFacadeREST.class);
-        resources.add(services.SensorTagsFacadeREST.class);
         resources.add(services.SensorTypeFacadeREST.class);
         resources.add(services.SensorsFacadeREST.class);
     }

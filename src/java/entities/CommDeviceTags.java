@@ -1,9 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
+import entities.SensorTags;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -27,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Priscila
+ * @author ccastillo
  */
 @Entity
 @Table(name = "comm_device_tags")
@@ -51,6 +54,7 @@ public class CommDeviceTags implements Serializable {
     private Integer periodMs;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
     @NotNull
@@ -62,9 +66,8 @@ public class CommDeviceTags implements Serializable {
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
-    @JoinColumn(name = "id_module", referencedColumnName = "id_module")
-    @ManyToOne
-    private Module idModule;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commDeviceTag")
+    private Collection<CommDeviceTagsLog> commDeviceTagsLogCollection;
     @JoinColumn(name = "id_location", referencedColumnName = "id_location")
     @ManyToOne
     private Location idLocation;
@@ -128,12 +131,13 @@ public class CommDeviceTags implements Serializable {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public Module getIdModule() {
-        return idModule;
+    @XmlTransient
+    public Collection<CommDeviceTagsLog> getCommDeviceTagsLogCollection() {
+        return commDeviceTagsLogCollection;
     }
 
-    public void setIdModule(Module idModule) {
-        this.idModule = idModule;
+    public void setCommDeviceTagsLogCollection(Collection<CommDeviceTagsLog> commDeviceTagsLogCollection) {
+        this.commDeviceTagsLogCollection = commDeviceTagsLogCollection;
     }
 
     public Location getIdLocation() {
@@ -183,7 +187,7 @@ public class CommDeviceTags implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.CommDeviceTags[ commDeviceTag=" + commDeviceTag + " ]";
+        return "Factories.CommDeviceTags[ commDeviceTag=" + commDeviceTag + " ]";
     }
     
 }

@@ -23,7 +23,7 @@ import javax.ws.rs.Produces;
  * @author Priscila
  */
 @Stateless
-@Path("entities.sensortype")
+@Path("sensorType")
 public class SensorTypeFacadeREST extends AbstractFacade<SensorType> {
     @PersistenceContext(unitName = "factoryEcomation_ServicesPU")
     private EntityManager em;
