@@ -6,7 +6,6 @@
 
 package entities;
 
-
 import entities.SensorCatalog;
 import java.io.Serializable;
 import java.util.Collection;
@@ -31,6 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 
+/**
+ *
+ * @author ccastillo
+ */
 @Entity
 @Table(name = "company")
 @XmlRootElement
@@ -111,7 +114,6 @@ public class Company implements Serializable {
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
-
 
     @XmlTransient
     public Collection<CommDeviceCatalog> getCommDeviceCatalogCollection() {
