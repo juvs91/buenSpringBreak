@@ -77,9 +77,20 @@ public class Sensorlist implements Serializable {
     @ManyToOne
     private Status slActualStatus;
     @OneToMany(mappedBy = "sensorId")
+    //@JoinColumn(name ="sLId", referencedColumnName ="sensor_id")
     private Collection<SensorTags> sensorTagsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "saSensorId")
     private Collection<Sensorarchive> sensorarchiveCollection;
+    //son las vatiables de los querys de join
+    /*
+    private String sensor_tag;
+    
+    private int sensor_id;
+    
+    private int id_sensor_catalog;
+    
+    private String sensor_type;
+    */
 
     public Sensorlist() {
     }

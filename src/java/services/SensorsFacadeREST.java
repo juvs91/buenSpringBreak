@@ -8,6 +8,8 @@ package services;
 
 import Factories.SensorsFactory;
 import entities.Sensor;
+import entities.SensorType;
+import entities.Sensorlist;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -77,7 +79,7 @@ public class SensorsFacadeREST extends AbstractFacade<Sensor> {
     
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<Sensor> listaSensores() {
+    public List<SensorType> listaSensores() {
         return  sensor.createSensors();
     }
 

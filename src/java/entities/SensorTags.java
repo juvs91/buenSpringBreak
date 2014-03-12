@@ -8,6 +8,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SensorTags.findAll", query = "SELECT s FROM SensorTags s"),
-    @NamedQuery(name = "SensorTags.restri", query ="SELECT s FROM SensorTags s WHERE s.id_sensor_catalog != null "),
+    @NamedQuery(name = "SensorTags.restri", query ="SELECT s FROM SensorTags s WHERE s.idSensorCatalog != null "),
     @NamedQuery(name = "SensorTags.findBySensorTag", query = "SELECT s FROM SensorTags s WHERE s.sensorTag = :sensorTag"),
     @NamedQuery(name = "SensorTags.findByMaxValue", query = "SELECT s FROM SensorTags s WHERE s.maxValue = :maxValue"),
     @NamedQuery(name = "SensorTags.findByMinValue", query = "SELECT s FROM SensorTags s WHERE s.minValue = :minValue"),
@@ -84,6 +86,11 @@ public class SensorTags implements Serializable {
     @JoinColumn(name = "sensor_id", referencedColumnName = "slId")
     @ManyToOne
     private Sensorlist sensorId;
+
+    
+    
+    
+    
 
     public SensorTags() {
     }
