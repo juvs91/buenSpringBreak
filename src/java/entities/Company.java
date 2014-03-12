@@ -6,9 +6,13 @@
 
 package entities;
 
+
+import entities.SensorCatalog;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,17 +20,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author usuario
- */
+
 @Entity
 @Table(name = "company")
 @XmlRootElement
@@ -57,6 +61,10 @@ public class Company implements Serializable {
     @Column(name = "last_update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCompany")
+    private Collection<CommDeviceCatalog> commDeviceCatalogCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCompany")
+    private Collection<SensorCatalog> sensorCatalogCollection;
 
     public Company() {
     }
@@ -102,6 +110,25 @@ public class Company implements Serializable {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+
+    @XmlTransient
+    public Collection<CommDeviceCatalog> getCommDeviceCatalogCollection() {
+        return commDeviceCatalogCollection;
+    }
+
+    public void setCommDeviceCatalogCollection(Collection<CommDeviceCatalog> commDeviceCatalogCollection) {
+        this.commDeviceCatalogCollection = commDeviceCatalogCollection;
+    }
+
+    @XmlTransient
+    public Collection<SensorCatalog> getSensorCatalogCollection() {
+        return sensorCatalogCollection;
+    }
+
+    public void setSensorCatalogCollection(Collection<SensorCatalog> sensorCatalogCollection) {
+        this.sensorCatalogCollection = sensorCatalogCollection;
     }
 
     @Override

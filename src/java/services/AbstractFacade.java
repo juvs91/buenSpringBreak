@@ -4,8 +4,10 @@
  */
 package services;
 
+import entities.Sensorlist;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -50,6 +52,7 @@ public abstract class AbstractFacade<T> {
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
+    
 
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
@@ -57,6 +60,15 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+    
+    public List<T> getData(String nameQuery, String parametro, Object obj){
+         Query query= getEntityManager().createNamedQuery(nameQuery);
+         
+         query.setParameter(parametro, obj);
+         List<T> result = (List<T>) query.getResultList();
+         return result;
+     
     }
     
 }

@@ -5,6 +5,9 @@
 package services;
 
 import entities.CommDeviceTags;
+import entities.Company;
+import entities.Location;
+import entities.SensorCatalog;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -78,6 +81,15 @@ public class CommDeviceTagsFacadeREST extends AbstractFacade<CommDeviceTags> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
+    }
+
+     @GET
+    @Path("/location/{id}")
+    @Produces({"application/xml"})
+    public List<CommDeviceTags> findRange(@PathParam("id") Integer id) {
+    Location location = getEntityManager().find(Location.class, id);    
+    return super.getData( "CommDeviceTags.findByLocation", "idLocation", location);
+        
     }
 
     @Override

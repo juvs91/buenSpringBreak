@@ -61,7 +61,7 @@ public class MeasurementUnitsFacadeREST extends AbstractFacade<MeasurementUnits>
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/xml"})
     public List<MeasurementUnits> findAll() {
         return super.findAll();
     }

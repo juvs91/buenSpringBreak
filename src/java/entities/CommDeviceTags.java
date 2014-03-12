@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CommDeviceTags.findByPeriodMs", query = "SELECT c FROM CommDeviceTags c WHERE c.periodMs = :periodMs"),
     @NamedQuery(name = "CommDeviceTags.findByActive", query = "SELECT c FROM CommDeviceTags c WHERE c.active = :active"),
     @NamedQuery(name = "CommDeviceTags.findByInsertDate", query = "SELECT c FROM CommDeviceTags c WHERE c.insertDate = :insertDate"),
+    @NamedQuery(name = "CommDeviceTags.findByLocation", query = "SELECT c FROM CommDeviceTags c WHERE c.idLocation = :idLocation"),
     @NamedQuery(name = "CommDeviceTags.findByLastUpdateDate", query = "SELECT c FROM CommDeviceTags c WHERE c.lastUpdateDate = :lastUpdateDate")})
 public class CommDeviceTags implements Serializable {
     private static final long serialVersionUID = 1L;
