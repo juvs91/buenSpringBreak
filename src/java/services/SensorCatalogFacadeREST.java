@@ -4,6 +4,7 @@
  */
 package services;
 
+import entities.Company;
 import entities.SensorCatalog;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -65,6 +66,15 @@ public class SensorCatalogFacadeREST extends AbstractFacade<SensorCatalog> {
     public List<SensorCatalog> findAll() {
         return super.findAll();
     }
+    
+    @GET
+    @Path("/company/{id}")
+    @Produces({"application/xml"})
+    public List<SensorCatalog> findRange(@PathParam("id") Integer id) {
+    Company company = getEntityManager().find(Company.class, id);    
+     return super.getData( "SensorCatalog.findByLastCompany", "idCompany", company);
+        
+    }
 
     @GET
     @Path("{from}/{to}")
@@ -72,6 +82,7 @@ public class SensorCatalogFacadeREST extends AbstractFacade<SensorCatalog> {
     public List<SensorCatalog> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
+    
 
     @GET
     @Path("count")

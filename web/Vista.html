@@ -37,18 +37,14 @@
   </div>
   <div class="form-group">
    <label for="exampleInputEmail1">Company</label>
-<select class="form-control" id="company">
+<select class="form-control" id="company"
+        onChange="loadXMLSensorCatalog()">
 </select>
 </div>
 
 <div class="form-group">
    <label for="exampleInputEmail1">Sensor Type</label>
-<select class="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
+<select class="form-control" id="sensorType">
 </select>
 </div><table class="table">
       <thead>
@@ -136,36 +132,28 @@
 
 <div class="form-group">
    <label for="exampleInputEmail1" >Location</label>
-<select class="form-control" id="location" >
+<select class="form-control" id="location" onchange="loadXMLCommonDeviceTag()" >
 </select>
    
 </div>
 <div class="form-group">
-   <label for="exampleInputEmail1">Common device Tag</label>
-<select class="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
+   <label for="exampleInputEmail1"  >Common device Tag</label>
+   <select class="form-control" id="commDeviceTags" >
 </select>
 </div><div class="form-group">
     <label for="exampleInputPassword1">Max Value</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Max">
-  </div><div class="form-group">
+
+</div><div class="form-group">
     <label for="exampleInputEmail1">Min Value</label>
     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Min">
   </div>
 <div class="form-group">
    <label for="exampleInputEmail1">Unit Name</label>
-<select class="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
+<select class="form-control" id="measurementUnits">
 </select>
-</div><div class="form-group">
+</div>
+<div class="form-group">
    <label for="exampleInputEmail1">Sensor ID</label>
 <select class="form-control">
   <option>1</option>
@@ -175,27 +163,13 @@
   <option>5</option>
 </select>
 </div>
-
-
-  
-  
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
-        
-        
+       
       </div>
-
-      
-
-      
-
     </div> <!-- /container -->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  
 
 </body></html>

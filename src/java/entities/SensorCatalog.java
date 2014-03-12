@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SensorCatalog.findByModel", query = "SELECT s FROM SensorCatalog s WHERE s.model = :model"),
     @NamedQuery(name = "SensorCatalog.findByReference", query = "SELECT s FROM SensorCatalog s WHERE s.reference = :reference"),
     @NamedQuery(name = "SensorCatalog.findByActive", query = "SELECT s FROM SensorCatalog s WHERE s.active = :active"),
-    @NamedQuery(name = "SensorCatalog.findByLastUpdateDate", query = "SELECT s FROM SensorCatalog s WHERE s.lastUpdateDate = :lastUpdateDate")})
+    @NamedQuery(name = "SensorCatalog.findByLastUpdateDate", query = "SELECT s FROM SensorCatalog s WHERE s.lastUpdateDate = :lastUpdateDate"), 
+    @NamedQuery(name = "SensorCatalog.findByLastCompany", query = "SELECT s FROM SensorCatalog s WHERE s.idCompany = :idCompany")})
 public class SensorCatalog implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
