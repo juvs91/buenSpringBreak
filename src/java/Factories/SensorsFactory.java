@@ -6,27 +6,13 @@
 
 package Factories;
 
-import entities.DataPoint;
-import entities.Sensorlist;
+
 import entities.Sensor;
-import entities.SensorCatalog;
-import entities.SensorCatalog_;
-import entities.SensorTags;
-import entities.SensorTags_;
-import entities.SensorType;
-import entities.Sensorlist_;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
@@ -37,69 +23,17 @@ public class SensorsFactory  {
     @PersistenceContext
     EntityManager em;    
 
-    public List<SensorType> createSensors(){
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        List<Predicate> conditions = new ArrayList();
-        CriteriaQuery<Object> query = builder.createQuery();
+    public List<Sensor> createSensors(){        
+        String queryString = "select " + 
+                "l.slId, l.slName1, l.slName2, l.slName3, " +
+                "l.slActualTimestamp, l.slActualValue, t.sensor_tag, " +
+                "t.sensor_id, c.id_sensor_catalog, y.sensor_type " +
+                "from sensorlist l left join sensor_tags t on l.slId = t.sensor_id " +
+                "left join sensor_catalog c on t.id_sensor_catalog = c.id_sensor_catalog " +
+                "left join sensor_type y on c.id_sensor_type = y.id_sensor_type;";
         
-        //List<Sensorlist> sensorList = new ArrayList<Sensorlist>();
-        //List<Sensorlist> sensorsList = (List<Sensorlist>) em.createNamedQuery("Sensorlist.findAll").getResultList();
-        Root<Sensorlist> fromSensors = query.from(Sensorlist.class);
-        Join<Sensorlist,SensorTags> joinSensorlistSensorTags = fromSensors.join(Sensorlist_.sensorTagsCollection);
-        Join<SensorTags,SensorCatalog> joinSensorTagSensorCatalog = joinSensorlistSensorTags.join(SensorTags_.idSensorCatalog);
-        Join<SensorCatalog,SensorType> joinSensorCatalogSensorType = joinSensorTagSensorCatalog.join(SensorCatalog_.idSensorType);
-        conditions.add(builder.equal(joinSensorlistSensorTags.get("sensorId"), fromSensors.get("sensorTagsCollection")));
-        //conditions.add(builder.equal(joinSensorlistSensorTags.get(""), fromSensors));
-        
-        
-        TypedQuery result = em.createQuery(em.getCriteriaBuilder()
-                .createQuery(Sensorlist.class)
-                .select(fromSensors)
-                .where()
-                );
-        
-        System.out.println(result.getResultList());
-        
-        //System.out.println(joinSensorlistSensorTags);
-        //System.out.println(joinSensorlistSensorTags.getCompoundSelectionItems().get(0));
-        //Join<SensorTags,SensorCatalog> joinSensorTagSensorCatalog = joinSensorlistSensorTags.join("");
-        
-        /*for (Sensorlist sen :  sensorsList){   
-            Sensor se  = new Sensor();
-            //metemos el gas y la unidad de medida
-            if(!(sen.getSensorTagsCollection().isEmpty())){
-                List<SensorTags> sensorTags = new ArrayList<>(sen.getSensorTagsCollection());
-                se.setSensorType(sensorTags.get(0).getIdSensorCatalog().getIdSensorType().getSensorType());
-                se.setUnit(sensorTags.get(0).getIdMeasurementUnit().getUnitName());
-                se.setSensorName(sensorTags.get(0).getSensorTag());
-            }
-            se.setSensorName1(sen.getSlName1());
-            se.setSensorName2(sen.getSlName2());
-            se.setSensorName3(sen.getSlName3());
-         
-            
-            //sacamos la lista
-            List<DataPoint> points = new ArrayList<DataPoint>();
-            
-            DataPoint point = new DataPoint();
-            point.setDate(sen.getSlActualTimestamp());
-            point.setValue(sen.getSlActualValue());
-            points.add(point);            
-            se.setPoint(points);
-            sensores.add(se);
-        }*/
-        
-        return result.getResultList();
-            
-        
-    }
-
-  
-    
-
-    
-    
-    
-    
-    
+        List resultList = em.createNativeQuery(queryString, entities.Sensor.class).getResultList();      
+        return resultList;
+               
+    }    
 }

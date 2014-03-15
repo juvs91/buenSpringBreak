@@ -79,7 +79,7 @@ public class SensorsFacadeREST extends AbstractFacade<Sensor> {
     
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<SensorType> listaSensores() {
+    public List<Sensor> listaSensores() {
         return  sensor.createSensors();
     }
 

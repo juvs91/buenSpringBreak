@@ -10,9 +10,9 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 		"data" : tuplePointValueDate, 
 		"visible" : false
 	};
-	this.addPoint = function setPoints (point) {
+	this.addPoint = function addPoint (value,date,idOutput,unit) { 
+		var point  = new Point(value,date,idOutput,unit);
 		points.push(point);  
-		//tuplePointValueDate = [point.getDate(),point.getValue()];
 		tuplePointValueDate.push([point.getDate(),point.getValue()]);
 	};
 	this.addPoints = function addPoints (n_points) {

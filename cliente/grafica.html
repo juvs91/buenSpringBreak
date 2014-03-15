@@ -19,53 +19,18 @@
 	var allSeries = [];   
 	var chart; //variable chart para que se actualize en tiempo real 
 	var shift;//la variable que se encarga si se tiene que mover la grafica  
-	var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo     
+	var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo    
+	var mapeoDeSensoresPuntos = { null:{}};
 
-	function creaSensor (sensorJson) {
-		sensor =new Sensores();
-		sensor.setTag(sensorJson["sensor_ID"]);
-	  	sensor.setSensorName(sensorJson["sensorName"]);
-		if (sensorJson["point"] != null) {
-	       lastPointTemp = sensor.addPoints(sensorJson["point"]);
-		   idLastPoint = (lastPointTemp > idLastPoint) ? lastPointTemp : idLastPoint ; 
-	
-		}    
-		mapeoIdSeries[sensor.getTag()] = i;
-		return sensor;
-	}
-	          
-	//esta funcion tiene que llenar los puntos 
-	function pushPoints(newPoints) { 
-		console.log(newPoints);                 
-		for (var i = 0; i < newPoints.length; i++) {
-			//mueve la grafica o no 
-			shift = chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].data.length > 58; 
-			//agrega los puntos a la grafica
-			//tengo que agregar el punto a la serie y pasarle por parametro el add.Point de sensores y uego con los gets y sets del sensor para poder utilizar los datos para lo que pidio el doctor  
-	chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].addPoint([newPoints[i]["insertDate"],newPoints[i]["outputValue"]],shift,true); 
-			    idLastPoint = (newPoints[i]["idOutput"] > idLastPoint) ? newPoints[i]["idOutput"] : idLastPoint; 
-			}                                                                                           
-
-	}
-	
-	function addSeries (serie) {
-
-
-
-		chart.addSeries();
-   }
-   
 
 	for(var i = 0, t = sensoresJson.length; i < t; i++) {
-		allSeries.push((creaSensor(sensoresJson[i])).getDataStructureGraph());
+		allSeries.push((creaSensor(sensoresJson[i],i)).getDataStructureGraph());
 	} 
 	chart = new Highcharts.Chart({
 		chart :{
 			renderTo :"container",
 			defaultSeriesType: 'line',
-			events : {
-				//load : requestNewPoints
-			} 
+
 		},
 		title :{
 			text : "todos los sensores"
@@ -85,8 +50,56 @@
 		}, 
 		series : allSeries,
 
-	});      
+	});          
+	
+	  
+	//esta funcion tiene que llenar los puntos 
+	function pushPoints(newPoints) { 
+		console.log(newPoints);                 
+		for (var i = 0; i < newPoints.length; i++) {
+			//mueve la grafica o no 
+			shift = chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].data.length > 58; 
+			//agrega los puntos a la grafica
+			//tengo que agregar el punto a la serie y pasarle por parametro 
+			chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]]
+						.addPoint([newPoints[i]["insertDate"]
+						,newPoints[i]["outputValue"]],shift,true); 
+						
+			idLastPoint = (newPoints[i]["idOutput"] > idLastPoint) ? newPoints[i]["idOutput"] : idLastPoint; 
+		}                                                                                           
+
+	}   
+	
+	    
+	function addSeries (serie) {
+
+
+
+		chart.addSeries();
+   	}
+	
+	function llenaElSensoresPuntos(mapa) {
 		
+	}
+  
+	function creaSensor (sensorJson,posArreglo) {
+		sensor =new Sensores();   
+		sensor.setTag(sensorJson["sensor_tag"]);  
+		if (sensorJson["sensor_tag"]) {
+		  	sensor.setSensorName(sensorJson["sensor_tag"]); 
+		}else{                             
+			sensor.setSensorName("puntos sin sensor");
+		}                                                
+		llenaElSensoresPuntos(sensorJson);
+   	    sensor.addPoint(sensorJson["slActualValue"]
+						,sensorJson["slActualTimeStamp"]
+						,sensorJson["slId"]
+						,sensorJson["sensor_type"]);
+		//slId tiene el ultimo punto de la tabla sensorlist				
+	    idLastPoint = (sensorJson["slId"]  > idLastPoint) ? sensorJson["slId"]  : idLastPoint ; 
+   		mapeoIdSeries[sensor.getTag()] = posArreglo;  
+		return sensor;
+	}	
 	
 
 		

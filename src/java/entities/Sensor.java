@@ -11,10 +11,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.*;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -27,46 +28,46 @@ public class Sensor implements Serializable {
    
     
     @Id
-    private Long slId;
-
-    @Column(name ="slName1")
+    private int slId;
     private String slName1;
-    
-    @Column(name ="slName2")
     private String slName2;
-    
-    @Column(name ="slName3")
     private String slName3;
-    
-    @Column(name ="slActualTimestamp")
-    private Timestamp slActualTimestamp;
-    
-    @Column(name ="slActualValue")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date slActualTimestamp;
     private double slActualValue;
-    
-    @Column(name ="sensor_tag")
     private String sensor_tag;
-    
-    @Column(name ="sensor_id")
-    private int sensor_id;
-    
-    @Column(name ="id_sensor_catalog")
     private int id_sensor_catalog;
-    
-    @Column(name ="sensor_type")
     private String sensor_type;
+    public Sensor() {
+    }
 
-    
-    
-    public Long getSlId() {
+    public Sensor(int slId) {
+        this.slId = slId;
+    }
+
+    public Sensor(int slId, String slName1, String slName2,
+            String slName3, Date slActualTimestamp, double slActualValue,
+            String sensor_tag, int id_sensor_catalog, String sensor_type) {
+        this.slId = slId;
+        this.slName1 = slName1;
+        this.slName2 = slName2;
+        this.slName3 = slName3;
+        this.slActualTimestamp = slActualTimestamp;
+        this.slActualValue = slActualValue;
+        this.sensor_tag = sensor_tag;
+        this.id_sensor_catalog = id_sensor_catalog;
+        this.sensor_type = sensor_type;
+    }
+
+    public int getSlId() {
         return slId;
     }
 
-    public void setSlId(Long slId) {
+    public void setSlId(int slId) {
         this.slId = slId;
     }
-    
-        public String getSlName1() {
+
+    public String getSlName1() {
         return slName1;
     }
 
@@ -90,11 +91,11 @@ public class Sensor implements Serializable {
         this.slName3 = slName3;
     }
 
-    public Timestamp getSlActualTimestamp() {
+    public Date getSlActualTimestamp() {
         return slActualTimestamp;
     }
 
-    public void setSlActualTimestamp(Timestamp slActualTimestamp) {
+    public void setSlActualTimestamp(Date slActualTimestamp) {
         this.slActualTimestamp = slActualTimestamp;
     }
 
@@ -114,14 +115,6 @@ public class Sensor implements Serializable {
         this.sensor_tag = sensor_tag;
     }
 
-    public int getSensor_id() {
-        return sensor_id;
-    }
-
-    public void setSensor_id(int sensor_id) {
-        this.sensor_id = sensor_id;
-    }
-
     public int getId_sensor_catalog() {
         return id_sensor_catalog;
     }
@@ -137,6 +130,6 @@ public class Sensor implements Serializable {
     public void setSensor_type(String sensor_type) {
         this.sensor_type = sensor_type;
     }
-    
+
       
 }
