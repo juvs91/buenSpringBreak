@@ -6,6 +6,7 @@ package services;
 
 import entities.Company;
 import entities.SensorCatalog;
+import entities.SensorType;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -69,10 +70,20 @@ public class SensorCatalogFacadeREST extends AbstractFacade<SensorCatalog> {
     
     @GET
     @Path("/company/{id}")
-    @Produces({"application/xml"})
-    public List<SensorCatalog> findRange(@PathParam("id") Integer id) {
+    @Produces({"application/xml", "application/json"})
+    public List<SensorCatalog> getData(@PathParam("id") Integer id) {
     Company company = getEntityManager().find(Company.class, id);    
-     return super.getData( "SensorCatalog.findByLastCompany", "idCompany", company);
+     return super.getData( "SensorCatalog.findByCompany", "idCompany", company);
+        
+    }
+    
+    @GET
+    @Path("/company/{idCompany}/sensorType/{idSensor}")
+    @Produces({"application/xml", "application/json"})
+    public List<SensorCatalog> getData(@PathParam("idCompany") Integer idCompany, @PathParam("idSensor") Integer idSensor) {
+    Company company = getEntityManager().find(Company.class, idCompany);    
+    SensorType sensorType = getEntityManager().find(SensorType.class, idSensor);
+    return super.getData( "SensorCatalog.findByCompanySensorType", "idCompany", company, "idSensorType", sensorType);
         
     }
 

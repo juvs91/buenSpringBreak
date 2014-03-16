@@ -85,7 +85,7 @@ public class CommDeviceTagsFacadeREST extends AbstractFacade<CommDeviceTags> {
 
      @GET
     @Path("/location/{id}")
-    @Produces({"application/xml"})
+    @Produces({"application/xml", "application/json"})
     public List<CommDeviceTags> findRange(@PathParam("id") Integer id) {
     Location location = getEntityManager().find(Location.class, id);    
     return super.getData( "CommDeviceTags.findByLocation", "idLocation", location);

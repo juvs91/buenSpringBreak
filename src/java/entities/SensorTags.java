@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SensorTags.findByMinValue", query = "SELECT s FROM SensorTags s WHERE s.minValue = :minValue"),
     @NamedQuery(name = "SensorTags.findByActive", query = "SELECT s FROM SensorTags s WHERE s.active = :active"),
     @NamedQuery(name = "SensorTags.findByInsertDate", query = "SELECT s FROM SensorTags s WHERE s.insertDate = :insertDate"),
-    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate")})
+    @NamedQuery(name = "SensorTags.findByLastUpdateDate", query = "SELECT s FROM SensorTags s WHERE s.lastUpdateDate = :lastUpdateDate"),
+    @NamedQuery(name="SensorTags.findBySensorList",query="SELECT s FROM SensorTags s WHERE s.sensorId = :sensorId")})
 public class SensorTags implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
