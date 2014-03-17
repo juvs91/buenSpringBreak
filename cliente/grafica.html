@@ -11,27 +11,29 @@
 		<div id='container' ></div>
 	</body>                        
 	<script type="text/javascript" charset="utf-8">
-
-	var sensoresJson = requestSensores();  
-	var idLastPoint = 0;     
-	var lastPointTemp = 0;
+    /*
+    	falta hacer un refactor de cambiar todo el codigo en ingles y checar que el sensor pueda pedir los puntos por id y desde el mapa, consultarlo con el equipo
+	*/
+	var sensoresJson = requestSensores(); 
 	var sensor; 
 	var allSeries = [];   
 	var chart; //variable chart para que se actualize en tiempo real 
 	var shift;//la variable que se encarga si se tiene que mover la grafica  
 	var mapeoIdSeries = {  }; //para saber que sensor corresponde a que posision del arreglo    
-	var mapeoDeSensoresPuntos = { null:{}};
+	var mapeoDeSensoresPuntos = { null:{}};                
+	var j = 0;         
+	var sensoresDesplegados = []; //actualemente no se encuentran sensores seleccionados 
+	var sesnortipoActual = null; //es el tipo de sensor actualmente     
 
 
-	for(var i = 0, t = sensoresJson.length; i < t; i++) {
-		allSeries.push((creaSensor(sensoresJson[i],i)).getDataStructureGraph());
-	} 
+	for(t = sensoresJson.length; j < t; j++) {
+		allSeries.push((creaSensor(sensoresJson[j],j)).getDataStructureGraph());
+	}           
 	chart = new Highcharts.Chart({
 		chart :{
 			renderTo :"container",
 			defaultSeriesType: 'line',
-
-		},
+			},
 		title :{
 			text : "todos los sensores"
 		},
@@ -49,61 +51,105 @@
 			}
 		}, 
 		series : allSeries,
-
+        plotOptions : {
+			series : {
+				events: {
+					show :function(e){//se detecta cuando una serie es seleccionada 
+						selectSerie(e["target"])
+						//console.log(e);
+					},
+					hide:function  (e) {
+						deSelectSerie(e["target"]);
+					} 
+				},
+			},
+		},
 	});          
+   
+	function selectSerie(serie){
+		//console.log(serie);  
+		if (serie.options.id == sesnortipoActual) {
+			sensoresDesplegados.push(serie);//se guarda el sensor en la lista de sensores desplegados
+		}else{
+			hideAllSensors();
+			sensoresDesplegados = [];//se borran los sensores acumulados
+			sesnortipoActual = serie.options.id;//se cambia el sensor que se va a desplegar 
+			sensoresDesplegados.push(serie);//se guarda el sensor en la lista de sensores desplegados
+			chart.yAxis[0].setTitle({text : serie.options.id})
+		}
+	} 
 	
-	  
+	function deSelectSerie (serie) { 
+		sensoresDesplegados.pop(serie);
+	}
+	function hideAllSensors () {
+		for (var i = sensoresDesplegados.length - 1; i >= 0; i--){
+			sensoresDesplegados.pop().hide();
+		};
+	}
+	
+	 
 	//esta funcion tiene que llenar los puntos 
-	function pushPoints(newPoints) { 
-		console.log(newPoints);                 
+	function graphPoints(newPoints) { 
 		for (var i = 0; i < newPoints.length; i++) {
-			//mueve la grafica o no 
-			shift = chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]].data.length > 58; 
-			//agrega los puntos a la grafica
-			//tengo que agregar el punto a la serie y pasarle por parametro 
-			chart.series[mapeoIdSeries[newPoints[i]["sensorTag"]["sensorTag"]]]
-						.addPoint([newPoints[i]["insertDate"]
-						,newPoints[i]["outputValue"]],shift,true); 
-						
-			idLastPoint = (newPoints[i]["idOutput"] > idLastPoint) ? newPoints[i]["idOutput"] : idLastPoint; 
+			if (mapeoDeSensoresPuntos[newPoints[i]["sensor_tag"]]) {
+				 if (!(mapeoDeSensoresPuntos[newPoints[i]["sensor_tag"]][newPoints[i]["slId"]])) {
+				   pushPoints(newPoints[i]);
+			     }
+			}else{//se crear e sensor 
+			   addSeries(newPoints[i]); 
+			}
 		}                                                                                           
 
 	}   
 	
+	function pushPoints (newPoint) {
+		 //mueve la grafica o no 
+		 shift = chart.series[mapeoIdSeries[newPoint["sensor_tag"]]].data.length > 58;  
+		 //agrega los puntos a la grafica
+		 //tengo que agregar el punto a la serie y pasarle por parametro 
+		 chart.series[mapeoIdSeries[newPoint["sensor_tag"]]]
+			  .addPoint([newPoint["slActualTimestamp"]
+			  ,newPoint["slActualValue"]],shift,true); 
+  	}
 	    
 	function addSeries (serie) {
-
-
-
-		chart.addSeries();
+		chart.addSeries((creaSensor(serie,j)).getDataStructureGraph());
+		j++;
    	}
 	
-	function llenaElSensoresPuntos(mapa) {
-		
+	function llenaSensoresPuntos(mapa) {  
+		if (mapa["sensor_tag"]) {
+			mapeoDeSensoresPuntos[mapa["sensor_tag"]] = {};
+			mapeoDeSensoresPuntos[mapa["sensor_tag"]][mapa["slId"]] = mapa["slId"];
+		}else{                                                        
+			mapeoDeSensoresPuntos[null][mapa["slId"]] = mapa["slId"]; 
+			
+		}
 	}
   
 	function creaSensor (sensorJson,posArreglo) {
 		sensor =new Sensores();   
-		sensor.setTag(sensorJson["sensor_tag"]);  
+		sensor.setTag(sensorJson["sensor_tag"]); 
+		sensor.setType(sensorJson["sensor_type"]); 
 		if (sensorJson["sensor_tag"]) {
 		  	sensor.setSensorName(sensorJson["sensor_tag"]); 
 		}else{                             
 			sensor.setSensorName("puntos sin sensor");
 		}                                                
-		llenaElSensoresPuntos(sensorJson);
+		llenaSensoresPuntos(sensorJson); 
    	    sensor.addPoint(sensorJson["slActualValue"]
-						,sensorJson["slActualTimeStamp"]
+						,sensorJson["slActualTimestamp"]
 						,sensorJson["slId"]
 						,sensorJson["sensor_type"]);
 		//slId tiene el ultimo punto de la tabla sensorlist				
-	    idLastPoint = (sensorJson["slId"]  > idLastPoint) ? sensorJson["slId"]  : idLastPoint ; 
    		mapeoIdSeries[sensor.getTag()] = posArreglo;  
 		return sensor;
 	}	
 	
 
 		
-	setInterval(function(){requestNewPoints(idLastPoint)},5000);
+	setInterval(function(){requestNewPoints()},5000);
 
 	</script>
 </html>

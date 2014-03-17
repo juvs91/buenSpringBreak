@@ -12,7 +12,8 @@ function requestSensores() {
 	    contentType: "aplication/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
-	    success: function(json) {
+	    success: function(json) { 
+		   console.log(json);
 		   data = json; 		
 	    },
 	    error: function(e) { 
@@ -27,10 +28,8 @@ function requestSensores() {
 }   
 
 //get the lastest points of the chart
-function requestNewPoints (idLastPoint) {  
-	//entities.outputs                  
-	console.log(idLastPoint);
-	var url = "http://localhost:8080/factoryEcomation_Services/webresources/entities.outputs/"+idLastPoint+"/newOutputs";
+function requestNewPoints () {  
+	var url = "http://localhost:8080/factoryEcomation_Services/webresources/sensors";
 	var data = {};
     $.support.cors = true;
 	$.ajax({    
@@ -42,7 +41,7 @@ function requestNewPoints (idLastPoint) {
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
-			pushPoints(json);
+			graphPoints(json);
 	    },
 	    error: function(e) { 
 	       console.log(e);
@@ -52,4 +51,4 @@ function requestNewPoints (idLastPoint) {
 		}
 	});
 	
-}
+}    

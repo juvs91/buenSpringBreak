@@ -8,7 +8,8 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 	var dataStructureGraph = {
 		"name" :"",
 		"data" : tuplePointValueDate, 
-		"visible" : false
+		"visible" : false,
+		"id":""
 	};
 	this.addPoint = function addPoint (value,date,idOutput,unit) { 
 		var point  = new Point(value,date,idOutput,unit);
@@ -21,10 +22,8 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 		
 		for(var i = 0; i < n_points.length; i++) {
 			this.addPoint(new Point(n_points[i]["value"],n_points[i]["date"],n_points[i]["unit"],n_points[i]["outputId"]));
-			idLastPoint = (n_points[i]["outputId"] > idLastPoint) ? n_points[i]["outputId"] : idLastPoint ; 
 		}
 		    
-		return idLastPoint;                                                       
 	}; 
 	
 	sort = function sort (points) {
@@ -69,6 +68,7 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 	};  
 	this.setType = function setType (typeIn) {
 		type = typeIn;
+		dataStructureGraph["id"] = type;
 	}; 
 	this.getTypeg = function getTypeg () {
 		return type;
