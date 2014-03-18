@@ -13,14 +13,14 @@ function requestSensores() {
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) { 
-		   console.log(json);
+		   //console.log(json);
 		   data = json; 		
 	    },
 	    error: function(e) { 
 	       console.log(e);
 	    },
 	 	onload:function(json){
-			console.log();
+			console.log(json);
 		}
 	});
 	return data;   

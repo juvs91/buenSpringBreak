@@ -23,7 +23,8 @@
 	var mapeoDeSensoresPuntos = { null:{}};                
 	var j = 0;         
 	var sensoresDesplegados = []; //actualemente no se encuentran sensores seleccionados 
-	var sesnortipoActual = null; //es el tipo de sensor actualmente     
+	var sesnortipoActual = null; //es el tipo de sensor actualmente   
+	var pos = -1;  
 
 
 	for(t = sensoresJson.length; j < t; j++) {
@@ -46,7 +47,7 @@
 			minPadding : 0.2,
 			maxPadding : 0.2,
 			title : {
-				text : "value",
+				text : "",
 				margin : 80
 			}
 		}, 
@@ -72,15 +73,28 @@
 			sensoresDesplegados.push(serie);//se guarda el sensor en la lista de sensores desplegados
 		}else{
 			hideAllSensors();
-			sensoresDesplegados = [];//se borran los sensores acumulados
+			//sensoresDesplegados = [];//se borran los sensores acumulados
 			sesnortipoActual = serie.options.id;//se cambia el sensor que se va a desplegar 
 			sensoresDesplegados.push(serie);//se guarda el sensor en la lista de sensores desplegados
-			chart.yAxis[0].setTitle({text : serie.options.id})
+			if (serie.options.id) {
+				if ((serie.options.id).toLocaleLowerCase() == "gas") {
+					chart.yAxis[0].setTitle({text : "PPM"})
+				}else{
+					chart.yAxis[0].setTitle({text : "temperatura"})
+				}
+			}else{
+				chart.yAxis[0].setTitle({text : ""})
+			}
 		}
 	} 
 	
-	function deSelectSerie (serie) { 
-		sensoresDesplegados.pop(serie);
+	function deSelectSerie (serie) {   
+		pos = sensoresDesplegados.indexOf(serie);
+		if (pos > -1) { 
+			sensoresDesplegados.splice(pos,1)[0]; 
+			pos = -1;
+		}
+		//sensoresDesplegados.pop(serie);
 	}
 	function hideAllSensors () {
 		for (var i = sensoresDesplegados.length - 1; i >= 0; i--){
