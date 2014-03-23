@@ -65,7 +65,7 @@ public class CompanyFacadeREST extends AbstractFacade<Company> {
 
     @GET
     @Override
-    @Produces({"application/xml"})
+    @Produces({"application/xml", "application/json"})
     public List<Company> findAll() {
         return super.findAll();
     }

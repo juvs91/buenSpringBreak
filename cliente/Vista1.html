@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///home/ccastillo/Desktop/bootstrap-3.1.1-dist/Vista.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
+
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		 <script type="text/javascript" src="plugins/jquery.min.js"></script> 
+		 <script src="highcharts.js"></script>     
+		<script type="text/javascript" src="sensores.js" charset="utf-8"></script>                                                        
+		<script type="text/javascript" src="point.js" charset="utf-8"></script>                 
+		<script type="text/javascript" src="request.js" charset="utf-8"></script>  
+		
+
+	
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+ 
+<script src="Cargar.js"></script>
+    </head>
+
+  <body onload="onLoad()">
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Home</a></li>
+          <li><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">About</a></li>
+          <li><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Project name</h3>
+      </div>
+
+      <div class="jumbotron">
+            <form role="form">
+  <div class="form-group">
+    <label for="exampleInputEmail1">SensorTag</label>
+    <input  class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+  </div>
+  <div class="form-group">
+   <label for="exampleInputEmail1">Company</label>
+<select class="form-control" id="company" onChange="fillSensorType()">
+</select>
+</div>
+
+<div class="form-group">
+   <label for="exampleInputEmail1" >Sensor Type</label>
+<select class="form-control" id="sensorType" onChange="fillSeveralOptionsCatalog()">
+</select>
+</div><table class="table"  >
+      <thead>
+        <tr>
+          <th>Check</th>
+          <th>Model</th>
+          <th>Reference</th>
+          <th>Output Format</th>
+            <th>Output Type</th>
+
+        </tr>
+      </thead>
+      <tbody id="table" >
+
+</tbody>
+    </table>
+
+<div class="form-group">
+   <label for="exampleInputEmail1" >Location</label>
+<select class="form-control" id="location"  onChange="fillCommonDeviceTag()" >
+</select>
+   
+</div>
+<div class="form-group">
+   <label for="exampleInputEmail1"  >Common device Tag</label>
+   <select class="form-control" id="commDeviceTags" >
+</select>
+</div><div class="form-group">
+    <label for="exampleInputEmail1">Max Value</label>
+    <input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Max">
+
+</div>
+<div class="form-group">
+    <label for="exampleInputEmail1">Min Value</label>
+    <input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Min">
+  </div>
+
+<div class="form-group">
+   <label for="exampleInputEmail1">Unit Name</label>
+<select class="form-control" id="measurementUnits">
+</select>
+</div>
+<div class="form-group">
+   <label for="exampleInputEmail1" >Sensor ID</label>
+
+<select class="form-control" id="sensorList" >
+ 
+</select>
+</div>
+  <button type="submit" >Submit</button>
+</form>
+
+       
+      </div>
+    </div> 
+
+
+
+</body></html>

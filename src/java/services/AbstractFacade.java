@@ -62,10 +62,27 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
     
+        
+    public List<T> getData(String nameQuery){
+         Query query= getEntityManager().createNamedQuery(nameQuery);
+         List<T> result = (List<T>) query.getResultList();
+         return result;
+     
+    }
     public List<T> getData(String nameQuery, String parametro, Object obj){
          Query query= getEntityManager().createNamedQuery(nameQuery);
          
          query.setParameter(parametro, obj);
+         List<T> result = (List<T>) query.getResultList();
+         return result;
+     
+    }
+    
+     public List<T> getData(String nameQuery, String parametro1, Object obj1,  String parametro2, Object obj2){
+         Query query= getEntityManager().createNamedQuery(nameQuery);
+         
+         query.setParameter(parametro1, obj1);
+         query.setParameter(parametro2, obj2);
          List<T> result = (List<T>) query.getResultList();
          return result;
      

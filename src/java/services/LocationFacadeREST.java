@@ -61,7 +61,7 @@ public class LocationFacadeREST extends AbstractFacade<Location> {
 
     @GET
     @Override
-    @Produces({"application/xml"})
+    @Produces({"application/xml", "application/json"})
     public List<Location> findAll() {
         return super.findAll();
     }

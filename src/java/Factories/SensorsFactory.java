@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 
 /**
@@ -32,8 +33,9 @@ public class SensorsFactory  {
                 "left join sensor_catalog c on t.id_sensor_catalog = c.id_sensor_catalog " +
                 "left join sensor_type y on c.id_sensor_type = y.id_sensor_type;";
         
-        List resultList = em.createNativeQuery(queryString, entities.Sensor.class).getResultList();      
-        return resultList;
+        return em.createNativeQuery(queryString, entities.Sensor.class).getResultList();      
+        //return resultList;
                
-    }    
+    }
+    
 }

@@ -7,15 +7,11 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collection;
-import java.util.Date;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import java.sql.Timestamp;
+
 
 /**
  *
@@ -23,7 +19,6 @@ import javax.persistence.Temporal;
  */
 @Entity
 @XmlRootElement
-
 public class Sensor implements Serializable {
    
     
@@ -32,8 +27,7 @@ public class Sensor implements Serializable {
     private String slName1;
     private String slName2;
     private String slName3;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date slActualTimestamp;
+    private Timestamp slActualTimestamp;
     private double slActualValue;
     private String sensor_tag;
     private int id_sensor_catalog;
@@ -46,7 +40,7 @@ public class Sensor implements Serializable {
     }
 
     public Sensor(int slId, String slName1, String slName2,
-            String slName3, Date slActualTimestamp, double slActualValue,
+            String slName3, Timestamp slActualTimestamp, double slActualValue,
             String sensor_tag, int id_sensor_catalog, String sensor_type) {
         this.slId = slId;
         this.slName1 = slName1;
@@ -91,11 +85,11 @@ public class Sensor implements Serializable {
         this.slName3 = slName3;
     }
 
-    public Date getSlActualTimestamp() {
+    public Timestamp getSlActualTimestamp() {
         return slActualTimestamp;
     }
 
-    public void setSlActualTimestamp(Date slActualTimestamp) {
+    public void setSlActualTimestamp(Timestamp slActualTimestamp) {
         this.slActualTimestamp = slActualTimestamp;
     }
 

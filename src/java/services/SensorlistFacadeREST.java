@@ -6,15 +6,20 @@
 
 package services;
 
+import Factories.SensorListFactory;
 import Factories.SensorsFactory;
+import entities.Company;
 import entities.Sensor;
-import entities.SensorType;
+import entities.SensorCatalog;
+import entities.SensorTags;
 import entities.Sensorlist;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,59 +34,70 @@ import javax.ws.rs.Produces;
  * @author ccastillo
  */
 @Stateless
-@Path("sensors")
-public class SensorsFacadeREST extends AbstractFacade<Sensor> {
+@Path("entities.sensorlist")
+public class SensorlistFacadeREST extends AbstractFacade<Sensorlist> {
     @PersistenceContext(unitName = "factoryEcomation_ServicesPU")
-    @EJB SensorsFactory sensor;
+   @EJB SensorListFactory listSensor;
     private EntityManager em;
-
-    public SensorsFacadeREST() {
-        super(Sensor.class);
+    private String nameQuery;
+    
+    
+    public SensorlistFacadeREST() {
+        super(Sensorlist.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Sensor entity) {
+    public void create(Sensorlist entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Long id, Sensor entity) {
+    public void edit(@PathParam("id") Integer id, Sensorlist entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Sensor find(@PathParam("id") Long id) {
+    public Sensorlist find(@PathParam("id") Integer id) {
         return super.find(id);
     }
-    
-  
-    
+
+    @GET
+    @Override
+    @Produces({"application/xml", "application/json"})
+    public List<Sensorlist> findAll() {
+        return super.findAll();
+    }
     
     @GET
+    @Path("/noreference")
     @Produces({"application/xml", "application/json"})
-    public List<Sensor> listaSensores() {
-        return  sensor.createSensors();
+    public List<Sensorlist> getData() {
+      List<Sensorlist> sensorList=listSensor.createSensorList();
+     return sensorList;
+     
+     
     }
-
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Sensor> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Sensorlist> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
+    
+   
 
     @GET
     @Path("count")
