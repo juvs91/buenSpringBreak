@@ -6,32 +6,6 @@ requestSimple('entities.sensorlist/noreference','sensorList', 'slName1', 'stId' 
 
 }
 
-function requestSimple (url,obj, name, idName) {
-    var url = 'http://localhost:8080/buenSpringBreak/webresources/'+ url;
-    var data;
-    //console.log(data["idSensor"]);
-    $.support.cors = true;
-	$.ajax({    
-	    type: 'GET',
-	    url: url,
-	    async: true,
-	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
-	    dataType: 'json',   
-		//crossDomain : true, 
-	    success: function(json) {
-		   pushOptions(json,obj,name , idName); 		
-	    },
-	    error: function(e) { 
-	       console.log(e);
-	    },
-	    onload:function(json){
-		console.log();
-	    }
-	});
-	return data;   
-	
-}
 
 
 function pushOptions(json, obj, name , idName){
@@ -64,34 +38,6 @@ console.log(temp_name);
 }
 
 
-
-function fillSensorType() {
-    var index = document.getElementById("company").selectedIndex;
-    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorcatalog/company/'+index;
-    var data;
-    //console.log(data["idSensor"]);
-    $.support.cors = true;
-	$.ajax({    
-	    type: 'GET',
-	    url: url,
-	    async: true,
-	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
-	    dataType: 'json',   
-		//crossDomain : true, 
-	    success: function(json) {
-		   pushOptionsSensorType(json); 		
-	    },
-	    error: function(e) { 
-	       console.log(e);
-	    },
-	    onload:function(json){
-		console.log();
-	    }
-	});
-	return data;   
-	
-}
 
 
 function pushOptionsSensorType(json){
@@ -129,36 +75,6 @@ function pushOptionsSensorType(json){
 
 
 
-function fillCommonDeviceTag() {
-console.log("entroo");
-    var index = document.getElementById("location").selectedIndex;
-    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.commdevicetags/location/'+index;
-    var data;
-    //console.log(data["idSensor"]);
-    $.support.cors = true;
-	$.ajax({    
-	    type: 'GET',
-	    url: url,
-	    async: true,
-	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
-	    dataType: 'json',   
-		//crossDomain : true, 
-	    success: function(json) {
-		   pushOptionsCommonDeviceTag(json); 		
-	    },
-	    error: function(e) { 
-	       console.log(e);
-	    },
-	    onload:function(json){
-		console.log();
-	    }
-	});
-	return data;   
-	
-}
-
-
 function pushOptionsCommonDeviceTag(json){
 
    //cargar el select
@@ -191,34 +107,6 @@ console.log(json);
 }
 
 
-function fillSeveralOptionsCatalog() {
-    var idCompany = document.getElementById("company").selectedIndex;
-    var idSensorType = document.getElementById("sensorType").selectedIndex;
-    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorcatalog/company/'+idCompany+'/sensorType/'+idSensorType;
-    var data;
-    //console.log(data["idSensor"]);
-    $.support.cors = true;
-	$.ajax({    
-	    type: 'GET',
-	    url: url,
-	    async: true,
-	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
-	    dataType: 'json',   
-		//crossDomain : true, 
-	    success: function(json) {
-		   pushOptionsSeveralCatalog(json); 		
-	    },
-	    error: function(e) { 
-	       console.log(e);
-	    },
-	    onload:function(json){
-		console.log();
-	    }
-	});
-	return data;   
-	
-}
 
 function pushOptionsSeveralCatalog(json){
   
