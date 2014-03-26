@@ -9,23 +9,14 @@
 
 
     <title></title>
-		<script type="text/javascript" src="plugins/jquery.min.js"></script> 
-		<script src="plugins/highcharts.js"></script>     
-		<script type="text/javascript" src="js/sensores.js" charset="utf-8"></script>                                                        
-		<script type="text/javascript" src="js/point.js" charset="utf-8"></script>                 
-		<script type="text/javascript" src="js/request.js" charset="utf-8"></script>  
-		
-
-	
-
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="plugins/jquery.min.js"></script> 
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/forms.css" rel="stylesheet">
+    <script src="js/Cargar.js"></script>
 
- 
-	<script src="js/Cargar.js"></script>
     </head>
 
-  <body onload="onLoad()">
+    <body onload="onLoad()">
 
     <div class="container">
       <div class="header">
@@ -38,17 +29,17 @@
       <div class="jumbotron">
             <form role="form">
   				<div class="form-group">
-    				<label for="exampleInputEmail1">SensorTag</label>
-    				<input  class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+    				<label >SensorTag</label>
+    				<input  class="form-control" placeholder="Enter Name">
   				</div>
   				<div class="form-group">
-   					<label for="exampleInputEmail1">Company</label>
+   					<label >Company</label>
 					<select class="form-control" id="company" onChange="fillSensorType()">
 					</select>
 				</div>
 
 				<div class="form-group">
-   					<label for="exampleInputEmail1" >Sensor Type</label>
+   					<label>Sensor Type</label>
 					<select class="form-control" id="sensorType" onChange="fillSeveralOptionsCatalog()">
 					</select>
 				</div>
@@ -68,39 +59,39 @@
     			</table>
 
 				<div class="form-group">
-   					<label for="exampleInputEmail1" >Location</label>
+   					<label  >Location</label>
 					<select class="form-control" id="location"  onChange="fillCommonDeviceTag()" >
 					</select>
    
 				</div>
 				<div class="form-group">
-   					<label for="exampleInputEmail1"  >Common device Tag</label>
+   					<label >Common device Tag</label>
    					<select class="form-control" id="commDeviceTags" >
 					</select>
 				</div>
 				<div class="form-group">
-    				<label for="exampleInputEmail1">Max Value</label>
+    				<label >Max Value</label>
     				<input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Max">
 
 				</div>
 				<div class="form-group">
-    				<label for="exampleInputEmail1">Min Value</label>
+    				<label>Min Value</label>
     				<input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Min">
   				</div>
 
 				<div class="form-group">
-   					<label for="exampleInputEmail1">Unit Name</label>
+   					<label >Unit Name</label>
 					<select class="form-control" id="measurementUnits">
 					</select>
 				</div>
 				<div class="form-group">
-   					<label for="exampleInputEmail1" >Sensor ID</label>
+   					<label>Sensor ID</label>
 
 					<select class="form-control" id="sensorList" >
  
 					</select>
 				</div>
-  				<button type="submit"  class="btn btn-default">Submit</button>
+  				<button type="submit" >Submit</button>
 			</form>
 
        

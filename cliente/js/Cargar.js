@@ -2,7 +2,7 @@ function onLoad(){
 requestSimple('entities.company','company', 'companyName', 'idCompany' );
 requestSimple('entities.location','location', 'locationName', 'idLocation' );
 requestSimple('entities.measurementunits','measurementUnits', 'unitName', 'idMeasurementUnit' );
- 
+requestSimple('entities.sensorlist/noreference','sensorList', 'slName1', 'stId' );  
 
 }
 
@@ -97,9 +97,11 @@ function fillSensorType() {
 function pushOptionsSensorType(json){
 
    //cargar el select
-   var select = document.getElementById("sensorType");
-
-   select.innerHTML='';  
+   var div = document.getElementById("div_sensorType");
+  
+    var div_sensorType="<label>Sensor Type</label>"; 
+    div_sensorType=div_sensorType + "<select class=\"form-control\" id=\"sensorType\" onChange=\"fillSeveralOptionsCatalog()\">";
+    
     
     //boton de vacio
     var option = document.createElement("option")
@@ -250,56 +252,7 @@ function pushOptionsSeveralCatalog(json){
 
 
 
-function fillSensorList() {
-    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorlist';
-    var data;
-    $.support.cors = true;
-	$.ajax({    
-	    type: 'GET',
-	    url: url,
-	    async: true,
-	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
-	    dataType: 'json',   
-		//crossDomain : true, 
-	    success: function(json) {
-		   pushOptionsSensorList(json,obj,name , idName); 		
-	    },
-	    error: function(e) { 
-	       console.log(e);
-	    },
-	    onload:function(json){
-		console.log();
-	    }
-	});
-	return data;   
-	
-}
 
-
-function pushOptionsSensorList(json){
-
-   //cargar el select
-   var select = document.getElementById("sensorList");
-    
-    
-
-   for (i=0;i<json.length;i++)
-      {
-      temp_name= json[i].slName1;
-      temp_idName=json[i][idName];
-     
-   
-      var option = document.createElement("option")
-      option.text =temp_name;
-      option.value = temp_idName;
-      console.log(temp_name);
-  
-      select.add(option);
-      }
- 
-
-}
 
 
 
