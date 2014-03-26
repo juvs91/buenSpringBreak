@@ -7,7 +7,7 @@ requestSimple('entities.measurementunits','measurementUnits', 'unitName', 'idMea
 }
 
 function requestSimple (url,obj, name, idName) {
-    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/'+ url;
+    var url = 'http://localhost:8080/buenSpringBreak/webresources/'+ url;
     var data;
     //console.log(data["idSensor"]);
     $.support.cors = true;
@@ -67,7 +67,7 @@ console.log(temp_name);
 
 function fillSensorType() {
     var index = document.getElementById("company").selectedIndex;
-    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensorcatalog/company/'+index;
+    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorcatalog/company/'+index;
     var data;
     //console.log(data["idSensor"]);
     $.support.cors = true;
@@ -130,7 +130,7 @@ function pushOptionsSensorType(json){
 function fillCommonDeviceTag() {
 console.log("entroo");
     var index = document.getElementById("location").selectedIndex;
-    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.commdevicetags/location/'+index;
+    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.commdevicetags/location/'+index;
     var data;
     //console.log(data["idSensor"]);
     $.support.cors = true;
@@ -192,7 +192,7 @@ console.log(json);
 function fillSeveralOptionsCatalog() {
     var idCompany = document.getElementById("company").selectedIndex;
     var idSensorType = document.getElementById("sensorType").selectedIndex;
-    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensorcatalog/company/'+idCompany+'/sensorType/'+idSensorType;
+    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorcatalog/company/'+idCompany+'/sensorType/'+idSensorType;
     var data;
     //console.log(data["idSensor"]);
     $.support.cors = true;
@@ -251,7 +251,7 @@ function pushOptionsSeveralCatalog(json){
 
 
 function fillSensorList() {
-    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensorlist';
+    var url = 'http://localhost:8080/buenSpringBreak/webresources/entities.sensorlist';
     var data;
     $.support.cors = true;
 	$.ajax({    
