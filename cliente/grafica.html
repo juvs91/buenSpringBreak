@@ -3,12 +3,14 @@
 	<head>
 		<script type="text/javascript" src="plugins/jquery.min.js"></script> 
 		<script src="plugins/highcharts.js"></script>     
-		<script type="text/javascript" src="sensores.js" charset="utf-8"></script>                                                        
-		<script type="text/javascript" src="point.js" charset="utf-8"></script>                 
-		<script type="text/javascript" src="request.js" charset="utf-8"></script>   
+		<script type="text/javascript" src="js/sensores.js" charset="utf-8"></script>                                                        
+		<script type="text/javascript" src="js/point.js" charset="utf-8"></script>                 
+		<script type="text/javascript" src="js/request.js" charset="utf-8"></script>   
+		<link rel="import" href="Vista1.html" charset="utf-8">
 	</head>
 	<body id="body">
-		<div id='container' ></div> 
+		<div id='container' ></div>  
+		<div id="form"></div>
 	</body>                        
 	<script type="text/javascript" charset="utf-8">
     /*
@@ -68,7 +70,10 @@
 	});          
    
 	function selectSerie(serie){
-		//console.log(serie);  
+		//console.log(serie); 
+		if (!(serie.options.id)){
+			displayForm(serie);
+		}
 		if (serie.options.id == sesnortipoActual) {
 			sensoresDesplegados.push(serie);//se guarda el sensor en la lista de sensores desplegados
 		}else{
@@ -82,11 +87,16 @@
 				}else{
 					chart.yAxis[0].setTitle({text : "temperatura"})
 				}
-			}else{
+			}else{ 
 				chart.yAxis[0].setTitle({text : ""})
 			}
 		}
-	} 
+	}   
+	
+	
+	function displayForm (serie) {
+		console.log(serie);
+	}
 	
 	function deSelectSerie (serie) {   
 		pos = sensoresDesplegados.indexOf(serie);
@@ -149,7 +159,7 @@
 		if (sensorJson["sensor_tag"]) {
 		  	sensor.setSensorName(sensorJson["sensor_tag"]); 
 		}else{                             
-			sensor.setSensorName("puntos sin sensor");
+			sensor.setSensorName("slId "+sensorJson["slId"]);
 		}                                                
 		llenaSensoresPuntos(sensorJson); 
    	    sensor.addPoint(sensorJson["slActualValue"]
