@@ -9,7 +9,7 @@ function requestSensores() {
 	    url: url,
 	    async: false,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) { 
@@ -36,7 +36,7 @@ function requestNewPoints () {
 	    url: url,
 	    async: true,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
@@ -64,7 +64,7 @@ function requestSimple (url,obj, name, idName) {
 	    url: url,
 	    async: true,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
@@ -94,7 +94,7 @@ function fillSensorType() {
 	    url: url,
 	    async: true,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
@@ -127,7 +127,7 @@ console.log("entroo");
 	    url: url,
 	    async: true,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
@@ -158,7 +158,7 @@ function fillSeveralOptionsCatalog() {
 	    url: url,
 	    async: true,
 	    jsonpCallback: 'jsonCallback',
-	    contentType: "aplication/json",
+	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {

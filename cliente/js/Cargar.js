@@ -1,4 +1,15 @@
 function onLoad(){
+
+$(document).ready(function () {
+  $("#div_sensorType").hide();
+  $("#div_commDeviceTags").hide();
+  $("#div_Catalog").hide();
+
+});
+
+
+
+
 requestSimple('entities.company','company', 'companyName', 'idCompany' );
 requestSimple('entities.location','location', 'locationName', 'idLocation' );
 requestSimple('entities.measurementunits','measurementUnits', 'unitName', 'idMeasurementUnit' );
@@ -41,22 +52,27 @@ console.log(temp_name);
 
 
 function pushOptionsSensorType(json){
+   
+  $(document).ready(function(){
+		$("#div_sensorType").show(); 
+       		$("#div_Catalog").hide(); 
+});
 
-   //cargar el select
-   var div = document.getElementById("div_sensorType");
-  
-    var div_sensorType="<label>Sensor Type</label>"; 
-    div_sensorType=div_sensorType + "<select class=\"form-control\" id=\"sensorType\" onChange=\"fillSeveralOptionsCatalog()\">";
-    
-    
+
+  var select = document.getElementById("sensorType");
+
     //boton de vacio
+    select.innerHTML="";
+
     var option = document.createElement("option")
     option.text ="";
     option.value = -1;
     select.add(option);
+    
+  
+   
 
-   for (i=0;i<json.length;i++)
-      {
+   for (i=0;i<json.length;i++){
 
       temp_name= json[i].idSensorType.sensorType;
       temp_idName=json[i].idSensorType.idSensorType;     
@@ -68,7 +84,6 @@ function pushOptionsSensorType(json){
   
       select.add(option);
       }
-  
 
 }
 
@@ -109,6 +124,11 @@ console.log(json);
 
 
 function pushOptionsSeveralCatalog(json){
+
+  $(document).ready(function(){
+		$("#div_Catalog").show(); 
+});
+
   
    var table = document.getElementById("table");
    table.innerHTML='';

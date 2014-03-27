@@ -11,9 +11,16 @@
     <title></title>
     <script type="text/javascript" src="plugins/jquery.min.js"></script> 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/forms.css" rel="stylesheet">
     <script src="js/Cargar.js"></script>
+<script src="js/request.js"></script>
+<!--
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+-->
 
+<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
+<script src="js/jquery-1.10.2.min.js"></script>
     </head>
 
     <body onload="onLoad()">
@@ -32,31 +39,68 @@
     				<label >SensorTag</label>
     				<input  class="form-control" placeholder="Enter Name">
   				</div>
+	                        <div class="form-group">
+   					<label>Sensor ID</label>
+
+					<select class="form-control" id="sensorList" >
+ 
+					</select>
+				</div>
   				<div class="form-group">
    					<label >Company</label>
 					<select class="form-control" id="company" onChange="fillSensorType()">
 					</select>
 				</div>
 
-				<div class="form-group">
-   					<label>Sensor Type</label>
-					<select class="form-control" id="sensorType" onChange="fillSeveralOptionsCatalog()">
-					</select>
-				</div>
-				<table class="table" >
-      				<thead>
-        				<tr>
-          					<th>Check</th>
-          					<th>Model</th>
-          					<th>Reference</th>
-          					<th>Output Format</th>
-            				<th>Output Type</th>
-        				</tr>
-      				</thead>
-      				<tbody id="table" >
+				<div class="form-group" id="div_sensorType">
+                                    <label id=>Sensor Type</label>
 
-					</tbody>
-    			</table>
+                                     <select class="form-control" id="sensorType" onChange="fillSeveralOptionsCatalog()">
+                                     </select>
+
+				</div>
+
+
+    <div data-role="main" class="ui-content" id="div_Catalog">
+     <p>Catalog</p>
+    <div class="ui-grid-d">
+      <div class="ui-block-a">
+        <label>checkbox</label><br>
+        <span>First Column: This is some text. This is some text. This is some text. This is some text. This is some text.</span>
+      </div>
+      <div class="ui-block-b">
+        <label>Model</label><br>
+        <span>Second Column: This is some text. This is some text. This is some text. This is some text.</span>
+      </div>
+      <div class="ui-block-c">
+        <label>Reference</label><br>
+        <span>Third Column: This is some text. This is some text. This is some text. This is some text.</span>
+      </div>
+      <div class="ui-block-d">
+       <label>Output Format</label><br>
+        <span>Fourth Column: This is some text. This is some text. This is some text. This is some text.</span>
+      </div>  
+      <div class="ui-block-e">
+        <label>Output Type</label><br>
+        <span>Fifth Column: This is some text. This is some text. This is some text. This is some text.</span>
+      </div>  
+    </div>
+  </div>
+
+                             
+
+                            
+
+
+
+
+
+
+
+
+
+
+
 
 				<div class="form-group">
    					<label  >Location</label>
@@ -64,31 +108,24 @@
 					</select>
    
 				</div>
-				<div class="form-group">
+				<div class="form-group" id="div_commDeviceTags">
    					<label >Common device Tag</label>
    					<select class="form-control" id="commDeviceTags" >
 					</select>
 				</div>
 				<div class="form-group">
     				<label >Max Value</label>
-    				<input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Max">
+    				<input type="number" class="form-control"  placeholder="Enter Max">
 
 				</div>
 				<div class="form-group">
     				<label>Min Value</label>
-    				<input type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter Min">
+    				<input type="number" class="form-control"  placeholder="Enter Min">
   				</div>
 
 				<div class="form-group">
    					<label >Unit Name</label>
 					<select class="form-control" id="measurementUnits">
-					</select>
-				</div>
-				<div class="form-group">
-   					<label>Sensor ID</label>
-
-					<select class="form-control" id="sensorList" >
- 
 					</select>
 				</div>
   				<button type="submit" >Submit</button>
