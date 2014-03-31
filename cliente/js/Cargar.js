@@ -13,7 +13,7 @@ $(document).ready(function () {
 requestSimple('entities.company','company', 'companyName', 'idCompany' );
 requestSimple('entities.location','location', 'locationName', 'idLocation' );
 requestSimple('entities.measurementunits','measurementUnits', 'unitName', 'idMeasurementUnit' );
-requestSimple('entities.sensorlist/noreference','sensorList', 'slName1', 'stId' );  
+requestSimple('entities.sensorlist/noreference','sensorList', 'slId', 'stId' );  
 
 }
 
@@ -30,10 +30,15 @@ function pushOptions(json, obj, name , idName){
       option.text ="";
       option.value = -1;
       select.add(option);
+  console.log("---------------------------------");
+      console.log(json);
+    console.log("---------------------------------");
 
    for (i=0;i<json.length;i++)
       {
+
       temp_name= json[i][name];
+      //console.log("nombre"+ temp_name);
       temp_idName=json[i][idName];
      
    
@@ -55,7 +60,8 @@ function pushOptionsSensorType(json){
    
   $(document).ready(function(){
 		$("#div_sensorType").show(); 
-       		$("#div_Catalog").hide(); 
+       		$("#div_Catalog").hide();
+		$("#div_commDeviceTags").hide();  
 });
 
 
@@ -92,6 +98,10 @@ function pushOptionsSensorType(json){
 
 function pushOptionsCommonDeviceTag(json){
 
+  $(document).ready(function(){
+		$("#div_commDeviceTags").show(); 
+});
+
    //cargar el select
    var select = document.getElementById("commDeviceTags");
 
@@ -102,14 +112,15 @@ function pushOptionsCommonDeviceTag(json){
     option.text ="";
     option.value = -1;
     select.add(option);
-console.log(json);
+    console.log(json);
 
    for (i=0;i<json.length;i++)
       {
 
       temp_name= json[i].commDeviceTag;
-      temp_idName=json[i].commDeviceTag;     
-   
+      temp_idName=json[i].commDeviceTag; 
+    
+
       var option = document.createElement("option")
       option.text =temp_name;
       option.value = temp_idName;
@@ -130,16 +141,16 @@ function pushOptionsSeveralCatalog(json){
 });
 
   
-   var table = document.getElementById("table");
-   table.innerHTML='';
-
-
 
    for (i=0;i<json.length;i++)
       {
 
-     console.log(json);
+   var span = document.createElement("span");
+   span.text='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
+   document.getElementById("checkbox").appendChild(span);
+console.log("entroo");
 
+/*
     var row = table.insertRow(i);
     var cell1 = row.insertCell(0);
     cell1.innerHTML='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
@@ -151,7 +162,7 @@ function pushOptionsSeveralCatalog(json){
     cell4.innerHTML=json[i].idOutputFormat.outputFormat;
     var cell5 = row.insertCell(4);
     cell5.innerHTML=json[i].idOutputType.outputType;
-
+*/
  
       }
 

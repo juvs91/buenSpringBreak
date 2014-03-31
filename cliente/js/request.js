@@ -116,11 +116,9 @@ function fillSensorType() {
 //filtra commDeviceTags por locationId  SELECT * FROM commdevicetags WHERE locationID=index
 
 function fillCommonDeviceTag() {
-console.log("entroo");
     var index = document.getElementById("location").selectedIndex;
     var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.commdevicetags/location/'+index;
     var data;
-    //console.log(data["idSensor"]);
     $.support.cors = true;
 	$.ajax({    
 	    type: 'GET',
