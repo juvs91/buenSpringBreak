@@ -29,10 +29,6 @@ function pushOptions(json, obj, name , idName){
       var option = document.createElement("option")
       option.text ="";
       option.value = -1;
-      select.add(option);
-  console.log("---------------------------------");
-      console.log(json);
-    console.log("---------------------------------");
 
    for (i=0;i<json.length;i++)
       {
@@ -44,9 +40,7 @@ function pushOptions(json, obj, name , idName){
    
       var option = document.createElement("option")
       option.text =temp_name;
-      option.value = temp_idName;
-console.log(temp_name);
-  
+      option.value = temp_idName;  
       select.add(option);
       }
  
@@ -148,7 +142,6 @@ function pushOptionsSeveralCatalog(json){
    var span = document.createElement("span");
    span.text='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
    document.getElementById("checkbox").appendChild(span);
-console.log("entroo");
 
 /*
     var row = table.insertRow(i);
