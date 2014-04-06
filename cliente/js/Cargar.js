@@ -1,170 +1,247 @@
-function onLoad(){
+/*
+**************************************
+funcion que se llama cuando se carga la vista
+************************************
+*/
 
 $(document).ready(function () {
+  
+  //oculta varias opciones
   $("#div_sensorType").hide();
   $("#div_commDeviceTags").hide();
   $("#div_Catalog").hide();
+  $("#soloUnCheckBox").hide();
+  
+  //mandar llamar servicios web
+  requestSimple('entities.company','#company', 'companyName', 'idCompany' );
+  requestSimple('entities.location','#location', 'locationName', 'idLocation' );
+  requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
+  requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' );  
+
 
 });
+ 
 
-
-
-
-requestSimple('entities.company','company', 'companyName', 'idCompany' );
-requestSimple('entities.location','location', 'locationName', 'idLocation' );
-requestSimple('entities.measurementunits','measurementUnits', 'unitName', 'idMeasurementUnit' );
-requestSimple('entities.sensorlist/noreference','sensorList', 'slId', 'stId' );  
-
-}
-
-
+/*
+*********************************
+Funcion de llenado de las opciones de varios servicios web 
+***********************************
+*/
 
 function pushOptions(json, obj, name , idName){
 
-   //cargar el select
-   var select = document.getElementById(obj);
-    
-    
-    //boton de vacio
-      var option = document.createElement("option")
-      option.text ="";
-      option.value = -1;
-
+    //opcion vacia 
+     $(obj).append("<option id=\"-1\"></option>");
+   
+   //colocar todas las opciones
    for (i=0;i<json.length;i++)
       {
-
-      temp_name= json[i][name];
-      //console.log("nombre"+ temp_name);
-      temp_idName=json[i][idName];
-     
-   
-      var option = document.createElement("option")
-      option.text =temp_name;
-      option.value = temp_idName;  
-      select.add(option);
+      $(obj).append("<option id=\""+ json[i][idName] +"\">"+json[i][name] +"</option>");
       }
  
 
 }
 
+/*
+******************************
+//funcion que se llama cuando cambia la opcion de company y se ocultan opciones
+********************************
+*/
 
+$(document).ready(function () {
+  $("#company").change(function(){
 
+console.log("entro");
+    //se muestra el sensortype
+    $("#div_sensorType").show();
+    
+    //se ocultan
+    $("#div_Catalog").hide();
+    $("#div_commDeviceTags").hide();  
+  
+    //lamar el servicio web y se llenan las opciones 
+    fillSensorType();
 
-function pushOptionsSensorType(json){
-   
-  $(document).ready(function(){
-		$("#div_sensorType").show(); 
-       		$("#div_Catalog").hide();
-		$("#div_commDeviceTags").hide();  
+   })
+
 });
 
 
-  var select = document.getElementById("sensorType");
+/*
+***************************
+Funcion de llenado de todos los SensorTypes
+****************************
+*/
 
-    //boton de vacio
-    select.innerHTML="";
-
-    var option = document.createElement("option")
-    option.text ="";
-    option.value = -1;
-    select.add(option);
+function pushOptionsSensorType(json){
+   
+    //vaciar la lista
+    $("#sensorType").empty();
     
+    //crear una opcion vacia
+    $("#sensorType").append("<option id=\"-1\"></option>");
   
    
-
+   //colocar los datos del sensorType
    for (i=0;i<json.length;i++){
 
-      temp_name= json[i].idSensorType.sensorType;
-      temp_idName=json[i].idSensorType.idSensorType;     
-   
-      var option = document.createElement("option")
-      option.text =temp_name;
-      option.value = temp_idName;
-
-  
-      select.add(option);
+     $("#sensorType").append("<option id=\""+ json[i].idSensorType.idSensorType+"\">"+json[i].idSensorType.sensorType +"</option>");
       }
 
 }
 
 
+/*
+*********************************************
+*Funcion que se llama cuando cambia el Location 
+**********************************************
+*/
+
+$(document).ready(function () {
+  $("#location").change(function(){
+     
+    //Muestra los commDeviceTags 
+     $("#div_commDeviceTags").show(); 
+   
+   //Manda a llamar el servicio web
+   fillCommonDeviceTag();
+
+   })
+
+});
+
+/*
+***************************************
+*Funcion que llena todas las opciones de commonDeviceTag despues de llamar el servicio web 
+***********************************************
+*/
 
 
 function pushOptionsCommonDeviceTag(json){
 
-  $(document).ready(function(){
-		$("#div_commDeviceTags").show(); 
-});
-
-   //cargar el select
-   var select = document.getElementById("commDeviceTags");
-
-   select.innerHTML='';  
+    //vaciar la lista
+    $("#commDeviceTags").empty();
     
-    //boton de vacio
-    var option = document.createElement("option")
-    option.text ="";
-    option.value = -1;
-    select.add(option);
-    console.log(json);
-
+    //crear una opcion vacia
+    $("#commDeviceTags").append("<option id=\"-1\"></option>");
+  
+   //llenado de opciones
    for (i=0;i<json.length;i++)
       {
-
-      temp_name= json[i].commDeviceTag;
-      temp_idName=json[i].commDeviceTag; 
+      $("#commDeviceTags").append("<option id=\""+ json[i].commDeviceTag+"\">"+json[i].commDeviceTag +"</option>");
     
-
-      var option = document.createElement("option")
-      option.text =temp_name;
-      option.value = temp_idName;
-
-  
-      select.add(option);
       }
   
 
 }
 
+/*
+************************************
+Funcion que se manda a llamar cuando cambia de opcion sensorType
+**************************************
+*/
 
+$(document).ready(function () {
+  $("#sensorType").change(function(){
+     
+    //Muestra los commDeviceTags 
+     $("#div_Catalog").show(); 
+   
+   //Manda a llamar el servicio web
+   fillSeveralOptionsCatalog()
+
+   })
+
+});
+
+/*
+**************************
+Funcion que llena las opciones cuando se llama el servicio web
+****************************
+*/
 
 function pushOptionsSeveralCatalog(json){
 
-  $(document).ready(function(){
-		$("#div_Catalog").show(); 
-});
-
+    //vaciar la lista
+    $("#llenado").empty();
   
+   //etiquetas del row principal
+   var row="<div class=\"row\" >";
+   var end= "</div>";
+   var col2 ="<div class=\"col-md-2\">";
+   var col3 ="<div class=\"col-md-3\">";
+   
 
+
+ 
    for (i=0;i<json.length;i++)
       {
+       var input="<input type=\"checkbox\" value=\""+ json.idSensorCatalog+"\""; 
+      input =input+" onChange=\"selectedCheckBox(this.id)\" ";
+       input =input+ " id=\"check" + i+ "\">";
+       
+       $("#datos").append(row);
+        $("#datos").append(col2 +input + end);
+         $("#datos").append(col2 + json[i].model + end);
+         $("#datos").append(col2 + json[i].reference + end);
+         $("#datos").append(col3 + json[i].idOutputFormat.outputFormat + end);
+         $("#datos").append(col2 + json[i].idOutputType.outputType + end);
+       $("#datos").append(end);
 
-   var span = document.createElement("span");
-   span.text='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
-   document.getElementById("checkbox").appendChild(span);
-
-/*
-    var row = table.insertRow(i);
-    var cell1 = row.insertCell(0);
-    cell1.innerHTML='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
-    var cell2 = row.insertCell(1);
-    cell2.innerHTML=json[i].model;
-    var cell3 = row.insertCell(2);
-    cell3.innerHTML=json[i].reference;
-    var cell4 = row.insertCell(3);
-    cell4.innerHTML=json[i].idOutputFormat.outputFormat;
-    var cell5 = row.insertCell(4);
-    cell5.innerHTML=json[i].idOutputType.outputType;
-*/
- 
       }
 
 
 }
 
 
+/*
+**************************
+Funcion que oculta todos los checkbox excepto el del nombre
+**************************
+*/
+
+
+function hideExcept(name){
+  $(document).ready(function () {
+    $("input[id!='"+name+"']").hide();
+    $("#max").show();
+    $("#min").show();
+  });
+
+}
 
 
 
+/*
+**************************
+Funcion que muestra todos los checkbox
+**************************
+*/
 
+
+function showAllCheckbox(){
+  $(document).ready(function () {
+    $("input[type='checkbox']").show();
+  });
+
+}
+
+
+/*
+*************************
+Funcion que valida si el checkbox esta selecionado o no
+********************
+*/
+
+function selectedCheckBox(id){
+var value = $("#"+id).prop('checked');
+console.log("VALUE  "+value );
+  if($("#"+id).prop('checked')){
+    hideExcept(id);
+  } else  
+    showAllCheckbox();
+
+}
+
+ 
 
