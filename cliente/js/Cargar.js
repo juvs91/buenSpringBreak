@@ -143,7 +143,7 @@ function pushOptionsSeveralCatalog(json){
    span.text='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
    document.getElementById("checkbox").appendChild(span);
 
-/*
+
     var row = table.insertRow(i);
     var cell1 = row.insertCell(0);
     cell1.innerHTML='<input type="checkbox" id="'+ json.idSensorCatalog +'">';
@@ -155,7 +155,7 @@ function pushOptionsSeveralCatalog(json){
     cell4.innerHTML=json[i].idOutputFormat.outputFormat;
     var cell5 = row.insertCell(4);
     cell5.innerHTML=json[i].idOutputType.outputType;
-*/
+
  
       }
 
