@@ -11,7 +11,6 @@
     <title></title>
     <script type="text/javascript" src="plugins/jquery.min.js"></script> 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/forms.css" rel="stylesheet">
     <script src="js/Cargar.js"></script>
 <script src="js/request.js"></script>
 <!--
@@ -22,7 +21,7 @@
 <script src="plugins/jquery.min.js"></script>
     </head>
 
-    <body onload="onLoad()">
+    <body >
 
     <div class="container">
       <div class="header">
@@ -47,14 +46,14 @@
 				</div>
   				<div class="form-group">
    					<label >Company</label>
-					<select class="form-control" id="company" onChange="fillSensorType()">
+					<select class="form-control" id="company" >
 					</select>
 				</div>
 
 				<div class="form-group" id="div_sensorType">
                                     <label id=>Sensor Type</label>
 
-                                     <select class="form-control" id="sensorType" onChange="fillSeveralOptionsCatalog()">
+                                     <select class="form-control" id="sensorType" >
                                      </select>
 
 				</div>
@@ -63,19 +62,21 @@
     <div data-role="main" class="ui-content" id="div_Catalog">
      <p>Catalog</p> 
 	<div id="container-fluis">
-		  <div class="row" id="checkbox">
+		  <div class="row" id="titulos">
 		      <div class="col-md-2">checkbox</div>
-			  <div class="col-md-2">model</div>
-			  <div class="col-md-2">reference</div>
-			  <div class="col-md-3">output format</div>
-			  <div class="col-md-2">output</div>      
-	    </div>
-	</div>
-  </div>
+		      <div class="col-md-2">model</div>
+		      <div class="col-md-2">reference</div>
+		      <div class="col-md-3">output format</div>
+		      <div class="col-md-2">output Type</div>      
+	           </div>
+                   <div id="datos">
+                   </div>            
+       </div>
+   </div>
 
    <div class="form-group">
    	<label  >Location</label>
-	      <select class="form-control" id="location"  onChange="fillCommonDeviceTag()" >
+	      <select class="form-control" id="location" >
 			</select>
    
 				</div>
@@ -86,12 +87,12 @@
 				</div>
 				<div class="form-group">
     				<label >Max Value</label>
-    				<input type="number" class="form-control"  placeholder="Enter Max">
-
+    				<input type="number" class="form-control"  placeholder="Enter Max"
+				id="max">
 				</div>
 				<div class="form-group">
     				<label>Min Value</label>
-    				<input type="number" class="form-control"  placeholder="Enter Min">
+    				<input type="number" class="form-control"  placeholder="Enter Min"   					id="min">
   				</div>
 
 				<div class="form-group">
@@ -99,21 +100,14 @@
 					<select class="form-control" id="measurementUnits">
 					</select>
 				</div>
-  				<button type="submit" >Submit</button>
+
+  				<button type="submit" id="submit">Submit</button>
 			</form>
 
        
       	</div>
-    </div>   
-   <div id="container-fluis">
-		  <div class="row" id="checkbox">
-		      <div class="col-md-2">checkbox</div>
-			  <div class="col-md-2">model</div>
-			  <div class="col-md-2">reference</div>
-			  <div class="col-md-2">output format</div>
-			  <div class="col-md-2">output</div>      
-	    </div>
-	</div>
+    </div>
+
 
   </body>
 

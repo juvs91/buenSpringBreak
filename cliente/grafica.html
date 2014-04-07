@@ -12,14 +12,12 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 	    <link href="css/forms.css" rel="stylesheet">
 	</head>
-	<body id="body" onload="onLoad()">
+	<body id="body" >             
+		<button type="button" class="btn btn-primary  " id = "btn-form-modify">modificar sensor</button>  
+		<button type="button" class="btn btn-danger  " id = "btn-form-delete">borrar un sensor</button>
 		<div id='container' ></div>  
-		<div id="form-create"></div> 
+		<div id="form"></div> 
 		<button type="button" class="btn btn-primary btn-block" id = "btn-form-create" >crear sensor</button>  
-		<div id="form-modify"></div> 
-		<button type="button" class="btn btn-primary btn-block " id = "btn-form-modify">modificar sensor</button>  
-		<div id="form-delete"></div> 
-		<button type="button" class="btn btn-danger btn-block " id = "btn-form-delete">borrar un sensor</button>
 		
 	</body>                        
 	<script type="text/javascript" charset="utf-8">
@@ -40,8 +38,7 @@
 	var hasToggleByButton = false;
 	
 	//se agregan la forma y se oculta para que no e vea pero este disponible para el toggle 
-    $("#form-create").append(forma).hide(); 
-    $("#form-modify").append(forma).hide();         
+    $("#form").append(forma).hide(); 
 
 
 	for(t = sensoresJson.length; j < t; j++) {
@@ -111,7 +108,7 @@
 				fillForm(serie); 
 				hasToggleByButton = false;
 			}else{
-				displayForm(serie,$("#form-create"));
+				displayForm(serie);
 			}    
 		}
 	}   
@@ -119,14 +116,15 @@
 	
 	//funcion que despliega la forma de crear
 	$("#btn-form-create").click(function() {  
-		displayForm(null,$("#form-create"));    
+		displayForm(null);    
 		hasToggleByButton = true;
 	});                
 	
 	//funcion que despliega la forma de cambiar
 	$("#btn-form-modify").click(function () { 
 		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null) {
-		   	displayForm (displayedSensors[0],$("#form-modify"));//el unico sensor que esta en la lista
+		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista 
+			//hasToggleByButton = true;
 		}
 	}); 
 	//funcion que despliega la forma de cambiar
@@ -138,7 +136,7 @@
 	                
 	function deSelectSerie (serie) {  
 		if (serie.options.id == null) {
-			displayForm(null,$("#form-create"));  
+			displayForm(null);  
 		}
 		pos = displayedSensors.indexOf(serie);
 		if (pos > -1) { 
