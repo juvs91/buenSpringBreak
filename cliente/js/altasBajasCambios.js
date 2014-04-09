@@ -6,7 +6,7 @@ function displayForm (serie) {
 	if (serie) {
 		fillForm(serie);
 	}      
-	console.log("si entro");
+	//console.log("si entro");
 	$("#form").slideToggle();
 	
 }  
