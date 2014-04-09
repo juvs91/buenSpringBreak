@@ -163,13 +163,13 @@ Funcion que llena las opciones cuando se llama el servicio web
 function pushOptionsSeveralCatalog(json){
 
     //vaciar la lista
-    $("#llenado").empty();
+    $("#datos").empty();
   
    //etiquetas del row principal
    var row="<div class=\"row\" >";
    var end= "</div>";
    var col2 ="<div class=\"col-md-2\">";
-   var col3 ="<div class=\"col-md-3\">";
+   var col3 ="<div class=\"col-md-2\">";
    
 
 
@@ -179,7 +179,6 @@ function pushOptionsSeveralCatalog(json){
        var input="<input type=\"checkbox\" value=\""+ json.idSensorCatalog+"\""; 
       input =input+" onChange=\"selectedCheckBox(this.id)\" ";
        input =input+ " id=\"check" + i+ "\">";
-       
        $("#datos").append(row);
         $("#datos").append(col2 +input + end);
          $("#datos").append(col2 + json[i].model + end);
