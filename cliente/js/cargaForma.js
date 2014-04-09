@@ -3,7 +3,7 @@ var forma = ''+
 	'<form role="form">'+
 		'<div class="form-group">'+
     			'<label>SensorTag</label>'+
-    			'<input class="form-control" placeholder="Enter Name"></input>'+
+    			'<input class="form-control" placeholder="Enter Name" id="sensorTag"></input>'+
   		'</div>'+
 		'<div class="form-group">'+
 			'<label>Sensor ID</label>'+

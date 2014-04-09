@@ -1,3 +1,7 @@
+var sensorTags={sensorTag: "name", idSensorCatalog: "-1", commDeviceTag:"-1", 
+ 		maxValue:"-1", minValue:"-1", 
+		idMeasurementUnit:"-1", sensorId: "-1"};
+
 /*
 **************************************
 funcion que se llama cuando se carga la vista
@@ -206,6 +210,8 @@ function hideExcept(name){
     $("input[id!='"+name+"']").hide();
     $("#max").show();
     $("#min").show();
+    $("#sensorTag").show();
+    $("#submit1").show();
   });
 
 }
@@ -235,7 +241,6 @@ Funcion que valida si el checkbox esta selecionado o no
 
 function selectedCheckBox(id){
 var value = $("#"+id).prop('checked');
-console.log("VALUE  "+value );
   if($("#"+id).prop('checked')){
     hideExcept(id);
   } else  
@@ -243,5 +248,25 @@ console.log("VALUE  "+value );
 
 }
 
- 
+/*
+*******************************
+Funcion para crear un objecto json
+******************************
+*/
+function createJson(){
 
+sensorTags.sensorTag=$("#sensorTag").prop("value");
+sensorTags.idSensorCatalog=$("input[checked='checked']").prop("value");
+sensorTags.commDeviceTag=$("#commDeviceTags").prop("value");
+sensorTags.maxValue=$("#max").prop("value");
+sensorTags.minValue=$("#min").prop("value");
+sensorTags.idMeasurementUnit=$("#measurementUnits").prop("value");
+sensorTags.sensorId=$("#sensorList").prop("value");
+console.log(sensorTags.idSensorCatalog);
+console.log(sensorTags.commDeviceTag);
+console.log(sensorTags.maxValue);
+console.log(sensorTags.minValue);
+console.log(sensorTags.idMeasurementUnit);
+console.log(sensorTags.sensorId);
+
+}
