@@ -84,9 +84,16 @@
 	function selectSerie(serie){
 		//console.log(serie);     
 
-		if (serie.options.id == actualTypeSensor) {
+		if (serie.options.id == actualTypeSensor && serie.options.id != null) {
 			displayedSensors.push(serie);//se guarda el sensor en la lista de sensores desplegados
+			if (hasToggleByButton){
+				hasToggleByButton = false;
+			}
 		}else{
+			if (hasToggleByButton){
+				displayForm(null);
+				hasToggleByButton = false;
+			}
 			hideAllSensors();
 			//displayedSensors = [];//se borran los sensores acumulados
 			actualTypeSensor = serie.options.id;//se cambia el sensor que se va a desplegar 
@@ -116,18 +123,28 @@
 	
 	//funcion que despliega la forma de crear
 	$("#btn-form-create").click(function() {  
-		displayForm(null);    
-		hasToggleByButton = true;
+		if (hasToggleByButton){
+			displayForm(null);
+			hideAllSensors();
+			hasToggleByButton = false;
+		}else{
+			displayForm(null);
+			hideAllSensors();
+			hasToggleByButton = true;
+		}
 	});                
 	
-	//funcion que despliega la forma de cambiar
+	//funcion que despliega la forma de modificar
 	$("#btn-form-modify").click(function () { 
 		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null) {
 		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista 
-			//hasToggleByButton = true;
+		   	if(hasToggleByButton){ 
+		   		hasToggleByButton=false;
+		   	}
+			else hasToggleByButton = true;
 		}
 	}); 
-	//funcion que despliega la forma de cambiar
+	//funcion que despliega la forma de borrar
 	$("#btn-form-delete").click(function () { 
 		if (displayedSensors.length == 1) {
 		   	deleteSensor(displayedSensors[0]);//el unico sensor que esta en la lista
@@ -135,9 +152,14 @@
 	});
 	                
 	function deSelectSerie (serie) {  
+		
 		if (serie.options.id == null) {
 			displayForm(null);  
 		}
+		else if (hasToggleByButton){
+			displayForm(null);
+			hasToggleByButton = false;
+		}	
 		pos = displayedSensors.indexOf(serie);
 		if (pos > -1) { 
 			displayedSensors.splice(pos,1)[0]; 
@@ -209,10 +231,6 @@
    		idSeriesMap[sensor.getTag()] = posArreglo;  
 		return sensor;
 	}	
-	 
-	
-	
-
 		
 	setInterval(function(){requestNewPoints()},5000);
 
