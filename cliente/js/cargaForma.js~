@@ -48,6 +48,5 @@ var forma = ''+
    			'<label>Unit Name</label>'+
 			'<select class="form-control" id="measurementUnits"></select>'+
 		'</div>'+
-		'<button type="button" class="btn bt-default" id="submit">submit</button>'+
 	'</form>'+
 '</div>';

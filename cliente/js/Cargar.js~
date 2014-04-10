@@ -274,6 +274,7 @@ sensorTags.sensorId=$("#sensorList").prop("value");
 $(document).ready(function () {
   $("#submit").click(function() {
      
+  alert("error");
   var data = {"sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
 				,"Company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
 				,"active":"","lastUpdateDate":"","idSensorCatalog":$("#"+selectedChecked).val()
