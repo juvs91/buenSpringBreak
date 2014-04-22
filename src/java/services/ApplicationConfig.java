@@ -48,6 +48,7 @@ public class ApplicationConfig extends Application {
         resources.add(services.OutputFormatFacadeREST.class);
         resources.add(services.OutputTypeFacadeREST.class);
         resources.add(services.SensorCatalogFacadeREST.class);
+        resources.add(services.SensorTagsFacadeREST.class);
         resources.add(services.SensorTypeFacadeREST.class);
         resources.add(services.SensorlistFacadeREST.class);
         resources.add(services.SensorsFacadeREST.class);

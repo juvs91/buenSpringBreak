@@ -56,6 +56,7 @@ function pushOptions(json, obj, name , idName){
 $(document).ready(function () {
   $("#company").change(function(){
 
+console.log("entro");
     //se muestra el sensortype
     $("#div_sensorType").show();
     
@@ -267,4 +268,28 @@ sensorTags.idMeasurementUnit=$("#measurementUnits").prop("value");
 sensorTags.sensorId=$("#sensorList").prop("value");
 
 }
- 
+
+
+
+$(document).ready(function () {
+  $("#submit").click(function() {
+     
+  alert("error");
+  var data = {"sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
+				,"Company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
+				,"active":"","lastUpdateDate":"","idSensorCatalog":$("#"+selectedChecked).val()
+				,"idMeasurementUnit":$("#measurementUnits").val(),"commDeviceTag":$("#commDeviceTags").val()};
+//all the data that is going to update or create   
+   console.log(data.sensorTag);
+   console.log(data.sensorId);
+   console.log(data.Company);
+   console.log(data.maxValue);
+   console.log(data.minValue);
+   console.log(data.idMeasurementUnit);
+   console.log(data.commDeviceTag);
+
+   //requestEditCreateSensor(data);
+
+   });
+
+});

@@ -53,9 +53,9 @@ var Sensores = function Sensores(points,sensorName,tag,type){
 	this.getTag = function getTag () {
 		return tag;
 	};  
-	this.setType = function setType (typeIn) {
+	this.setType = function setType (typeIn,slId) {
 		type = typeIn;
-		dataStructureGraph["id"] = type;
+		dataStructureGraph["id"] = {"type":type,"slId":slId};
 	}; 
 	this.getTypeg = function getTypeg () {
 		return type;

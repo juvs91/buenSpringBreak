@@ -3,4 +3,8 @@ var validator = function validator () {
 		var re = / [ -~]/;
 	    return re.test(name);
   	}
+	this.isOnlyOneCkeckBox = function(){
+   
+        }
+
 }

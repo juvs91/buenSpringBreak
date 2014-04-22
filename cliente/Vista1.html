@@ -1,114 +1,96 @@
 <!DOCTYPE html>
-
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- saved from url=(0085)file:///home/ccastillo/NetBeansProjects/factoryEcomation_Services/cliente/Vista1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title></title>
-    <script type="text/javascript" src="plugins/jquery.min.js"></script> 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/Cargar.js"></script>
-<script src="js/request.js"></script>
-<!--
-<script src="js/jquery.mobile-1.4.2.min.js"></script>
--->
-
-<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
-<script src="plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="plugins/jquery.min.js"></script> 
+		<script src="plugins/highcharts.js"></script>     
+		<script type="text/javascript" src="js/sensores.js" charset="utf-8"></script>                                                        
+		<script type="text/javascript" src="js/point.js" charset="utf-8"></script>                 
+		<script type="text/javascript" src="js/request.js" charset="utf-8"></script> 
+		<script type="text/javascript" src="js/cargaForma.js" charset="utf-8"></script>  
+		<script type="text/javascript" src="js/altasBajasCambios.js"></script>
+		<script src="js/Cargar.js"></script>  
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/forms.css" rel="stylesheet">
     </head>
 
-    <body >
+    <body>
 
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Alta</a></li>
-        </ul>
-        <h3 class="text-muted">Project name</h3>
-      </div>
 
-      <div class="jumbotron">
             <form role="form">
   				<div class="form-group">
-    				<label >SensorTag</label>
-    				<input  class="form-control" placeholder="Enter Name">
+    				<label>SensorTag</label>
+    				<input class="form-control" placeholder="Enter Name">
   				</div>
 	                        <div class="form-group">
    					<label>Sensor ID</label>
 
-					<select class="form-control" id="sensorList" >
- 
-					</select>
+					<select class="form-control" id="sensorList"></select>
 				</div>
   				<div class="form-group">
-   					<label >Company</label>
-					<select class="form-control" id="company" >
+   					<label>Company</label>
+					<select class="form-control" id="company">
 					</select>
 				</div>
 
-				<div class="form-group" id="div_sensorType">
-                                    <label id=>Sensor Type</label>
+				<div class="form-group" id="div_sensorType" style="display: block;">
+                                    <label id="">Sensor Type</label>
 
-                                     <select class="form-control" id="sensorType" >
-                                     </select>
+                                     <select class="form-control" id="sensorType"></select>
 
 				</div>
 
 
-    <div data-role="main" class="ui-content" id="div_Catalog">
+    <div class="form-group" id="div_Catalog">
      <p>Catalog</p> 
-	<div id="container-fluis">
 		  <div class="row" id="titulos">
 		      <div class="col-md-2">checkbox</div>
 		      <div class="col-md-2">model</div>
 		      <div class="col-md-2">reference</div>
-		      <div class="col-md-3">output format</div>
+		      <div class="col-md-2">output format</div>
 		      <div class="col-md-2">output Type</div>      
 	           </div>
-                   <div id="datos">
+                   <div id="datos" class="row">
                    </div>            
        </div>
-   </div>
-
+  
    <div class="form-group">
-   	<label  >Location</label>
-	      <select class="form-control" id="location" >
-			</select>
+   	<label>Location</label>
+	      <select class="form-control" id="location"></select>
    
 				</div>
-				<div class="form-group" id="div_commDeviceTags">
-   					<label >Common device Tag</label>
-   					<select class="form-control" id="commDeviceTags" >
-					</select>
+				<div class="form-group" id="div_commDeviceTags" style="display: block;">
+   					<label>Common device Tag</label>
+   					<select class="form-control" id="commDeviceTags"></select>
 				</div>
 				<div class="form-group">
-    				<label >Max Value</label>
-    				<input type="number" class="form-control"  placeholder="Enter Max"
-				id="max">
+    				<label>Max Value</label>
+    				<input type="number" class="form-control" placeholder="Enter Max" id="max">
 				</div>
 				<div class="form-group">
     				<label>Min Value</label>
-    				<input type="number" class="form-control"  placeholder="Enter Min"   					id="min">
+    				<input type="number" class="form-control" placeholder="Enter Min" id="min">
   				</div>
 
 				<div class="form-group">
-   					<label >Unit Name</label>
-					<select class="form-control" id="measurementUnits">
-					</select>
+   					<label>Unit Name</label>
+					<select class="form-control" id="measurementUnits"></select>
 				</div>
 
-  				<button type="submit" id="submit">Submit</button>
 			</form>
 
        
       	</div>
-    </div>
 
 
-  </body>
 
-</html>
+  
+
+
+</body></html>
