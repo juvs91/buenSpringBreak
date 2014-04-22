@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html ng-app>
+<html >
 	<head>
 		<script type="text/javascript" src="plugins/jquery.min.js"></script> 
-		<script src="plugins/highcharts.js"></script>     
+		<script src="plugins/highcharts.js"></script>         
+		<script type="text/javascript" src="plugins/bootstrap.min.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/sensores.js" charset="utf-8"></script>                                                        
 		<script type="text/javascript" src="js/point.js" charset="utf-8"></script>                 
 		<script type="text/javascript" src="js/request.js" charset="utf-8"></script> 
@@ -11,14 +12,48 @@
 		<script src="js/Cargar.js"></script>  
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 	    <link href="css/forms.css" rel="stylesheet">
-	</head>
-	<body id="body" >             
-		<button type="button" class="btn btn-primary  " id = "btn-form-modify">modificar sensor</button>  
-		<button type="button" class="btn btn-danger  " id = "btn-form-delete">borrar un sensor</button>
+	</head>    
+	<body id="body" >                                              
+		<button type="button" class="btn btn-primary  " id = "btn-form-create" style = "display">crear sensor</button>  
+		<button type="button" class="btn btn-primary  " id = "btn-form-modify" style = "display:none;">modificar sensor</button>  
+		<button type="button" class="btn btn-danger  " id = "btn-form-delete-decision" style = "display:none;">borrar un sensor</button>
 		<div id='container' ></div>  
-		<div id="form"></div> 
-		<button type="button" class="btn btn-primary btn-block" id = "btn-form-create" >crear sensor</button>  
-		
+		<!-- es la pantalla que aparece cuando se desea borrar un sensor -->
+		<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modaldelete" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="modaldelete">desea borrar el sensor?</h4>
+					</div>                                                                   
+					<div class="modal-body">
+						<div id="delete-msg">
+							
+						</div>
+					</div> 
+					<div class="modal-footer">
+					   <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
+					   <button type="button" class="btn btn-primary" id="btn-delete-sensor" data-dismiss="modal">borrar</button>
+					</div>
+				</div>
+			</div>
+		</div>  
+		<div class="modal fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="modalform" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="modalform">desea crear un sensor?</h4>
+					</div>                                                                   
+					<div class="modal-body">
+						<div id="form"></div> 
+					</div> 
+					<div class="modal-footer">
+					   <button type="button" class="btn btn-default" id ="submit" data-dismiss="modal">submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>                        
 	<script type="text/javascript" charset="utf-8">
     /*
@@ -35,10 +70,10 @@
 	var displayedSensors = []; //actualemente no se encuentran sensores seleccionados 
 	var actualTypeSensor = null; //es el tipo de sensor actualmente   
 	var pos = -1;     
-	var hasToggleByButton = false;
+	var create = false;  
 	
 	//se agregan la forma y se oculta para que no e vea pero este disponible para el toggle 
-    $("#form").append(forma).hide(); 
+    $("#form").append(forma); 
 
 
 	for(t = sensoresJson.length; j < t; j++) {
@@ -83,16 +118,21 @@
    
 	function selectSerie(serie){
 		//console.log(serie);     
-
-		if (serie.options.id == actualTypeSensor) {
-			displayedSensors.push(serie);//se guarda el sensor en la lista de sensores desplegados
-		}else{
+		if (serie.options.id.type == actualTypeSensor) {  
+			$("#btn-form-modify").show();
+			$("#btn-form-delete-decision").show();
+			
+			displayedSensors.push(serie);//se guarda el sensor en la lista de sensores desplegados      
+			
+		}else{  
+			$("#btn-form-modify").show();
+			$("#btn-form-delete-decision").show();     
 			hideAllSensors();
 			//displayedSensors = [];//se borran los sensores acumulados
-			actualTypeSensor = serie.options.id;//se cambia el sensor que se va a desplegar 
+			actualTypeSensor = serie.options.id.type;//se cambia el sensor que se va a desplegar 
 			displayedSensors.push(serie);//se guarda el sensor en la lista de sensores desplegados
-			if (serie.options.id) {
-				if ((serie.options.id).toLocaleLowerCase() == "gas") {
+			if (serie.options.id.type) {
+				if ((serie.options.id.type).toLocaleLowerCase() == "gas") {
 					chart.yAxis[0].setTitle({text : "PPM"})
 				}else{
 					chart.yAxis[0].setTitle({text : "temperatura"})
@@ -101,49 +141,50 @@
 				chart.yAxis[0].setTitle({text : ""})
 			}
 		}
-		if (serie.options.id == null ){ 
-			if (hasToggleByButton) {
-				//$("#form-create").slideToggle();//one toggle to put the other clicked sensor 
-				//displayForm(serie);  
-				fillForm(serie); 
-				hasToggleByButton = false;
-			}else{
-				displayForm(serie);
-			}    
+		if (serie.options.id.type == null ){   
+			$("#btn-form-modify").hide();
+			$("#btn-form-delete-decision").hide(); 
+			 displayForm(serie);
+			$("#form-modal").modal("show");
+			create = true; 
 		}
 	}   
 	
 	
 	//funcion que despliega la forma de crear
-	$("#btn-form-create").click(function() {  
-		displayForm(null);    
-		hasToggleByButton = true;
+	$("#btn-form-create").click(function() {
+		create = true;  
+		$("#form-modal").modal("show");
 	});                
 	
 	//funcion que despliega la forma de cambiar
-	$("#btn-form-modify").click(function () { 
+	$("#btn-form-modify").click(function () {   
 		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null) {
-		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista 
-			//hasToggleByButton = true;
+		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista    
+			$("#form-modal").modal("show");
 		}
 	}); 
 	//funcion que despliega la forma de cambiar
-	$("#btn-form-delete").click(function () { 
-		if (displayedSensors.length == 1) {
-		   	deleteSensor(displayedSensors[0]);//el unico sensor que esta en la lista
+	$("#btn-form-delete-decision").click(function () { 
+		if (displayedSensors.length == 1) {  
+			$("#delete-msg").text("se borrara el sensor "+displayedSensors[0].name);
+			$('#delete-modal').modal("show");
 		}
 	});
-	                
+	 
+	$("#btn-delete-sensor").click(function() {
+		deleteSensor(displayedSensors[0]);
+	});
+	               
 	function deSelectSerie (serie) {  
-		if (serie.options.id == null) {
+		if (serie.options.id.type == null) {
 			displayForm(null);  
-		}
+		}   
 		pos = displayedSensors.indexOf(serie);
 		if (pos > -1) { 
 			displayedSensors.splice(pos,1)[0]; 
 			pos = -1;
-		}
-		//displayedSensors.pop(serie);
+		} 
 	}
 	function hideAllSensors () {
 		for (var i = displayedSensors.length - 1; i >= 0; i--){
@@ -194,7 +235,7 @@
 	function creaSensor (sensorJson,posArreglo) {
 		sensor =new Sensores();   
 		sensor.setTag(sensorJson["sensor_tag"]); 
-		sensor.setType(sensorJson["sensor_type"]); 
+		sensor.setType(sensorJson["sensor_type"],sensorJson["slId"]); 
 		if (sensorJson["sensor_tag"]) {
 		  	sensor.setSensorName(sensorJson["sensor_tag"]); 
 		}else{                             
@@ -217,4 +258,5 @@
 	setInterval(function(){requestNewPoints()},5000);
 
 	</script>
+
 </html>

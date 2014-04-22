@@ -1,3 +1,8 @@
+var sensorTags={sensorTag: "name", idSensorCatalog: "-1", commDeviceTag:"-1", 
+ 		maxValue:"-1", minValue:"-1", 
+		idMeasurementUnit:"-1", sensorId: "-1"};
+var selectedChecked="";
+
 /*
 **************************************
 funcion que se llama cuando se carga la vista
@@ -51,7 +56,6 @@ function pushOptions(json, obj, name , idName){
 $(document).ready(function () {
   $("#company").change(function(){
 
-console.log("entro");
     //se muestra el sensortype
     $("#div_sensorType").show();
     
@@ -163,13 +167,13 @@ Funcion que llena las opciones cuando se llama el servicio web
 function pushOptionsSeveralCatalog(json){
 
     //vaciar la lista
-    $("#llenado").empty();
+    $("#datos").empty();
   
    //etiquetas del row principal
    var row="<div class=\"row\" >";
    var end= "</div>";
    var col2 ="<div class=\"col-md-2\">";
-   var col3 ="<div class=\"col-md-3\">";
+   var col3 ="<div class=\"col-md-2\">";
    
 
 
@@ -179,7 +183,6 @@ function pushOptionsSeveralCatalog(json){
        var input="<input type=\"checkbox\" value=\""+ json.idSensorCatalog+"\""; 
       input =input+" onChange=\"selectedCheckBox(this.id)\" ";
        input =input+ " id=\"check" + i+ "\">";
-       
        $("#datos").append(row);
         $("#datos").append(col2 +input + end);
          $("#datos").append(col2 + json[i].model + end);
@@ -207,6 +210,8 @@ function hideExcept(name){
     $("input[id!='"+name+"']").hide();
     $("#max").show();
     $("#min").show();
+    $("#sensorTag").show();
+    $("#submit1").show();
   });
 
 }
@@ -236,13 +241,33 @@ Funcion que valida si el checkbox esta selecionado o no
 
 function selectedCheckBox(id){
 var value = $("#"+id).prop('checked');
-console.log("VALUE  "+value );
   if($("#"+id).prop('checked')){
+    selectedChecked=id;
     hideExcept(id);
-  } else  
+  } else  {
     showAllCheckbox();
+    selectedChecked="";
+  }
 
 }
 
- 
+/*
+*******************************
+Funcion para crear un objecto json
+******************************
+*/
+function createJson(){
+
+sensorTags.sensorTag=$("#sensorTag").prop("value");
+sensorTags.idSensorCatalog=$("#"+selectedChecked).prop("value");
+sensorTags.commDeviceTag=$("#commDeviceTags").prop("value");
+sensorTags.maxValue=$("#max").prop("value");
+sensorTags.minValue=$("#min").prop("value");
+sensorTags.idMeasurementUnit=$("#measurementUnits").prop("value");
+sensorTags.sensorId=$("#sensorList").prop("value");
+
+}
+
+
+
 

@@ -171,6 +171,99 @@ function fillSeveralOptionsCatalog() {
 	});
 	return data;   
 	
+}     
+
+function requestEditCreateSensor (jsonin) {
+	var url;
+	var typeRequest = null;
+	if (create) {    
+		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/create';  
+		typeRequest = 'POST';    
+	}else{             
+		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+json.sensorTag;  
+		typeRequest = 'PUT';
+	}   
+	console.log(typeRequest,url,jsonin,$("#measurementUnits").val()); 
+	json = {//checar este pedo por que no jala cuando lo envio por parametro
+		  "sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
+			,"company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
+			,"active":false,"idSensorCatalog":$("#measurementUnits").find(":selected")[0].id
+			,"idMeasurementUnit":$("#measurementUnits").find(":selected")[0].id,"commDeviceTag":$("#commDeviceTags").val()
+		 };
+	$.support.cors = true;
+	$.ajax({    
+	    type: "POST",
+	    url: url,
+	    async: true,  
+		//data : json,
+		data :JSON.stringify(json),
+	    jsonpCallback: 'jsonCallback',
+	    contentType: "application/json; charset=UTF-8",
+	    dataType: 'json',
+		crossDomain : true, 
+	    success: function(json) {
+            console.log("succes en modificar o crear"); 
+			//crear o editar el sensor
+			if (create) {
+				
+			}else{
+				
+			}
+	    },
+	    error: function(e) { 
+	       console.log(e);
+	    },
+	    onload:function(json){
+		console.log();
+	    }
+	});
+}    
+function requestDeleteSensor (id) {
+    var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+id;
+	$.support.cors = true;
+	$.ajax({    
+	    type: 'DELETE',
+	    url: url,
+	    async: true,  
+		data : null,
+	    jsonpCallback: 'jsonCallback',
+	    contentType: "application/json",
+	    dataType: 'json',   
+		//crossDomain : true, 
+	    success: function() {
+            console.log("succes en borrar");
+	    },
+	    error: function(e) { 
+	       console.log(e);
+	    },
+	    onload:function(json){
+		console.log();
+	    }
+	});
+}    
+
+function requestDescubreSensores () {
+	var url ='http://localhost:8080/factoryEcomation_Services/webresources/';    
+	$.support.cors = true;   
+	$.ajax({    
+	    type: 'GET',
+	    url: url,
+	    async: true,  
+		data : json,
+	    jsonpCallback: 'jsonCallback',
+	    contentType: "application/json",
+	    dataType: 'json',   
+		//crossDomain : true, 
+	    success: function(json) {
+            console.log(json);
+	    },
+	    error: function(e) { 
+	       console.log(e);
+	    },
+	    onload:function(json){
+		console.log();
+	    }
+	});
 }
 
 
