@@ -105,6 +105,20 @@ public class SensorTags implements Serializable {
         this.insertDate = insertDate;
         this.lastUpdateDate = lastUpdateDate;
     }
+    
+    public void fillAll(SensorTags newSensor){
+        this.sensorTag = newSensor.getSensorTag();
+        this.maxValue = newSensor.getMaxValue();
+        this.minValue = newSensor.getMinValue();
+        this.active = newSensor.getActive();
+        this.insertDate = newSensor.getInsertDate();
+        this.lastUpdateDate = newSensor.getLastUpdateDate();
+        this.sensorTagsLogCollection = newSensor.getSensorTagsLogCollection();
+        this.idSensorCatalog = newSensor.getIdSensorCatalog();
+        this.idMeasurementUnit = newSensor.getIdMeasurementUnit();
+        this.commDeviceTag = newSensor.getCommDeviceTag();
+        this.sensorId = newSensor.getSensorId();
+    }
 
     public String getSensorTag() {
         return sensorTag;
@@ -219,5 +233,6 @@ public class SensorTags implements Serializable {
     public String toString() {
         return "Factories.SensorTags[ sensorTag=" + sensorTag + " ]";
     }
+
     
 }

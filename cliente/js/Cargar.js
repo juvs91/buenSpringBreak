@@ -147,12 +147,9 @@ Funcion que se manda a llamar cuando cambia de opcion sensorType
 
 $(document).ready(function () {
   $("#sensorType").change(function(){
-     
-    //Muestra los commDeviceTags 
-     $("#div_Catalog").show(); 
-   
-   //Manda a llamar el servicio web
-   fillSeveralOptionsCatalog()
+        
+    //Manda a llamar el servicio web
+	fillSeveralOptionsCatalog()
 
    })
 
@@ -167,32 +164,40 @@ Funcion que llena las opciones cuando se llama el servicio web
 function pushOptionsSeveralCatalog(json){
 
     //vaciar la lista
-    $("#datos").empty();
-  
-   //etiquetas del row principal
-   var row="<div class=\"row\" >";
-   var end= "</div>";
-   var col2 ="<div class=\"col-md-2\">";
-   var col3 ="<div class=\"col-md-2\">";
-   
+   $("#datos").empty();
+   console.log("asdfasdfasd");
+   console.log(json.length);
+   if(json.length > 0){               
+	//Muestra los commDeviceTags
+	$(document).ready(function(){
+		$("#div_Catalog").show(); 
+	}); 
+    
+	//etiquetas del row principal
+	   var row="<div class=\"row\" >";
+	   var end= "</div>";
+	   var col2 ="<div class=\"col-md-2\">";
+	   var col3 ="<div class=\"col-md-2\">";
 
 
- 
-   for (i=0;i<json.length;i++)
-      {
-       var input="<input type=\"checkbox\" value=\""+ json.idSensorCatalog+"\""; 
-      input =input+" onChange=\"selectedCheckBox(this.id)\" ";
-       input =input+ " id=\"check" + i+ "\">";
-       $("#datos").append(row);
-        $("#datos").append(col2 +input + end);
-         $("#datos").append(col2 + json[i].model + end);
-         $("#datos").append(col2 + json[i].reference + end);
-         $("#datos").append(col3 + json[i].idOutputFormat.outputFormat + end);
-         $("#datos").append(col2 + json[i].idOutputType.outputType + end);
-       $("#datos").append(end);
 
-      }
 
+	   for (i=0;i<json.length;i++)
+	      {
+	       var input="<input type=\"checkbox\" value=\""+ json.idSensorCatalog+"\""; 
+	      input =input+" onChange=\"selectedCheckBox(this.id)\" ";
+	       input =input+ " id=\"check" + i+ "\">";
+	       $("#datos").append(row);
+	        $("#datos").append(col2 +input + end);
+	         $("#datos").append(col2 + json[i].model + end);
+	         $("#datos").append(col2 + json[i].reference + end);
+	         $("#datos").append(col3 + json[i].idOutputFormat.outputFormat + end);
+	         $("#datos").append(col2 + json[i].idOutputType.outputType + end);
+	       $("#datos").append(end);
+
+	      }
+	
+	}
 
 }
 

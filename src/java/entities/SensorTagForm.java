@@ -55,7 +55,6 @@ public class SensorTagForm implements Serializable {
     }
     
     
-    
     public String getSensorTag() {
         return sensorTag;
     }

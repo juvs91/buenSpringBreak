@@ -70,7 +70,9 @@
 	var displayedSensors = []; //actualemente no se encuentran sensores seleccionados 
 	var actualTypeSensor = null; //es el tipo de sensor actualmente   
 	var pos = -1;     
-	var create = false;  
+	var create = false; 
+	var sensorDiscovereds = [];
+	var sensorIdSelected = null; 
 	
 	//se agregan la forma y se oculta para que no e vea pero este disponible para el toggle 
     $("#form").append(forma); 
@@ -140,8 +142,9 @@
 			}else{ 
 				chart.yAxis[0].setTitle({text : ""})
 			}
-		}
-		if (serie.options.id.type == null ){   
+		} 
+		console.log(serie.options.id.type);
+		if (serie.options.id.tag == null ){   
 			$("#btn-form-modify").hide();
 			$("#btn-form-delete-decision").hide(); 
 			 displayForm(serie);
@@ -159,7 +162,8 @@
 	
 	//funcion que despliega la forma de cambiar
 	$("#btn-form-modify").click(function () {   
-		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null) {
+		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null){
+			create = false;
 		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista    
 			$("#form-modal").modal("show");
 		}
@@ -189,35 +193,51 @@
 	function hideAllSensors () {
 		for (var i = displayedSensors.length - 1; i >= 0; i--){
 			displayedSensors.pop().hide();
-		};
+		};           
+		chart.redraw();
 	}
 	
 	 
 	//esta funcion tiene que llenar los puntos 
 	function graphPoints(newPoints) { 
 		for (var i = 0; i < newPoints.length; i++) {
-			if (sensorsPointsMap[newPoints[i]["sensor_tag"]]) {
-				 if (!(sensorsPointsMap[newPoints[i]["sensor_tag"]][newPoints[i]["slId"]])) {
-				   pushPoints(newPoints[i]);
-			     }
-			}else{//se crear e sensor 
+			if(newPoints[i]["sensor_tag"]){       
+				if (sensorsPointsMap[newPoints[i]["sensor_tag"]]) {
+					if(!(sensorsPointsMap[newPoints[i]["sensor_tag"]][newPoints[i]["slId"]]))
+						pushPoints(newPoints[i]);
+				}else{
+					addSeries(newPoints[i]); 
+				}  
+			} else if(sensorsPointsMap[null][newPoints[i]["slId"]]){ 
+				console.log("push points");
+				pushPoints(newPoints[i]);
+			} else{//se crear e senso 
 			   addSeries(newPoints[i]); 
 			}
-		}                                                                                           
-
+		}
+		chart.redraw();                                                                                          
 	}   
 	
 	function pushPoints (newPoint) {
-		 //mueve la grafica o no 
-		 shift = chart.series[idSeriesMap[newPoint["sensor_tag"]]].data.length > 58;  
+		 //mueve la grafica o no
+		if(idSeriesMap[newPoint["sensor_tag"]]){
+		  shift = chart.series[idSeriesMap[newPoint["sensor_tag"]]].data.length > 58;  		   
 		 //agrega los puntos a la grafica
 		 //tengo que agregar el punto a la serie y pasarle por parametro 
 		 chart.series[idSeriesMap[newPoint["sensor_tag"]]]
 			  .addPoint([newPoint["slActualTimestamp"]
 			  ,newPoint["slActualValue"]],shift,true); 
+		}else if(idSeriesMap[newPoint["slId"]]){
+		  shift = chart.series[idSeriesMap[newPoint["slId"]]].data.length > 58;
+		 //agrega los puntos a la grafica
+		 //tengo que agregar el punto a la serie y pasarle por parametro  
+		 chart.series[idSeriesMap[newPoint["slId"]]]
+			  .addPoint({ x : newPoint["slActualTimestamp"], y : newPoint["slActualValue"]},true,shift,true);   
+ 		   		
+		}
   	}
 	    
-	function addSeries (serie) {
+	function addSeries (serie) {   
 		chart.addSeries((creaSensor(serie,j)).getDataStructureGraph());
 		j++;
    	}
@@ -235,21 +255,28 @@
 	function creaSensor (sensorJson,posArreglo) {
 		sensor =new Sensores();   
 		sensor.setTag(sensorJson["sensor_tag"]); 
-		sensor.setType(sensorJson["sensor_type"],sensorJson["slId"]); 
+		sensor.setType(sensorJson["sensor_type"],sensorJson["slId"],sensorJson["sensor_tag"]); 
 		if (sensorJson["sensor_tag"]) {
 		  	sensor.setSensorName(sensorJson["sensor_tag"]); 
+			//slId tiene el ultimo punto de la tabla sensorlist				
+	   		idSeriesMap[sensor.getTag()] = posArreglo; 
 		}else{                             
 			sensor.setSensorName("slId "+sensorJson["slId"]);
+			//slId tiene el ultimo punto de la tabla sensorlist	
+	   		idSeriesMap[sensorJson["slId"]] = posArreglo;  
 		}                                                
 		llenaSensoresPuntos(sensorJson); 
    	    sensor.addPoint(sensorJson["slActualValue"]
 						,sensorJson["slActualTimestamp"]
 						,sensorJson["slId"]
 						,sensorJson["sensor_type"]);
-		//slId tiene el ultimo punto de la tabla sensorlist				
-   		idSeriesMap[sensor.getTag()] = posArreglo;  
 		return sensor;
 	}	
+	function redraw (sensorTag,sensorId) {  
+		console.log(sensorTag,idSeriesMap[sensorId],sensorId);
+		chart.series[idSeriesMap[sensorId]].update({name : sensorTag },false);
+		chart.redraw();
+	}
 	 
 	
 	

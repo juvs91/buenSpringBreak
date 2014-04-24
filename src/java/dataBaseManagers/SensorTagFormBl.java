@@ -8,18 +8,9 @@ package dataBaseManagers;
 import entities.SensorTags;
 import entities.SensorTagForm;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 
 
 /**
@@ -32,8 +23,6 @@ public class SensorTagFormBl {
     private EntityManager em;
     private SensorTagForm sensor;
     private SensorTags s;
-    private UserTransaction ux;
-    private Transaction trans;
     
     public SensorTagFormBl(){
     
@@ -42,15 +31,23 @@ public class SensorTagFormBl {
     public Object save(SensorTagForm sensor){
         this.s = new SensorTags();
         this.s = getSensor(sensor);
-        trans = new Transaction();
-        return trans.save(sensor);
+         try {
+            em.persist(this.s);
+         } catch (Exception e) {
+            e.printStackTrace();
+         }        
+        return this.s;
     }
-    public void edit(SensorTagForm sensor,String id){
+    public SensorTags edit(SensorTagForm sensor,String id){
         this.s = getSensor(sensor);
         SensorTags oldSensor = em.find(entities.SensorTags.class, id);
-        em.getTransaction().begin();
-        oldSensor = this.s;
-        em.getTransaction().commit();
+        oldSensor.fillAll(this.s);
+         try {
+            em.persist(oldSensor);
+         } catch (Exception e) {
+            e.printStackTrace();
+         }    
+        return oldSensor;
     }
     
     public SensorTags getSensor(SensorTagForm sensor){

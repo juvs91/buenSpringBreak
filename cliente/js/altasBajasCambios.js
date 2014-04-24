@@ -5,16 +5,22 @@ function deleteSensor(sensor){ //delete the sensor from the data base
 function displayForm (serie) { 
 	if (serie) {
 		fillForm(serie);
+	}else{
+		$("#form").empty();
+		$("#form").append(forma); 
 	}     
 }                                   
 //this function fill the form from a serie
 function fillForm (serie) {             
 	 $("#sensorList").append("<option value="+serie.options.id.slId+">"+
 										serie.options.id.slId+"</option>").val(serie.options.id.slId);
-	if (serie.options.id.type != null) {
-		$("#sensorTag").val(serie.name); 
-		$("#measurementUnits").append("<option value="+serie.options.id.type+">"+
-										serie.options.id.type+"</option>").val(serie.options.id.type );  
+	if (serie.options.id.tag != null) { 
+		sensorIdSelected = serie.name
+		$("#sensorTag").val(serie.name);
+		if (serie.options.id.type != null) {
+			$("#measurementUnits").append("<option value="+serie.options.id.type+">"+
+										  serie.options.id.type+"</option>").val(serie.options.id.type );
+		}
 										
 	}     
 }        
@@ -30,7 +36,7 @@ $(document).ready(function () {
 				,"idMeasurementUnit":$("#measurementUnits").val(),"commDeviceTag":$("#commDeviceTags").val()
 				};
 
-   requestEditCreateSensor(SensorTagForm);
+   requestEditCreateSensor(SensorTagForm,sensorIdSelected);
 
    });
 

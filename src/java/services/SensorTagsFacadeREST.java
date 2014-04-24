@@ -60,8 +60,8 @@ public class SensorTagsFacadeREST extends AbstractFacade<SensorTags> {
     @PUT
     @Path("{id}")
     @Consumes({"application/json"})
-    public void edit(@PathParam("id") String id, SensorTagForm entity) {
-        sensor.edit(entity, id);
+    public SensorTags edit(@PathParam("id") String id, SensorTagForm entity) {
+        return sensor.edit(entity, id);
     }
 
     @DELETE

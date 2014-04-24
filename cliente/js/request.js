@@ -173,17 +173,17 @@ function fillSeveralOptionsCatalog() {
 	
 }     
 
-function requestEditCreateSensor (jsonin) {
+function requestEditCreateSensor (jsonin,id) {
 	var url;
 	var typeRequest = null;
 	if (create) {    
 		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/create';  
 		typeRequest = 'POST';    
 	}else{             
-		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+json.sensorTag;  
+		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+id;  
 		typeRequest = 'PUT';
 	}   
-	console.log(typeRequest,url,jsonin,$("#measurementUnits").val()); 
+	console.log(typeRequest,id,create); 
 	json = {//checar este pedo por que no jala cuando lo envio por parametro
 		  "sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
 			,"company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
@@ -192,7 +192,7 @@ function requestEditCreateSensor (jsonin) {
 		 };
 	$.support.cors = true;
 	$.ajax({    
-	    type: "POST",
+	    type: typeRequest,
 	    url: url,
 	    async: true,  
 		//data : json,
@@ -202,12 +202,21 @@ function requestEditCreateSensor (jsonin) {
 	    dataType: 'json',
 		crossDomain : true, 
 	    success: function(json) {
-            console.log("succes en modificar o crear"); 
+            console.log(json); 
 			//crear o editar el sensor
 			if (create) {
-				
+				if(json.sensorId != null){
+					redraw(json.sensorTag,json.sensorId["slId"]);
+				} else{
+					sensorDiscovereds.push(json);
+				}
 			}else{
-				
+				if(json.sensorId != null){
+					console.log(json);
+					redraw(id,json.sensorId["slId"]);
+				} else{
+					sensorDiscovereds.push(json);
+				}
 			}
 	    },
 	    error: function(e) { 
@@ -230,8 +239,10 @@ function requestDeleteSensor (id) {
 	    contentType: "application/json",
 	    dataType: 'json',   
 		//crossDomain : true, 
-	    success: function() {
+	    success: function(id) {
             console.log("succes en borrar");
+			chart.series[idSeriesMap[id]].remove()  
+			
 	    },
 	    error: function(e) { 
 	       console.log(e);
@@ -255,7 +266,8 @@ function requestDescubreSensores () {
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
-            console.log(json);
+            console.log(json); 
+			sensorDiscovereds.push(json); 
 	    },
 	    error: function(e) { 
 	       console.log(e);
