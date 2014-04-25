@@ -10,18 +10,24 @@ funcion que se llama cuando se carga la vista
 */
 
 $(document).ready(function () {
+
+	$("#btn-form-create").click(function() {
+
+
+		//ocultarlas
+  		$("#div_sensorType").hide();
+  		$("#div_commDeviceTags").hide();
+  		$("#div_Catalog").hide();
+  		$("#soloUnCheckBox").hide();
   
-  //oculta varias opciones
-  $("#div_sensorType").hide();
-  $("#div_commDeviceTags").hide();
-  $("#div_Catalog").hide();
-  $("#soloUnCheckBox").hide();
-  
-  //mandar llamar servicios web
-  requestSimple('entities.company','#company', 'companyName', 'idCompany' );
-  requestSimple('entities.location','#location', 'locationName', 'idLocation' );
-  requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
-  requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' );  
+  		//mandar llamar servicios web
+  		requestSimple('entities.company','#company', 'companyName', 'idCompany' );
+  		requestSimple('entities.location','#location', 'locationName', 'idLocation' );
+  		requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
+  		requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' ); 
+
+	});
+
 
 
 });
@@ -34,6 +40,9 @@ Funcion de llenado de las opciones de varios servicios web
 */
 
 function pushOptions(json, obj, name , idName){
+
+    //vacias 
+    $(obj).empty();
 
     //opcion vacia 
      $(obj).append("<option id=\"-1\"></option>");
@@ -267,6 +276,7 @@ Funcion para crear un objecto json
 */
 function createJson(){
 
+alert("entro");
 sensorTags.sensorTag=$("#sensorTag").prop("value");
 sensorTags.idSensorCatalog=$("#"+selectedChecked).prop("value");
 sensorTags.commDeviceTag=$("#commDeviceTags").prop("value");
