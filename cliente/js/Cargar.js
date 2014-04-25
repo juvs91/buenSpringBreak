@@ -165,8 +165,7 @@ function pushOptionsSeveralCatalog(json){
 
     //vaciar la lista
    $("#datos").empty();
-   console.log("asdfasdfasd");
-   console.log(json.length);
+
    if(json.length > 0){               
 	//Muestra los commDeviceTags
 	$(document).ready(function(){
@@ -198,6 +197,11 @@ function pushOptionsSeveralCatalog(json){
 	      }
 	
 	}
+     else {
+      	$(document).ready(function(){
+		$("#div_Catalog").hide(); 
+	}); 
+    }
 
 }
 

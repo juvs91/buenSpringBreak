@@ -27,10 +27,6 @@ public class SensorListFactory {
                 + "sl.slActualValue,  sl.slActualStatus FROM sensorlist sl"
                 + " LEFT JOIN sensor_tags  st ON sl.slId = st.sensor_id "
                 + " WHERE  st.sensor_id IS NULL";
-          String query2="SELECT sl.slId, sl.slName1, sl.slName2, sl.slName3, "
-                + " sl.slInsertTimestamp, sl.slGMTOffset, sl.slActualTimestamp, "
-                + "sl.slActualValue,  sl.slActualStatus FROM sensorlist sl"
-                + " LEFT JOIN sensor_tags  st ON sl.slId = st.sensor_id ";
           List resultList = em.createNativeQuery(query, entities.Sensorlist.class).getResultList();
         return resultList;
         
