@@ -9,7 +9,12 @@ funcion que se llama cuando se carga la vista
 ************************************
 */
 
-$(document).ready(function () {
+$(document).ready(function () {     
+	//mandar llamar servicios web
+	requestSimple('entities.company','#company', 'companyName', 'idCompany' );
+	requestSimple('entities.location','#location', 'locationName', 'idLocation' );
+	requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
+	requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' );
 
 	$("#btn-form-create").click(function() {
 
@@ -19,12 +24,6 @@ $(document).ready(function () {
   		$("#div_commDeviceTags").hide();
   		$("#div_Catalog").hide();
   		$("#soloUnCheckBox").hide();
-  
-  		//mandar llamar servicios web
-  		requestSimple('entities.company','#company', 'companyName', 'idCompany' );
-  		requestSimple('entities.location','#location', 'locationName', 'idLocation' );
-  		requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
-  		requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' ); 
 
 	});
 
@@ -46,10 +45,10 @@ function pushOptions(json, obj, name , idName){
 
     //opcion vacia 
      $(obj).append("<option id=\"-1\"></option>");
-   
-   //colocar todas las opciones
+   //colocar todas las opciones    
+console.log(json)
    for (i=0;i<json.length;i++)
-      {
+      {       
       $(obj).append("<option id=\""+ json[i][idName] +"\">"+json[i][name] +"</option>");
       }
  
@@ -67,7 +66,7 @@ $(document).ready(function () {
 
     //se muestra el sensortype
     $("#div_sensorType").show();
-    
+
     //se ocultan
     $("#div_Catalog").hide();
     $("#div_commDeviceTags").hide();  

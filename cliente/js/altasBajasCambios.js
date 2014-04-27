@@ -11,15 +11,18 @@ function displayForm (serie) {
 	}     
 }                                   
 //this function fill the form from a serie
-function fillForm (serie) {             
-	 $("#sensorList").append("<option value="+serie.options.id.slId+">"+
+function fillForm (serie) {
+	if ($("#sensorList option[value='"+serie.options.id.slId+"']").length < 0) {
+		$("#sensorList").append("<option value="+serie.options.id.slId+">"+
 										serie.options.id.slId+"</option>").val(serie.options.id.slId);
+	}else{
+		$("#sensorList").val(serie.options.id.slId)
+	}          
 	if (serie.options.id.tag != null) { 
 		sensorIdSelected = serie.name
 		$("#sensorTag").val(serie.name);
 		if (serie.options.id.type != null) {
-			$("#measurementUnits").append("<option value="+serie.options.id.type+">"+
-										  serie.options.id.type+"</option>").val(serie.options.id.type );
+			$("#measurementUnits").val(serie.options.id.type);
 		}
 										
 	}     
