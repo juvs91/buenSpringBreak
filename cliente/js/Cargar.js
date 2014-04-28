@@ -11,10 +11,10 @@ funcion que se llama cuando se carga la vista
 
 $(document).ready(function () {     
 	//mandar llamar servicios web
-	requestSimple('entities.company','#company', 'companyName', 'idCompany' );
-	requestSimple('entities.location','#location', 'locationName', 'idLocation' );
-	requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit' );
-	requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId' );
+	requestSimple('entities.company','#company', 'companyName', 'idCompany' ,null);
+	requestSimple('entities.location','#location', 'locationName', 'idLocation',null );
+	requestSimple('entities.measurementunits','#measurementUnits', 'unitName', 'idMeasurementUnit',null );
+	requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId',null );
 
 	$("#btn-form-create").click(function() {
 
@@ -43,14 +43,11 @@ function pushOptions(json, obj, name , idName){
     //vacias 
     $(obj).empty();
 
-    //opcion vacia 
-     $(obj).append("<option id=\"-1\"></option>");
-   //colocar todas las opciones    
-console.log(json)
-   for (i=0;i<json.length;i++)
-      {       
+   //opcion vacia 
+   $(obj).append("<option id=\"-1\"></option>");
+   for (i=0;i<json.length;i++){       
       $(obj).append("<option id=\""+ json[i][idName] +"\">"+json[i][name] +"</option>");
-      }
+   }
  
 
 }
@@ -91,13 +88,12 @@ function pushOptionsSensorType(json){
     $("#sensorType").empty();
     
     //crear una opcion vacia
-    $("#sensorType").append("<option id=\"-1\"></option>");
+    $("#sensorType").append("<option id=-1></option>");
   
-   
    //colocar los datos del sensorType
    for (i=0;i<json.length;i++){
 
-     $("#sensorType").append("<option id=\""+ json[i].idSensorType.idSensorType+"\">"+json[i].idSensorType.sensorType +"</option>");
+     $("#sensorType").append("<option id="+ json[i].idSensorType.idSensorType+">"+json[i].idSensorType.sensorType +"</option>");
       }
 
 }

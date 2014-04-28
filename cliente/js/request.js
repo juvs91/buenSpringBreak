@@ -54,7 +54,7 @@ function requestNewPoints () {
 
 //Carga company, location, measurement y sensorlist cuando se carga la pagina. 
 
-function requestSimple (url,obj, name, idName) {
+function requestSimple (url,obj, name, idName,serie) {
     var url = 'http://localhost:8080/factoryEcomation_Services/webresources/'+ url;
     var data;
     //console.log(data["idSensor"]);
@@ -68,7 +68,10 @@ function requestSimple (url,obj, name, idName) {
 	    dataType: 'json',   
 		//crossDomain : true, 
 	    success: function(json) {
-		   pushOptions(json,obj,name , idName); 		
+		   pushOptions(json,obj,name , idName); 
+		   if (serie) {
+				fillFormRecivedRequest(serie);		
+			}
 	    },
 	    error: function(e) { 
 	       console.log(e);

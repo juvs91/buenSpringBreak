@@ -3,20 +3,22 @@ function deleteSensor(sensor){ //delete the sensor from the data base
   requestDeleteSensor(sensor.name);
 }
 function displayForm (serie) { 
+	emptyForm();
 	if (serie) {
 		fillForm(serie);
-	}else{
-		$("#form").empty();
-		$("#form").append(forma); 
-	}     
+ 	}
 }                                   
 //this function fill the form from a serie
-function fillForm (serie) {
-	if ($("#sensorList option[value='"+serie.options.id.slId+"']").length < 0) {
+function fillForm (serie) { 
+    requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId',serie );      
+}                                                                             
+function fillFormRecivedRequest (serie) {
+	if ($("#sensorList option[id="+serie.options.id.slId+"]").length <= 0) {
 		$("#sensorList").append("<option value="+serie.options.id.slId+">"+
-										serie.options.id.slId+"</option>").val(serie.options.id.slId);
-	}else{
-		$("#sensorList").val(serie.options.id.slId)
+										serie.options.id.slId+"</option>").val(serie.options.id.slId); 
+		$("#sensorList").val(serie.options.id.slId);
+	}else{       
+		$("#sensorList").val(+serie.options.id.slId);
 	}          
 	if (serie.options.id.tag != null) { 
 		sensorIdSelected = serie.name
@@ -24,9 +26,23 @@ function fillForm (serie) {
 		if (serie.options.id.type != null) {
 			$("#measurementUnits").val(serie.options.id.type);
 		}
-										
-	}     
-}        
+
+	}
+}
+
+function emptyForm () {
+	$("#sensorTag").val("");
+	$("#sensorList option:eq(-1)");
+	$("#company option:eq(-1)");
+	$("#company option:eq(-1)");
+	$("#sensorType option:eq(-1)");
+	$("#location option:eq(-1)");
+	$("#commDeviceTags option:eq(-1)");
+	$("#max").val(0);
+	$("#min").val(0);
+	$("#measurementUnits aoption:eq(-1)");
+	
+}     
 
      
 $(document).ready(function () {

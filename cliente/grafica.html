@@ -14,11 +14,13 @@
 	    <link href="css/forms.css" rel="stylesheet">
 	</head>
 	<body id="body" >
-		<button type="button" class="btn btn-primary  " id = "btn-form-create" style = "display">Create sensor</button>
-		<button type="button" class="btn btn-primary  " id = "btn-form-modify" style = "display:none;">Modify sensor</button>
-		<button type="button" class="btn btn-danger  " id = "btn-form-delete-decision" style = "display:none;">Delete sensor</button>
-        <input type="number" class="form-control" id="timer" placeholder="Enter Number">
-		<div id='container' ></div>
+        <!--<input type="number" class="form-control" id="timer" placeholder="Enter Number"> -->
+		<div id='container' ></div>    
+		<div id="btn-continer">
+			<button type="button" class="btn btn-primary  " id = "btn-form-create" style = "display">Create sensor</button>
+			<button type="button" class="btn btn-primary  " id = "btn-form-modify" style = "display:none;">Modify sensor</button>
+			<button type="button" class="btn btn-danger  " id = "btn-form-delete-decision" style = "display:none;">Delete sensor</button>			
+		</div>
 		<!-- es la pantalla que aparece cuando se desea borrar un sensor -->
 		<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modaldelete" aria-hidden="true">
 			<div class="modal-dialog">
@@ -75,7 +77,7 @@
 	var create = false;
 	var sensorDiscovereds = [];
 	var sensorIdSelected = null;
-    var timer = 5000;
+    var timer = 5000;    
 
     //para que no cambie el tiempo con la zona horaria
     Highcharts.setOptions({
@@ -153,7 +155,6 @@
 				chart.yAxis[0].setTitle({text : ""})
 			}
 		}
-		console.log(serie.options.id.type);
 		if (serie.options.id.tag == null ){
 			$("#btn-form-modify").hide();
 			$("#btn-form-delete-decision").hide();
@@ -283,8 +284,13 @@
 		return sensor;
 	}
 	function redraw (sensorTag,sensorId) {
-		console.log(sensorTag,idSeriesMap[sensorId],sensorId);
-		chart.series[idSeriesMap[sensorId]].update({name : sensorTag },false);
+		console.log(sensorTag,idSeriesMap[sensorId],sensorId); 
+		sensorsPointsMap[sensorTag] = {sensorId:sensorId};
+		if (idSeriesMap[sensorId]) {
+			chart.series[idSeriesMap[sensorId]].update({name : sensorTag },false);
+		}else{
+			chart.series[idSeriesMap[sensorTag]].update({name : sensorTag },false);
+		}
 		chart.redraw();
 	}
     $('#timer').keyup(function(){
