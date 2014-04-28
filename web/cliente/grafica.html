@@ -211,11 +211,11 @@
 
 
 	//esta funcion tiene que llenar los puntos
-	function graphPoints(newPoints) {
-		for (var i = 0; i < newPoints.length; i++) {
-			if(idSeriesMap[newPoints[i]["sensor_tag"]] || idSeriesMap[newPoints[i]["slId"]]){
-				pushPoints (newPoints[i])
-			} else{//se crear e senso
+	function graphPoints(newPoints) {    
+		for (var i = 0; i < newPoints.length; i++) { 
+			if(idSeriesMap[newPoints[i]["sensor_tag"]] != null || idSeriesMap[newPoints[i]["slId"]] != null){
+				pushPoints (newPoints[i]);
+			} else{//se crear e senso 
 			   addSeries(newPoints[i]);
 			}
 		}
@@ -229,14 +229,13 @@
 		 //agrega los puntos a la grafica
 		 //tengo que agregar el punto a la serie y pasarle por parametro
 		 chart.series[idSeriesMap[newPoint["sensor_tag"]]]
-			  .addPoint([newPoint["slActualTimestamp"]
-			  ,newPoint["slActualValue"]],shift,true);
+			.addPoint({ x : newPoint["slActualTimestamp"], y : newPoint["slActualValue"]},true,shift,true);
 		}else if(idSeriesMap[newPoint["slId"]]){
 		  shift = chart.series[idSeriesMap[newPoint["slId"]]].data.length > 58;
 		 //agrega los puntos a la grafica
 		 //tengo que agregar el punto a la serie y pasarle por parametro
 		 chart.series[idSeriesMap[newPoint["slId"]]]
-			  .addPoint({ x : newPoint["slActualTimestamp"], y : newPoint["slActualValue"]},true,shift,true);
+			.addPoint({ x : newPoint["slActualTimestamp"], y : newPoint["slActualValue"]},true,shift,true);
 
 		}
   	}
@@ -276,18 +275,17 @@
 						,sensorJson["sensor_type"]);
 		return sensor;
 	}
-	function redraw (sensorTag,sensorId) {
-		console.log(sensorTag,idSeriesMap[sensorTag],sensorId,"asf"); 
-		sensorsPointsMap[sensorTag] = {sensorId:sensorId};    
-		idSeriesMap[sensorTag]  = idSeriesMap[sensorId];
-		delete idSeriesMap[sensorId];
+	function redraw (sensorTag,sensorId,create) {
 		if (idSeriesMap[sensorId] != null) {
 			console.log("entro a true");
 			chart.series[idSeriesMap[sensorId]].update({name : sensorTag },false);
 		}else{    
 			console.log("si entro a false");
 			chart.series[idSeriesMap[sensorTag]].update({name : sensorTag },false);
-		}
+		}      
+		chart.series[idSeriesMap[json.sensorTag]].options.id = {"type":"asdf",
+																"slId":sensorId,
+																"tag":sensorTag};
 		chart.redraw();
 	}
     $('#timer').keyup(function(){

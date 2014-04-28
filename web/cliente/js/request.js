@@ -186,7 +186,6 @@ function requestEditCreateSensor (jsonin,id) {
 		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+id;  
 		typeRequest = 'PUT';
 	}   
-	console.log(typeRequest,id,create); 
 	json = {//checar este pedo por que no jala cuando lo envio por parametro
 		  "sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
 			,"company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
@@ -205,17 +204,32 @@ function requestEditCreateSensor (jsonin,id) {
 	    dataType: 'json',
 		crossDomain : true, 
 	    success: function(json) {
-            console.log(json); 
 			//crear o editar el sensor
 			if (create) {
 				if(json.sensorId != null){
-					redraw(json.sensorTag,json.sensorId["slId"]);
+					idSeriesMap[json.sensorTag] = idSeriesMap[json.sensorId["slId"]];
+					delete idSeriesMap[json.sensorId["slId"]];
+					console.log(json.sensorTag); 
+					chart.series[idSeriesMap[json.sensorTag]].options.id = {"type":json.idSensorCatalog.idSensorType.sensor_type,
+																			"slId":json.sensorId["slId"],
+																			"tag":json.sensorTag};
+					console.log(json.sensorTag);
+					redraw(json.sensorTag,json.sensorId["slId"],create);
 				} else{
 					sensorDiscovereds.push(json);
 				}
 			}else{
 				if(json.sensorId != null){
-					redraw(id,json.sensorId["slId"]);
+					if(idSeriesMap[json.sensorId["slId"]]){
+						idSeriesMap[id] = idSeriesMap[json.sensorId["slId"]];
+						delete idSeriesMap[json.sensorId["slId"]];
+					}else{
+						idSeriesMap[id] = idSeriesMap[json.sensorTag];            
+						delete idSeriesMap[json.sensorTag];	
+											
+					}        
+					chart.series[idSeriesMap[json.sensorTag]].options.id = {"type":json.idSensorCatalog.idSensorType.sensor_type,"slId":json.sensorId["slId"],"tag":json.sensorTag};
+					redraw(id,json.sensorId["slId"],create);
 				} else{
 					sensorDiscovereds.push(json);
 				}
