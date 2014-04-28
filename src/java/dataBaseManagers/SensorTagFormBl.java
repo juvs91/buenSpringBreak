@@ -38,7 +38,7 @@ public class SensorTagFormBl {
          }        
         return this.s;
     }
-    public SensorTags edit(SensorTagForm sensor,String id){
+    public Object edit(SensorTagForm sensor,String id){
         this.s = getSensor(sensor);
         SensorTags oldSensor = em.find(entities.SensorTags.class, id);
         oldSensor.fillAll(this.s);
