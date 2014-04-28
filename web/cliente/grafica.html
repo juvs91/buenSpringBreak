@@ -213,16 +213,8 @@
 	//esta funcion tiene que llenar los puntos
 	function graphPoints(newPoints) {
 		for (var i = 0; i < newPoints.length; i++) {
-			if(newPoints[i]["sensor_tag"]){
-				if (sensorsPointsMap[newPoints[i]["sensor_tag"]]) {
-					if(!(sensorsPointsMap[newPoints[i]["sensor_tag"]][newPoints[i]["slId"]]))
-						pushPoints(newPoints[i]);
-				}else{
-					addSeries(newPoints[i]);
-				}
-			} else if(sensorsPointsMap[null][newPoints[i]["slId"]]){
-				//console.log();
-				pushPoints(newPoints[i]);
+			if(idSeriesMap[newPoints[i]["sensor_tag"]] || idSeriesMap[newPoints[i]["slId"]]){
+				pushPoints (newPoints[i])
 			} else{//se crear e senso
 			   addSeries(newPoints[i]);
 			}
