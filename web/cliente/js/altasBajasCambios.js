@@ -20,13 +20,16 @@ function fillFormRecivedRequest (serie) {
 	}else{       
 		$("#sensorList").val(+serie.options.id.slId);
 	}          
-	if (serie.options.id.tag != null) { 
+	if (serie.options.id.tag != null) {
+		$("#sensorTag").prop('disabled', true); 
 		sensorIdSelected = serie.name
 		$("#sensorTag").val(serie.name);
 		if (serie.options.id.type != null) {
 			$("#measurementUnits").val(serie.options.id.type);
 		}
-
+	}else{ 
+		$("#sensorTag").prop('disabled', false);
+	  
 	}
 }
 
@@ -46,7 +49,6 @@ function emptyForm () {
 
      
 $(document).ready(function () {
-  $("#sensorTag").prop('disabled', true);
   $("#submit").click(function() {
   if($("#sensorTag").val() != ""){
 	  var SensorTagForm = { 

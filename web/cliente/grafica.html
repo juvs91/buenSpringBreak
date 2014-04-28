@@ -285,12 +285,16 @@
 		return sensor;
 	}
 	function redraw (sensorTag,sensorId) {
-		console.log(sensorTag,idSeriesMap[sensorTag],sensorId); 
-		sensorsPointsMap[sensorTag] = {sensorId:sensorId};
-		if (idSeriesMap[sensorId]) {
-			chart.series[idSeriesMap[sensorId]].update({serie : sensorTag },false);
-		}else{
-			chart.series[idSeriesMap[sensorTag]].update({serie : sensorTag },false);
+		console.log(sensorTag,idSeriesMap[sensorTag],sensorId,"asf"); 
+		sensorsPointsMap[sensorTag] = {sensorId:sensorId};    
+		idSeriesMap[sensorTag]  = idSeriesMap[sensorId];
+		delete idSeriesMap[sensorId];
+		if (idSeriesMap[sensorId] != null) {
+			console.log("entro a true");
+			chart.series[idSeriesMap[sensorId]].update({name : sensorTag },false);
+		}else{    
+			console.log("si entro a false");
+			chart.series[idSeriesMap[sensorTag]].update({name : sensorTag },false);
 		}
 		chart.redraw();
 	}
