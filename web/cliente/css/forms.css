@@ -1,4 +1,6 @@
-
+.btn {
+    font-size: 18px;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -73,7 +75,11 @@
   }
 }
 
-#btn-continer{
+#btn-container{
 	margin:auto;
-	width:30%;
+	width:80%;
+}
+
+#logos {
+    margin: 2em;
 }
