@@ -15,8 +15,14 @@
 	</head>
 	<body id="body" >
         <!--<input type="number" class="form-control" id="timer" placeholder="Enter Number"> -->
-		<div id='container' ></div>    
-		<div id="btn-continer">
+        <div id="logos" align="center">
+            <img src="Factory_Ecomation_Logo.png" alt="Factory Ecomation" height="100" style="margin: 1em 1.5em 1em 1.5em;" />
+            <img src="Seventh_Framework_Programme_Logo.png" alt="Seventh Framework Programme" height="100" style="margin: 1em 1.5em 1em 1.5em;" />
+            <img src="European_Commission_Logo.png" alt="European Commission" height="100" style="margin: 1em 1.5em 1em 1.5em;" />   
+        </div>
+
+		<div id='container' style="margin-left: 2em; margin-right: 2em;"></div>    
+		<div id="btn-container" align="center">
 			<button type="button" class="btn btn-primary  " id = "btn-form-create" style = "display">Create sensor</button>
 			<button type="button" class="btn btn-primary  " id = "btn-form-modify" style = "display:none;">Modify sensor</button>
 			<button type="button" class="btn btn-danger  " id = "btn-form-delete-decision" style = "display:none;">Delete sensor</button>			
@@ -78,7 +84,10 @@
 	var create = false;
 	var sensorDiscovereds = [];
 	var sensorIdSelected = null;
-    var timer = 5000;    
+    var timer = 5000;
+    var titleFontSize = '20px';
+    var legendFontSize = '16px';
+    var axisFontSize = '15px';
 
     //para que no cambie el tiempo con la zona horaria
     Highcharts.setOptions({
@@ -100,25 +109,55 @@
 			defaultSeriesType: 'line',
 			},
 		title :{
-			text : "Sensors' graph"
+			text : "Sensors' graph",
+                        style : {
+                            fontSize: titleFontSize
+                        }
 		},
+                credits : {
+                  enabled : false  
+                },
+                legend: {
+                    itemStyle: {
+                        fontSize: legendFontSize
+                    }
+                },
 		xAxis :{
 			type : "datetime",
 			tickPixelInterval: 150,
-			maxZoom: 20 * 1000
+			maxZoom: 20 * 1000,
+                        labels: {
+                            style: {
+                                fontSize: axisFontSize
+                            },
+                            y: 20
+                        }
 		},
 		yAxis : {
 			minPadding : 0.2,
 			maxPadding : 0.2,
 			title : {
 				text : "",
-				margin : 80
-			}
+				margin : 80,
+                                style: {
+                                    fontSize: titleFontSize
+                                }
+			},
+                        labels: {
+                            style: {
+                                fontSize: axisFontSize
+                            }
+                        }
 		},
 		series : allSeries,
+                colors: ['#1560b2', '#991100', '#257800', '#8319b2', '#a83900', '#8c008c'],
         plotOptions : {
 			series : {
+                                lineWidth: 3,
 				events: {
+                                        hover: {
+                                            lineWidth: 6,
+                                        },
 					show :function(e){//se detecta cuando una serie es seleccionada
 						selectSerie(e["target"])
 						//console.log(e);
