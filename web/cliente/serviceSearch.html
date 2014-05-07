@@ -8,9 +8,10 @@ and open the template in the editor.
     <head>
         <script type="text/javascript" src="plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="plugins/bootstrap.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="js/request.js" charset="utf-8"></script>
-        <script type="text/javascript" src="js/jquery.tablesorter.js"></script> 
+        <script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+        <script type="text/javascript" src="js/servicesRequest.js" charset="utf-8"></script>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <title>Service search</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
@@ -31,7 +32,7 @@ and open the template in the editor.
             <div class="panel panel-default">
                 <!-- Default panel contents -->
                 <div class="panel-heading">Search results</div>
-                <table id="search-table" class="table tablesorter">
+                <table id="search-table" class="table tablesorter table-hover cust">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -51,13 +52,21 @@ and open the template in the editor.
                 </table>
             </div>
         </div>
+        <div>
+            
+        </div>
     </body>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() 
             { 
                 $("#search-table").tablesorter(); 
             } 
-        ); 
+        );
+        $("#search-term").keyup(function(event){
+            if(event.keyCode == 13){
+                $("#search-btn").click();
+            }
+        });
         $("#search-btn").click(function() {
             $("#search-table-body").empty()
             requestServices($("#search-term").val());
