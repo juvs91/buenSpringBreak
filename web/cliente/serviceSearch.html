@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <script type="text/javascript" src="plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/request.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/jquery.tablesorter.js"></script> 
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <title>Service search</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <div class="container" align="center">
+            <div>Service search</div>
+            <div class="row">
+                <div class="col-lg-8" style="float: none;">
+                  <div class="input-group">
+                    <input id="search-term" type="text" class="form-control">
+                    <span class="input-group-btn">
+                      <button id="search-btn" class="btn btn-default" type="button">Search</button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Search results</div>
+                <table id="search-table" class="table tablesorter">
+                    <thead>
+                        <tr>
+                            <th id="id">ID</th>
+                            <th id="name">Name</th>
+                            <th id="desc">Description</th>
+                            <th id="resource">Resource</th>
+                            <th id="url">URL</th>
+                            <th id="method">Method</th>
+                            <th id="input">Input</th>
+                            <th id="output">Output</th>
+                            <th id="format">Output format</th>
+                            <th id="example">Example</th>
+                            <th id="last-update">Last update</th>
+                        </tr>
+                    </thead>
+                    <tbody id="search-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() 
+            { 
+                $("#search-table").tablesorter(); 
+            } 
+        ); 
+        $("#search-btn").click(function() {
+            $("#search-table-body").empty()
+            requestServices($("#search-term").val());
+            //console.log($("#search-term").val());
+	});
+        function fillServiceTable(json) {
+            $.each(json, function(i, item) {
+                var d = new Date(item.lastUpdDate);
+                $("#search-table").append("<tr><td>" + item.idService + "</td>"
+                + "<td>" + item.serviceName + "</td>"
+                + "<td>" + item.description + "</td>"
+                + "<td>" + item.resource + "</td>"
+                + "<td>" + item.url + "</td>"
+                + "<td>" + item.restMethod + "</td>"
+                + "<td>" + item.inputParam + "</td>"
+                + "<td>" + item.output + "</td>"
+                + "<td>" + item.outputFormat + "</td>"
+                + "<td>" + item.example + "</td>"
+                + "<td>" + d.toDateString() + "</td>"
+                + "</tr>");
+            });
+        }
+    </script>
+</html>
