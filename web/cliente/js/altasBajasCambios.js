@@ -13,7 +13,8 @@ function fillForm (serie) {
     requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId',serie );      
 }                                                                             
 function fillFormRecivedRequest (serie) {
-	if ($("#sensorList option[id="+serie.options.id.slId+"]").length <= 0) {
+	if ($("#sensorList option[id="+serie.options.id.slId+"]").length <= 0) { 
+		
 		$("#sensorList").append("<option value="+serie.options.id.slId+">"+
 										serie.options.id.slId+"</option>").val(serie.options.id.slId); 
 		$("#sensorList").val(serie.options.id.slId);
@@ -58,7 +59,7 @@ $(document).ready(function () {
 					,"idMeasurementUnit":$("#measurementUnits").val(),"commDeviceTag":$("#commDeviceTags").val()
 					};
 	   $("#form-modal").modal("hide");
-	   requestEditCreateSensor(SensorTagForm,sensorIdSelected);	
+	   requestEditCreateSensor(SensorTagForm,$("#sensorTag").val(),$("#sensorList").val());	
 	}else{
 		$("#sensorTagEmpty").text("sensor Tag needed");
 	}    
