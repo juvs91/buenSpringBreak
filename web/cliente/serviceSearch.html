@@ -34,17 +34,17 @@ and open the template in the editor.
                 <table id="search-table" class="table tablesorter">
                     <thead>
                         <tr>
-                            <th id="id">ID</th>
-                            <th id="name">Name</th>
-                            <th id="desc">Description</th>
-                            <th id="resource">Resource</th>
-                            <th id="url">URL</th>
-                            <th id="method">Method</th>
-                            <th id="input">Input</th>
-                            <th id="output">Output</th>
-                            <th id="format">Output format</th>
-                            <th id="example">Example</th>
-                            <th id="last-update">Last update</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Resource</th>
+                            <th>URL</th>
+                            <th>Method</th>
+                            <th>Input</th>
+                            <th>Output</th>
+                            <th>Output format</th>
+                            <th>Example</th>
+                            <th>Last update</th>
                         </tr>
                     </thead>
                     <tbody id="search-table-body"></tbody>
@@ -79,6 +79,7 @@ and open the template in the editor.
                 + "<td>" + d.toDateString() + "</td>"
                 + "</tr>");
             });
+            $("#search-table").trigger("update");
         }
     </script>
 </html>
