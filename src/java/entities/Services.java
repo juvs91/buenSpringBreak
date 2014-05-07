@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Services.findByOutput", query = "SELECT s FROM Services s WHERE s.output = :output"),
     @NamedQuery(name = "Services.findByOutputFormat", query = "SELECT s FROM Services s WHERE s.outputFormat = :outputFormat"),
     @NamedQuery(name = "Services.findByExample", query = "SELECT s FROM Services s WHERE s.example = :example"),
+    @NamedQuery(name = "Services.findByIdServiceNameEntity", query = "SELECT s FROM Services s WHERE s.idService = :idService OR "
+            + "s.serviceName LIKE :term OR s.resource LIKE :term"),
+    //@NamedQuery(name = "Services.findByIdServiceNameEntity", query = "SELECT s FROM Services WHERE s.idService = :idService"),
     @NamedQuery(name = "Services.findByLastUpdDate", query = "SELECT s FROM Services s WHERE s.lastUpdDate = :lastUpdDate")})
 public class Services implements Serializable {
     private static final long serialVersionUID = 1L;

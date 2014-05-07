@@ -67,6 +67,23 @@ public class ServicesFacadeREST extends AbstractFacade<Services> {
     public List<Services> findAll() {
         return super.findAll();
     }
+    
+    @GET
+    @Path("find/{term}")
+    @Produces({"application/xml", "application/json"})
+    public List<Services> findByIdServiceNameEntity(@PathParam("term") String term) {
+        int id = -1;
+        try {
+            id = Integer.parseInt(term);
+        } catch (NumberFormatException e) {
+            //e.printStackTrace();
+        }
+        List<Services> services = em.createNamedQuery("Services.findByIdServiceNameEntity")
+            .setParameter("idService", id)
+            .setParameter("term", "%" + term  + "%")
+            .getResultList();
+        return services;
+    }
 
     @GET
     @Path("{from}/{to}")
