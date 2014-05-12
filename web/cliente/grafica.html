@@ -87,7 +87,8 @@
     var timer = 5000;
     var titleFontSize = '20px';
     var legendFontSize = '16px';
-    var axisFontSize = '15px';
+    var axisFontSize = '15px';  
+	var slId = null;
 
     //para que no cambie el tiempo con la zona horaria
     Highcharts.setOptions({
@@ -203,14 +204,14 @@
 
 	//funcion que despliega la forma de crear
 	$("#btn-form-create").click(function() {
-		create = true;
-		$("#form-modal").modal("show");
+		create = true;                   
+		$("#form-modal").modal("show");  
 	});
 
 	//funcion que despliega la forma de cambiar
 	$("#btn-form-modify").click(function () {
 		if (displayedSensors.length == 1 && displayedSensors[0].options.id != null){
-			create = false;
+			create = false;   
 		   	displayForm (displayedSensors[0]);//el unico sensor que esta en la lista
 			$("#form-modal").modal("show");
 		}
@@ -290,23 +291,64 @@
 		return sensor;
 	}
 	function redraw (sensorTag,sensorId,create,type,slId){   
-		if (!create) { 
-			//es update      {1:0,2:1,3:2,4:3,5:4,6:5} 
-			aux = idSeriesMap[slId];
-			if(idSeriesMap[slId]){
-				//correr todos los puntos del mapa de idSerieMap
-				
-			}
-			delete idSeriesMap[slId]; 
-			idSeriesMap[sensorId]=aux            
-		}  
-		update(idSeriesMap[sensorId],type,sensorId,sensorTag); 
+		if (!create) {       //[0,1,2,3,4]       4
+			//es update      {1:0,5:1,3:2,4:3,6:4} hacer el cambio por medio de slId no posicion del arreglo 
+			console.log(sensorId,slId);
+			if(sensorId != slId){
+				if(idSeriesMap[sensorId]){ 
+					sortArrPositions = [];
+					aux = idSeriesMap[sensorId];
+					idSeriesMap[sensorId] = idSeriesMap[slId];
+					delete idSeriesMap[slId];            
+					updateSeriesidSeriesMap(sortArrPositions,aux); 
+					update(idSeriesMap[sensorId],type,sensorId,sensorTag); 
+					chart.series[aux].remove(true); 
+				}
+			}else{
+				update(idSeriesMap[sensorId],type,sensorId,sensorTag); 
+			}                     
+		}else{
+			update(idSeriesMap[sensorId],type,sensorId,sensorTag); 
+		}
 		chart.redraw();
 	}
+
+	function redrawDeleteSensorOrNoSlId (slId) {
+		console.log("en no",slId);  
+		sortArrPositions = []; 
+		aux = idSeriesMap[slId];
+		console.log(aux,idSeriesMap);
+		delete idSeriesMap[slId]; 
+	    updateSeriesidSeriesMap(sortArrPositions,aux);  
+		chart.series[aux].remove(true);
+	}
+
 	function update (i,type,sensorId,sensorTag) {      
 		chart.series[i].update({name : sensorTag },false); 
-		chart.series[i].options.id = {"type":type,"slId":sensorId,"tag":sensorTag};
-	}
+		chart.series[i].options.id = {"type":type,"slId":sensorId,"tag":sensorTag};   
+		chart.series[i].setData([]);
+		chart.yAxis[0].setTitle({text:type});
+		
+	}  
+	
+	function updateSeriesidSeriesMap (sortArr,aux) {
+		 for (var i in idSeriesMap) {
+			sortArr.push([i,idSeriesMap[i]]);
+		 };  
+		 sortArr.sort(function(a,b) {
+			return a[1] - b[1];
+		 });                      
+		 //remover la pos aux del arreglo de series de chart
+		 for (var i=0; i < sortArr.length; i++) {
+			 sortArr[i][1] = i;
+		 };                                          
+		 for (var i=0; i < sortArr.length; i++) { 
+			 idSeriesMap[sortArr[i][0]] = i;      
+			j = i;
+		 };	
+		j = sortArr.length;   
+		
+	}     
     $('#timer').keyup(function(){
         timer = $('#timer').val();
         console.log(timer);

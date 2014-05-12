@@ -177,7 +177,7 @@ function fillSeveralOptionsCatalog() {
 }
 
 function requestEditCreateSensor (jsonin,id,slId) {
-	var url;
+	var url;               
 	var typeRequest = null;
 	if (create) {    
 		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/create';  
@@ -186,7 +186,6 @@ function requestEditCreateSensor (jsonin,id,slId) {
 		url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+id;  
 		typeRequest = 'PUT';
 	}   
-	console.log(typeRequest,id,create); 
 	json = {//checar este pedo por que no jala cuando lo envio por parametro
 		  "sensorTag":$("#sensorTag").val(),"sensorId":$("#sensorList").val()
 			,"company":$("#company").val(),"maxValue":$("#max").val(),"minValue":$("#min").val()
@@ -205,19 +204,18 @@ function requestEditCreateSensor (jsonin,id,slId) {
 	    dataType: 'json',
 		crossDomain : true, 
 	    success: function(json) {
-			//crear o editar el sensor
+			//crear o editar el sensor 
+			console.log(json,create,json.sensorId);
 			if (create) {
 				if(json.sensorId != null){
-					redraw(json.sensorTag,json.sensorId["slId"],create,"potato",slId);
-				} else{
-					sensorDiscovereds.push(json);
-				}
+					redraw(json.sensorTag,json.sensorId["slId"],create,json.idMeasurementUnit.unitName,slId);
+				} 
 			}else{
 				if(json.sensorId != null){
-					redraw(id,json.sensorId["slId"],create,"potatoe",slId);
-				} else{
-					sensorDiscovereds.push(json);
-				}
+					redraw(id,json.sensorId["slId"],create,json.idMeasurementUnit.unitName,slId);
+				}else{
+					redrawDeleteSensorOrNoSlId(slId); 
+				} 
 			}
 	    },
 	    error: function(e) { 
@@ -228,7 +226,7 @@ function requestEditCreateSensor (jsonin,id,slId) {
 	    }
 	});
 }    
-function requestDeleteSensor (id) {
+function requestDeleteSensor (id,slId) {
     var url = 'http://localhost:8080/factoryEcomation_Services/webresources/entities.sensortags/'+id;
 	$.support.cors = true;
 	$.ajax({    
@@ -242,7 +240,7 @@ function requestDeleteSensor (id) {
 		//crossDomain : true, 
 	    success: function(id) {
             console.log("succes en borrar");
-            chart.series[idSeriesMap[id]].remove()
+            redrawDeleteSensorOrNoSlId(slId);
 
         },
         error: function(e) {
