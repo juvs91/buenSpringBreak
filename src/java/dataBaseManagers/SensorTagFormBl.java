@@ -8,6 +8,7 @@ package dataBaseManagers;
 import entities.SensorTags;
 import entities.SensorTagForm;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +38,12 @@ public class SensorTagFormBl {
             e.printStackTrace();
          }        
         return this.s;
+    }
+    public Object delete(String SlId){
+        String query="SELECT s.sensor_tag,s.id_sensor_catalog,s.comm_device_tag,s.max_value,s.min_value,s.id_measurement_unit,s.sensor_id,s.active,s.insert_date,s.last_update_date \n" +
+        "FROM sensor_tags s,sensorlist l where l.slId = "+SlId;
+        List resultList = em.createNativeQuery(query, entities.SensorTags.class).getResultList();
+        return resultList.get(0);
     }
     public Object edit(SensorTagForm sensor,String id){
         this.s = getSensor(sensor);

@@ -87,7 +87,7 @@
     var timer = 5000;
     var titleFontSize = '20px';
     var legendFontSize = '16px';
-    var axisFontSize = '15px';  
+    var axisFontSize = '15px';
 	var slId = null;
 
     //para que no cambie el tiempo con la zona horaria
@@ -129,7 +129,9 @@
 			maxZoom: 20 * 1000,
                         labels: {
                             style: {
-                                fontSize: axisFontSize
+                                fontSize: axisFontSize,
+                                	fontWeight: 'bold',
+                                	color: '#000',
                             },
                             y: 20
                         }
@@ -137,6 +139,8 @@
 		yAxis : {
 			minPadding : 0.2,
 			maxPadding : 0.2,
+			gridLineWidth: 2,
+			gridLineColor: '#000',
 			title : {
 				text : "",
 				margin : 80,
@@ -146,7 +150,9 @@
 			},
                         labels: {
                             style: {
-                                fontSize: axisFontSize
+                                fontSize: axisFontSize,
+                                	fontWeight: 'bold',
+                                	color: '#000',
                             }
                         }
 		},
