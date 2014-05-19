@@ -1,6 +1,6 @@
 function deleteSensor(sensor){ //delete the sensor from the data base 
   //alert("se borrara el sensor "+sensor.name);   
-  requestDeleteSensor(sensor.name);
+  requestDeleteSensor(sensor.name,sensor.options.id.slId);
 }
 function displayForm (serie) { 
 	emptyForm();
@@ -12,7 +12,8 @@ function displayForm (serie) {
 function fillForm (serie) { 
     requestSimple('entities.sensorlist/noreference','#sensorList', 'slId', 'slId',serie );      
 }                                                                             
-function fillFormRecivedRequest (serie) {
+function fillFormRecivedRequest (serie) { 
+    slId = serie.options.id.slId;
 	if ($("#sensorList option[id="+serie.options.id.slId+"]").length <= 0) { 
 		
 		$("#sensorList").append("<option value="+serie.options.id.slId+">"+
@@ -58,8 +59,8 @@ $(document).ready(function () {
 					,"active":false,"idSensorCatalog":$("#measurementUnits").val()
 					,"idMeasurementUnit":$("#measurementUnits").val(),"commDeviceTag":$("#commDeviceTags").val()
 					};
-	   $("#form-modal").modal("hide");
-	   requestEditCreateSensor(SensorTagForm,$("#sensorTag").val(),$("#sensorList").val());	
+	   $("#form-modal").modal("hide");        
+	   requestEditCreateSensor(SensorTagForm,$("#sensorTag").val(),slId);	
 	}else{
 		$("#sensorTagEmpty").text("sensor Tag needed");
 	}    

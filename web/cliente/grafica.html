@@ -193,6 +193,7 @@
 			actualTypeSensor = serie.options.id.type;//se cambia el sensor que se va a desplegar
 			displayedSensors.push(serie);//se guarda el sensor en la lista de sensores desplegados
 			if (serie.options.id.type) {
+				//chart.yAxis[0].setTitle({text : "ppm"});
 				chart.yAxis[0].setTitle({text : serie.options.id.type});
 			}else{
 				chart.yAxis[0].setTitle({text : ""})
@@ -281,7 +282,8 @@
 	function creaSensor (sensorJson,posArreglo) {
 		sensor =new Sensores();
 		sensor.setTag(sensorJson["sensor_tag"]);
-		sensor.setType(sensorJson["sensor_type"],sensorJson["slId"],sensorJson["sensor_tag"]);
+		console.log(sensorJson);
+		sensor.setType(sensorJson["unit_name"],sensorJson["slId"],sensorJson["sensor_tag"]);
 		if (sensorJson["sensor_tag"]) {
 		  	sensor.setSensorName(sensorJson["sensor_tag"]);
 			//slId tiene el ultimo punto de la tabla sensorlist
